@@ -50,12 +50,20 @@
         }
     },
     "minimum-stability": "stable",
-    "repositories": [
-        {
+    "repositories": {
+        "magento": {
             "type": "composer",
             "url": "https://repo.magento.com/"
+        },
+        "local": {
+            "type": "path",
+            "url": "i4modules/*"
+        },
+        "interactiv4": {
+            "type": "composer",
+            "url": "https://repo.devi4.com"
         }
-    ],
+    },
     "extra": {
         "magento-force": "override"
     }
