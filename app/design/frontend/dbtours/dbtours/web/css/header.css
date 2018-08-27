@@ -1,4 +1,4 @@
-.header-top{
+.header-top, .panel.wrapper{
     background-color: #cfae62;
     color: black;
 }
@@ -13,6 +13,7 @@
 
 header.page-header {
     border-bottom: 1px solid #cfae62;
+    background-color: black;
 }
 
 .panel a,
@@ -23,10 +24,6 @@ header.page-header {
 
 .panel a:hover {
     color: #8c6203;
-}
-
-.header.content {
-    background-color: black;
 }
 
 .header.content img.logo-img {
@@ -40,6 +37,13 @@ header.page-header {
     margin-bottom: 20px;
     color: #cfae62;
 }
+.header.content h1 {
+   font-size: 32px;
+}
+.header.content h2 {
+    font-size: 22px;
+}
+
 @media (min-width:768px) {
     .header.content {
         padding: 22px 20px 0;
