@@ -1,0 +1,36 @@
+/*
+ * @author Rebeca Martínez García
+ * @copyright  Copyright © 2018  Discover Barcelona
+ */
+
+@media (min-width: 768px) {
+
+    .navigation .level0.active {
+        font-weight: 500;
+    }
+
+    .navigation .level0 > .level-top {
+        color: #f9ecd3 !important
+    }
+
+    .navigation .level0 > .level-top:hover {
+        color: #cfae62 !important
+    }
+
+    .navigation .level0.active > .level-top,
+    .navigation .level0.has-active > .level-top {
+        color: #cfae62 !important;
+    }
+
+    .navigation .level0.active > .level-top,
+    .navigation .level0.has-active > .level-top {
+        border-color: #cfae62 !important;
+    }
+}
+
+sections.nav-sections, nav.navigation, nav.navigation:hover {
+    background-color: black;
+    color: #f9ecd3;
+    font-weight: 700;
+}
+
