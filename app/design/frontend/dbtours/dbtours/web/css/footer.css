@@ -3,7 +3,7 @@
  * @copyright  Copyright © 2018  Discover Barcelona
  */
 .page-footer {
-    background-color: black;
+    background-color: black !important;
     color: #f9ecd3;
     font-size: 14px;
     padding: 10px;

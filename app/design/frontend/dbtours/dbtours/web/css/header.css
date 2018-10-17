@@ -1,14 +1,16 @@
-.header-top, .panel.wrapper{
-    background-color: #cfae62;
-    color: black;
-}
+/*.header-top, .panel.wrapper{*/
+    /*background-color: #cfae62;*/
+    /*color: black;*/
+/*}*/
 
 .page-header div.panel.wrapper {
     border:none;
     position: fixed;
     width: 100%;
-    z-index: 1200;
+    z-index: 100;
     box-shadow: 0px 1px 5px #cfae62;
+    background-color: #cfae62;
+    color: black;
 }
 
 header.page-header {
