@@ -13,16 +13,12 @@ body {
     font-weight: 200;
 }
 
-/*main.page-main {*/
-    /*text-align: center;*/
-/*}*/
-
 h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
 }
 
 a, a:visited {
-    color: #8c6203;
+    color: black;
 }
 
 a:hover {
@@ -31,16 +27,16 @@ a:hover {
 }
 
 .action.primary {
-    border: #cfae62;
+    border: #cfae62 1px solid;
     background: #cfae62;
     color: #f9ecd3;
     font-weight: 500;
 }
 
 .action.primary:hover {
-    border: #f9ecd3;
-    background: #cfae62;
-    color: #8c6203;
+    background-color: #f9f5ed;
+    border: #cfae62 1px solid;
+    color: #cfae62;
 }
 
 /** FORMS **/
