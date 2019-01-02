@@ -4,8 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4246e220fb91b7fa2bde0862f1b3d4bc",
+    "content-hash": "84a0d8bae08ad4b9abde47f539d7868a",
     "packages": [
+        {
+            "name": "avstudnitz/scopehint2",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avstudnitz/AvS_ScopeHint2.git",
+                "reference": "7e69f9c3aa3322884d4159414ca5955704587eb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avstudnitz/AvS_ScopeHint2/zipball/7e69f9c3aa3322884d4159414ca5955704587eb3",
+                "reference": "7e69f9c3aa3322884d4159414ca5955704587eb3",
+                "shasum": ""
+            },
+            "require": {
+                "magento/framework": "~100.0|~101.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "AvS\\ScopeHint\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "N/A",
+            "time": "2017-10-20T09:44:45+00:00"
+        },
         {
             "name": "braintree/braintree_php",
             "version": "3.27.0",
