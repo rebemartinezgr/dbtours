@@ -2,13 +2,23 @@
 /*
 # Except these files
 !.gitignore
+!.htaccess
+!composer.json
+!composer.lock
 !/app
 /app/etc/*
 !/app/etc/config.php
-!/app/etc/config.php.template
 /app/code/Magento
 /app/design/*/Magento
 /app/i18n
 /app/*.*
 !/lib
 /lib/*
+!/pub
+/pub/*
+!/pub/media
+/pub/media/*
+!/pub/media/catalog
+/pub/media/catalog/product/cache
+!/pub/media/wysiwyg
+/pub/media/wysiwyg/.thumbs
