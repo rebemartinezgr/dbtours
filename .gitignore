@@ -22,3 +22,6 @@
 /pub/media/catalog/product/cache
 !/pub/media/wysiwyg
 /pub/media/wysiwyg/.thumbs
+!/pub/media/favicon
+!/pub/media/theme
+!/pub/media/logo
