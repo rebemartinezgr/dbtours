@@ -120,5 +120,6 @@ return array (
     'Magento_WishlistAnalytics' => 1,
     'Shopial_Facebook' => 1,
     'Temando_Shipping' => 1,
+    'dbtours_theme' => 1,
   ),
 );
