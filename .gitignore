@@ -14,6 +14,8 @@
 /app/*.*
 !/lib
 /lib/*
+!/pub
+/pub/*
 !/pub/media
 /pub/media/captcha
 /pub/media/catalog/product/cache
