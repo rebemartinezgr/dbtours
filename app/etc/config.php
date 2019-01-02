@@ -3,6 +3,11 @@ return array (
   'modules' => 
   array (
     'Magento_Config' => 1,
+    'Dbtours_Base' => 1,
+    'Dbtours_Booking' => 1,
+    'Dbtours_Calendar' => 1,
+    'Dbtours_Event' => 1,
+    'Dbtours_Guide' => 1,
     'Dbtours_Theme' => 1,
     'Magento_Store' => 1,
     'Magento_Directory' => 1,
