@@ -2,14 +2,20 @@
     "name": "magento/project-community-edition",
     "description": "eCommerce Platform for Growth (Community Edition)",
     "type": "project",
-    "version": "2.2.3",
+    "version": "2.2.7",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
     ],
+    "config": {
+        "platform": {
+            "php": "7.1.17"
+        }
+    },
     "require": {
-        "magento/product-community-edition": "2.2.3",
-        "composer/composer": "@alpha"
+        "magento/product-community-edition": "2.2.7",
+        "composer/composer": "@alpha",
+        "avstudnitz/scopehint2": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.2.0",
@@ -50,12 +56,20 @@
         }
     },
     "minimum-stability": "stable",
-    "repositories": [
-        {
+    "repositories": {
+        "magento": {
             "type": "composer",
             "url": "https://repo.magento.com/"
+        },
+        "local": {
+            "type": "path",
+            "url": "i4modules/*"
+        },
+        "interactiv4": {
+            "type": "composer",
+            "url": "https://repo.devi4.com"
         }
-    ],
+    },
     "extra": {
         "magento-force": "override"
     }
