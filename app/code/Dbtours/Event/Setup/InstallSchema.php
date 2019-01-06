@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Dbtours\Event\Setup;
 
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -17,7 +18,7 @@ use Magento\Framework\Setup\SchemaSetupInterface;
  */
 class InstallSchema implements InstallSchemaInterface
 {
-    const EVENT_TOUR_TABLE_NAME = 'db_event_tour';
+    const EVENT_TOUR_TABLE_NAME = 'db_tour_event';
 
     /**
      * {@inheritdoc}
@@ -25,8 +26,7 @@ class InstallSchema implements InstallSchemaInterface
     public function install(
         SchemaSetupInterface $setup,
         ModuleContextInterface $context
-    )
-    {
+    ) {
         $setup->startSetup();
         $this->createEventTourTable($setup);
         $setup->endSetup();
@@ -53,13 +53,13 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true, 'nullable' => false, 'primary' => true],
             'Related Product ID'
         )->addColumn(
-            'start_at',
+            'start_time',
             Table::TYPE_DATETIME,
             null,
-            ['nullable' => false],
+            ['nullable' => false, 'primary' => true],
             'Start Event Datetime'
         )->addColumn(
-            'finish_at',
+            'finish_time',
             Table::TYPE_DATETIME,
             null,
             ['nullable' => false],
@@ -68,14 +68,24 @@ class InstallSchema implements InstallSchemaInterface
             $setup->getIdxName(self::EVENT_TOUR_TABLE_NAME, ['product_id']),
             ['product_id']
         )->addForeignKey(
-            $setup->getFkName(self::EVENT_TOUR_TABLE_NAME,
-                              'product_id',
-                              'catalog_product_entity',
-                              'entity_id'),
+            $setup->getFkName(
+                self::EVENT_TOUR_TABLE_NAME,
+                'product_id',
+                'catalog_product_entity',
+                'entity_id'
+            ),
             'product_id',
             $setup->getTable('catalog_product_entity'),
             'entity_id',
             Table::ACTION_CASCADE
+        )->addIndex(
+            $setup->getIdxName(
+                self::EVENT_TOUR_TABLE_NAME,
+                ['product_id', 'start_time'],
+                AdapterInterface::INDEX_TYPE_UNIQUE
+            ),
+            ['product_id', 'start_time'],
+            ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
         )->setComment(
             'Dbtours Event Tour'
         );
