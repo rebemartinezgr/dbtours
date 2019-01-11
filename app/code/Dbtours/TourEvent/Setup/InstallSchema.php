@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * @author Rebeca Martínez García
  * @copyright  Copyright © 2018  Discover Barcelona
@@ -18,8 +19,7 @@ use Magento\Framework\Setup\SchemaSetupInterface;
  */
 class InstallSchema implements InstallSchemaInterface
 {
-    const TOUR_EVENT_TABLE_NAME             = 'db_tour_event';
-    const TOUR_EVENT_LANGUAGE_TABLE_NAME    = 'db_tour_event_language';
+    const TOUR_EVENT_TABLE_NAME = 'db_tour_event';
 
     /**
      * {@inheritdoc}
@@ -39,7 +39,7 @@ class InstallSchema implements InstallSchemaInterface
      */
     private function createTourEventTable(SchemaSetupInterface $setup)
     {
-        $tablePromoImages = $setup->getConnection()->newTable(
+        $table = $setup->getConnection()->newTable(
             $setup->getTable(self::TOUR_EVENT_TABLE_NAME)
         )->addColumn(
             'entity_id',
@@ -51,13 +51,13 @@ class InstallSchema implements InstallSchemaInterface
             'product_id',
             Table::TYPE_INTEGER,
             null,
-            ['unsigned' => true, 'nullable' => false, 'primary' => true],
+            ['unsigned' => true, 'nullable' => false],
             'Related Product ID'
         )->addColumn(
             'start_time',
             Table::TYPE_DATETIME,
             null,
-            ['nullable' => false, 'primary' => true],
+            ['nullable' => false],
             'Start TourEvent Datetime'
         )->addColumn(
             'finish_time',
@@ -65,9 +65,12 @@ class InstallSchema implements InstallSchemaInterface
             null,
             ['nullable' => false],
             'Finish TourEvent Datetime'
-        )->addIndex(
-            $setup->getIdxName(self::TOUR_EVENT_TABLE_NAME, ['product_id']),
-            ['product_id']
+        )->addColumn(
+            'is_booked',
+            Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Is Booked Flag'
         )->addForeignKey(
             $setup->getFkName(
                 self::TOUR_EVENT_TABLE_NAME,
@@ -91,6 +94,6 @@ class InstallSchema implements InstallSchemaInterface
             'Dbtours TourEvent Tour'
         );
 
-        $setup->getConnection()->createTable($tablePromoImages);
+        $setup->getConnection()->createTable($table);
     }
 }
