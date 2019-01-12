@@ -10,4 +10,12 @@
     <preference for="Dbtours\TourEvent\Api\Data\TourEventInterface" type="Dbtours\TourEvent\Model\TourEvent"/>
     <preference for="Dbtours\TourEvent\Api\Data\TourEventSearchResultsInterface" type="Dbtours\TourEvent\Model\TourEventSearchResults"/>
     <preference for="Dbtours\TourEvent\Api\TourEventRepositoryInterface" type="Dbtours\TourEvent\Model\TourEventRepository"/>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="tourevent_generation" xsi:type="object">Dbtours\TourEvent\Console\Generator</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

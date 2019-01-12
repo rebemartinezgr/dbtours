@@ -5,15 +5,15 @@ declare(strict_types=1);
  * @copyright  Copyright © 2018  Discover Barcelona
  */
 
-namespace Dbtours\TourEvent\Cron;
+namespace Dbtours\TourEvent\Service;
 
 use Dbtours\Base\Logger\Logger;
 use Dbtours\TourEvent\Api\Config\Db\TourEvent\GenerationInterface;
 
 /**
- * Class Autogenerate
+ * Class Generator
  */
-class Autogenerate
+class Generator
 {
     /**
      * @var Logger
@@ -26,7 +26,7 @@ class Autogenerate
     private $generationConfig;
 
     /**
-     * Autogenerate constructor.
+     * Generator constructor.
      * @param Logger $logger
      * @param GenerationInterface $generationConfig
      */
@@ -39,13 +39,13 @@ class Autogenerate
     }
 
     /**
-     * Method executed when cron runs in server
+     * @return $this
      */
     public function execute()
     {
-        $this->logger->error('Running Cron from Test class');
+        $this->logger->info('Running Tour Event Service Generator');
         if (!$this->generationConfig->isEnabled()) {
-            $this->logger->error('TourEvent Generation is Disabled');
+            $this->logger->warning('TourEvent Generation is Disabled');
             return $this;
         }
         $daysInAdvance = $this->generationConfig->getDaysInAdvance();

@@ -6,8 +6,8 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="dbtours">
-        <job instance="Dbtours\TourEvent\Cron\Autogenerate" method="execute" name="dbtours_tourevent_autogenerate_cron">
-            <schedule>* * * * *</schedule>
+        <job instance="Dbtours\TourEvent\Cron\Generator" method="execute" name="dbtours_tourevent_generator_cron">
+            <schedule>0 3 * * *</schedule>
         </job>
     </group>
 </config>
