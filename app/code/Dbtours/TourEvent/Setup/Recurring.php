@@ -36,6 +36,8 @@ class Recurring implements InstallSchemaInterface
      */
     private function createTourEventLanguageView(SchemaSetupInterface $setup)
     {
+        $tourEventStart     = 'te.start_time - INTERVAL COALESCE(blocked_before,0) MINUTE';
+        $tourEventFinish    = 'te.finish_time + INTERVAL COALESCE(blocked_after,0) MINUTE';
         $sql1 = 'DROP VIEW IF EXISTS ' . self::TOUR_EVENT_LANGUAGE_VIEW_NAME;
         $sql2 = 'CREATE VIEW ' . self::TOUR_EVENT_LANGUAGE_VIEW_NAME . ' AS 
             SELECT
@@ -50,9 +52,9 @@ class Recurring implements InstallSchemaInterface
             INNER JOIN db_language l
             INNER JOIN db_guide_language gl on l.entity_id = gl.language_id
             LEFT JOIN db_calendar_event ce on gl.guide_id = ce.guide_id and 
-            ((te.start_time <= ce.start_time AND ce.start_time < te.finish_time) 
-            OR (te.start_time < ce.finish_time AND ce.finish_time <= te.finish_time)
-            OR (ce.start_time <= te.start_time AND te.finish_time <= ce.finish_time))
+            ((' . $tourEventStart . ' <= ce.start_time AND ce.start_time < ' . $tourEventFinish . ') 
+            OR (' . $tourEventStart . ' < ce.finish_time AND ce.finish_time <= ' . $tourEventFinish . ')
+            OR (ce.start_time <= ' . $tourEventStart . ' AND ' . $tourEventFinish . ' <= ce.finish_time))
             GROUP BY tour_event_id, language_id';
 
         $setup->getConnection()->query($sql1);
