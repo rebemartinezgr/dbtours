@@ -158,4 +158,14 @@ class TourEventRepository implements TourEventRepositoryInterface
 
         return $searchResults;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function deleteUnbooked()
+    {
+        /** @var Collection $collection */
+        $collection = $this->tourEventCollectionFactory->create();
+        $collection->deleteUnbooked();
+    }
 }

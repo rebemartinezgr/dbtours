@@ -64,4 +64,11 @@ interface TourEventRepositoryInterface
      * @return \Dbtours\TourEvent\Api\Data\TourEventSearchResultsInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
+
+    /**
+     * @return void
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     */
+    public function deleteUnbooked();
 }
