@@ -35,7 +35,9 @@ class Generator extends Command
 
     protected function configure()
     {
-        $this->setName('db:tourevent:generate')->setDescription('Generate Tour Events');
+        $this->setName('db:tourevent:generate')
+            ->setDescription('Generate Tour Events')
+            ->setAliases(['t:g']);
     }
 
     /**
