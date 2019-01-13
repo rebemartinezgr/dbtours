@@ -20,7 +20,6 @@ interface TourEventInterface extends CustomAttributesDataInterface
     const FINISH            = 'finish_time';
     const BLOCKED_AFTER     = 'blocked_after';
     const BLOCKED_BEFORE    = 'blocked_before';
-    const IS_BOOKED         = 'is_booked';
 
     /**
      * Retrieve Product Id
@@ -92,19 +91,6 @@ interface TourEventInterface extends CustomAttributesDataInterface
      */
     public function setBlockedAfter($blockedAfter);
 
-    /**
-     * Retrieve Is Blocked
-     *
-     * @return bool
-     */
-    public function isBooked();
-
-    /**
-     * Set Is Blocked
-     *
-     * @param bool $isBlocked
-     */
-    public function setIsBooked($isBlocked);
     /**
      * Retrieve existing extension attributes object or create a new one.
      *

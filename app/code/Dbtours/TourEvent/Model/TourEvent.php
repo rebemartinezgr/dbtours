@@ -108,22 +108,6 @@ class TourEvent extends AbstractExtensibleModel implements TourEventInterface
     /**
      * @inheritdoc
      */
-    public function isBooked()
-    {
-        return $this->_getData(self::IS_BOOKED);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setIsBooked($isBlocked)
-    {
-        $this->setData(self::IS_BOOKED, $isBlocked);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getExtensionAttributes()
     {
         return $this->_getExtensionAttributes();

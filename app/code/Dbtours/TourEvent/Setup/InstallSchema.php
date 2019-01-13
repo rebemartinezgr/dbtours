@@ -77,12 +77,6 @@ class InstallSchema implements InstallSchemaInterface
             null,
             ['unsigned' => true, 'nullable' => true],
             'Min Blocked After Event'
-        )->addColumn(
-            'is_booked',
-            Table::TYPE_SMALLINT,
-            null,
-            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
-            'Is Booked Flag'
         )->addForeignKey(
             $setup->getFkName(
                 self::TOUR_EVENT_TABLE_NAME,
