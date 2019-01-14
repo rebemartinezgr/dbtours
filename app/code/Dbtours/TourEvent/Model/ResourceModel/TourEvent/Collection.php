@@ -30,9 +30,8 @@ class Collection extends AbstractCollection
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function deleteUnbooked()
+    public function deleteAll()
     {
-        $this->addFieldToFilter(TourEvent::IS_BOOKED, 0);
         $this->walk('delete');
     }
 }

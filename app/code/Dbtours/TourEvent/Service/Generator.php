@@ -96,7 +96,7 @@ class Generator
             return $this;
         }
 
-        $this->cleanUnbookedTourEvents();
+        $this->cleanTourEvents();
         $this->generateTourEvents();
 
         return $this;
@@ -105,10 +105,10 @@ class Generator
     /**
      * Clear existing unbooked TourEvents
      */
-    private function cleanUnbookedTourEvents()
+    private function cleanTourEvents()
     {
         try {
-            $this->tourEventRepository->deleteUnbooked();
+            $this->tourEventRepository->deleteAll();
         } catch (\Exception $e) {
             $this->logger->error('Generator::deleteUnbookedTourEvents ' . $e->getMessage());
         }

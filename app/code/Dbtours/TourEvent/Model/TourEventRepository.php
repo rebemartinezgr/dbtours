@@ -162,10 +162,10 @@ class TourEventRepository implements TourEventRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function deleteUnbooked()
+    public function deleteAll()
     {
         /** @var Collection $collection */
         $collection = $this->tourEventCollectionFactory->create();
-        $collection->deleteUnbooked();
+        $collection->deleteAll();
     }
 }

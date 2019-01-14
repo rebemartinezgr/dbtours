@@ -70,5 +70,5 @@ interface TourEventRepositoryInterface
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function deleteUnbooked();
+    public function deleteAll();
 }
