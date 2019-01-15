@@ -110,7 +110,7 @@ class Generator
         try {
             $this->tourEventRepository->deleteAll();
         } catch (\Exception $e) {
-            $this->logger->error('Generator::deleteUnbookedTourEvents ' . $e->getMessage());
+            $this->logger->error('Generator::cleanTourEvents ' . $e->getMessage());
         }
     }
 

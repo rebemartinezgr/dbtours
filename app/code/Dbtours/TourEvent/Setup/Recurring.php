@@ -46,7 +46,8 @@ class Recurring implements InstallSchemaInterface
             te.start_time, 
             te.finish_time,  
             l.entity_id as language_id, 
-            l.code,
+            l.code AS language_code,
+            GROUP_CONCAT(IF (ce.entity_id, null, gl.guide_id)) AS available_guides,
             MAX(IF (ce.entity_id, 0, 1)) AS available
             FROM db_tour_event te
             INNER JOIN db_language l

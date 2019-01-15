@@ -28,6 +28,22 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
+    public function getProductId()
+    {
+        return $this->_getData(self::PRODUCT_ID);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setProductId($productId)
+    {
+        $this->setData(self::PRODUCT_ID, $productId);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getTourEventId()
     {
         return $this->_getData(self::TOUR_EVENT_ID);
@@ -39,6 +55,38 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     public function setTourEventId($tourEventId)
     {
         $this->setData(self::TOUR_EVENT_ID, $tourEventId);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getStartTime()
+    {
+        return $this->_getData(self::START_TIME);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setStartTime($startTime)
+    {
+        $this->setData(self::START_TIME, $startTime);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getFinishTime()
+    {
+        return $this->_getData(self::FINISH_TIME);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setFinishTime($finishTime)
+    {
+        $this->setData(self::FINISH_TIME, $finishTime);
     }
 
     /**
@@ -60,6 +108,22 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
+    public function setLanguageCode($languageCode)
+    {
+        $this->setData(self::LANGUAGE_CODE, $languageCode);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLanguageCode()
+    {
+        return $this->_getData(self::LANGUAGE_CODE);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getAvailable()
     {
         return $this->_getData(self::AVAILABLE);
@@ -71,6 +135,22 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     public function setAvailable($available)
     {
         $this->setData(self::AVAILABLE, $available);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAvailableGuides()
+    {
+        return $this->_getData(self::AVAILABLE_GUIDES);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAvailableGuides($availableGuides)
+    {
+        $this->setData(self::AVAILABLE_GUIDES, $availableGuides);
     }
 
     /**

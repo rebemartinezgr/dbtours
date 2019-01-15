@@ -64,4 +64,10 @@ interface TourEventLanguageRepositoryInterface
      * @return \Dbtours\TourEvent\Api\Data\TourEventLanguageSearchResultsInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
+
+    /**
+     * @param int $productId
+     * @return \Dbtours\TourEvent\Api\Data\TourEventLanguageSearchResultsInterface
+     */
+    public function getInfoByProductId($productId);
 }

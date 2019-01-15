@@ -158,4 +158,23 @@ class TourEventLanguageRepository implements TourEventLanguageRepositoryInterfac
 
         return $searchResults;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getInfoByProductId($productId)
+    {
+        /** @var Collection $collection */
+        $collection = $this->tourEventLanguageCollectionFactory->create();
+        $this->extensionAttributesJoinProcessor->process($collection, TourEventLanguageInterface::class);
+        $collection
+            ->addProductIdFilter($productId)
+            ->addDateTimesLanguageAvailability();
+        /** @var TourEventSearchResultsInterface $searchResults */
+        $searchResults = $this->tourEventLanguageSearchResultsInterfaceFactory->create();
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+
+        return $searchResults;
+    }
 }
