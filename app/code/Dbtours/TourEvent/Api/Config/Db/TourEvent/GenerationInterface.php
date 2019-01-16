@@ -30,4 +30,10 @@ interface GenerationInterface extends TourEventInterface
      * @return int
      */
     public function getDaysInAdvance($storeId = null): int;
+
+    /**
+     * @param int $storeId
+     * @return int
+     */
+    public function getMinHours($storeId = null): int;
 }

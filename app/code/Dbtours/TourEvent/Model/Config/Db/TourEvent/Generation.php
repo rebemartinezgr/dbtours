@@ -38,11 +38,20 @@ class Generation extends TourEvent implements GenerationInterface
     {
         return (bool)$this->scopeConfig->getValue($this->getXmlBaseGroupPath() . 'enabled');
     }
+
     /**
      * @inheritdoc
      */
     public function getDaysInAdvance($storeId = null): int
     {
         return (int)$this->scopeConfig->getValue($this->getXmlBaseGroupPath() . 'day_in_advance');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMinHours($storeId = null): int
+    {
+        return (int)$this->scopeConfig->getValue($this->getXmlBaseGroupPath() . 'min_hours');
     }
 }
