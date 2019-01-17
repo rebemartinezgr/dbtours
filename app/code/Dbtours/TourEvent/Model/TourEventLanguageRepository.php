@@ -78,17 +78,6 @@ class TourEventLanguageRepository implements TourEventLanguageRepositoryInterfac
     /**
      * @inheritdoc
      */
-    public function save(TourEventLanguageInterface $tourEventLanguage)
-    {
-        $tourEventLanguage->getResource()->save($tourEventLanguage);
-
-        return $tourEventLanguage;
-    }
-
-
-    /**
-     * @inheritdoc
-     */
     public function getById($tourEventLanguageId)
     {
         return $this->get($tourEventLanguageId);
@@ -107,36 +96,6 @@ class TourEventLanguageRepository implements TourEventLanguageRepositoryInterfac
         }
 
         return $tourEventLanguage;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function delete(TourEventLanguageInterface $tourEventLanguage)
-    {
-
-        $tourEventLanguageId = $tourEventLanguage->getId();
-        try {
-            $tourEventLanguage->getResource()->delete($tourEventLanguage);
-        } catch (ValidatorException $e) {
-            throw new CouldNotSaveException(__($e->getMessage()));
-        } catch (Exception $e) {
-            throw new CouldNotDeleteException(
-                __('Unable to remove tourEventLanguage %1', $tourEventLanguageId)
-            );
-        }
-
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function deleteById($tourEventLanguageId)
-    {
-        $tourEventLanguage = $this->getById($tourEventLanguageId);
-
-        return $this->delete($tourEventLanguage);
     }
 
     /**
