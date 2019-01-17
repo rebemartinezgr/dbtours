@@ -99,8 +99,16 @@ class InstallSchema implements InstallSchemaInterface
             'code',
             Table::TYPE_TEXT,
             100,
-            [],
+            ['nullable' => false],
             'Code Language'
+        )->addIndex(
+            $setup->getIdxName(
+                self::LANGUAGE_TABLE_NAME,
+                ['code'],
+                AdapterInterface::INDEX_TYPE_UNIQUE
+            ),
+            ['code'],
+            ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
         )->setComment(
             'Dbtours Language'
         );
