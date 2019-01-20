@@ -1,10 +1,10 @@
 <?php
-declare(strict_types=1);
 /**
- * @author Interactiv4 Team
- * @copyright Copyright © Interactiv4 (https://www.interactiv4.com)
+ * @author Rebeca Martínez García
+ * @copyright  Copyright © 2018  Discover Barcelona
  */
 
+declare(strict_types=1);
 namespace Dbtours\TourEvent\Console;
 
 use Symfony\Component\Console\Command\Command;
