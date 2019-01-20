@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /* @var $block \Dbtours\Catalog\Block\Product\View\Options\Type\TourEvent */ ?>
+<?php $_option = $block->getOption() ?>
+<?php $_optionId = $_option->getId() ?>
+<?php $class = ($_option->getIsRequire()) ? ' required' : ''; ?>
+<div class="field tourevent<?= /* @escapeNotVerified */ $class ?>"
+     data-mage-init='{"priceOptionDate":{"fromSelector":"#product_addtocart_form"}}'>
+    <fieldset class="fieldset fieldset-product-options-inner<?= /* @escapeNotVerified */ $class ?>">
+        <legend class="legend">
+            <span><?= $block->escapeHtml($_option->getTitle()) ?></span>
+            <?= /* @escapeNotVerified */ $block->getFormattedPrice() ?>
+        </legend>
+        <div class="control">
+            <?= $block->getCalendarDateHtml() ?>
+            <?php if ($_option->getIsRequire()): ?>
+                <input type="hidden"
+                       name="validate_tourevent_<?= /* @escapeNotVerified */ $_optionId ?>"
+                       class="validate-tourevent-<?= /* @escapeNotVerified */ $_optionId ?>"
+                       value=""
+                       data-validate="{'validate-required-tourevent':<?= /* @escapeNotVerified */ $_optionId ?>}"/>
+            <?php else: ?>
+                <input type="hidden"
+                       name="validate_tourevent_<?= /* @escapeNotVerified */ $_optionId ?>"
+                       class="validate-tourevent-<?= /* @escapeNotVerified */ $_optionId ?>"
+                       value=""
+                       data-validate="{'validate-optional-tourevent':<?= /* @escapeNotVerified */ $_optionId ?>}"/>
+            <?php endif; ?>
+            <script type="text/x-magento-init">
+                {
+                    "#product_addtocart_form": {
+                        "validation": {
+                            "ignore": ":hidden:not(input[name^='validate_tourevent_'])"
+                        }
+                    }
+                }
+            </script>
+        </div>
+    </fieldset>
+</div>

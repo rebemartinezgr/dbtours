@@ -1,0 +1,112 @@
+<?php
+/** @var  \Dbtours\Catalog\Block\Product\View\Options\Type\TourEvent $block */
+$showTime           = $block->getTimeFormat() ? "showsTime: true," : "showsTime: false,";
+$timeFormat         = $block->getTimeFormat() ? "timeFormat: '" . $block->getTimeFormat() . "'," : "";
+$calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYearsRange() . "'," : "";
+?>
+
+<!-- TODO use styles css -->
+<div class="container-ajax-loader"
+     style="opacity: 0.8;z-index: 1001;width:371px;height:288px;">
+    <div style="background-image: url('//d17yw2zwrx4t83.cloudfront.net/js/jquery/ajaxloader/ajax-loader.gif?ts=1547454667');
+    background-position: center center;background-repeat: no-repeat;height:100%;width:100%;background-color: transparent;"
+         class="ajax-loader">
+
+    </div>
+</div>
+
+<div id="div-<?= $block->getId()?>">
+
+</div>
+
+<div id="container-accordion"></div>
+
+<script type="text/javascript">
+    require(["jquery", "mage/calendar"], function($){
+        function showOptions(options) {
+            var html = '<div id="options-accordion">';
+            for (var language in options) {
+                html += '<h3>' + language + '</h3>';
+                html += '<div class="language-option-container" class="language">';
+                html += '<input hidden id="language-' + language +'"' +
+                    'type="radio" ' +
+                    'name="<?= $block->getName()?>[language_code]" ' +
+                    'value="' + language +'">';
+                for (var time in options[language]) {
+                    var tourEventId = options[language][time];
+                    html += '<div class="time-option-container">';
+                    html += '<input ' +
+                        'data-language="' + language + '" ' +
+                        'type="radio" ' +
+                        'name="<?= $block->getName()?>[tour_event_id]" ';
+                    if (tourEventId > 0) {
+                        html +='value="' + tourEventId +'" ';
+                    } else {
+                        html += 'disabled ';
+                    }
+                    html += '>';
+                    html += '<p>' + time + '</p>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+            $("#container-accordion").html(html);
+            $("#options-accordion").accordion();
+            $('.time-option-container input:radio').click(function() {
+                var selectedLanguage = $(this).data("language");
+                $(this).attr('checked', true);
+                $("#language-" + selectedLanguage).attr('checked', true);
+
+            });
+        }
+        function initDatepicker(data) {
+            $(<?= "'#div-" . $block->getId() . "'"?>).datepicker({
+                <?= $showTime ?>
+                <?= $timeFormat ?>
+                <?= $calendarYearsRange ?>
+                showButtonPanel: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                minDate: new Date(),
+                firstDay: 1,
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "<?= $block->getDateFormat() ?>",
+                buttonImage: "<?= $block->getImage() ?>",
+                beforeShowDay: function (date) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [data.dates.indexOf(string) != -1];
+                },
+                onSelect: function(dateText, inst) {
+                    var date = new Date(Date.parse($(this).datepicker('getDate')));
+                    var dateFormatted = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    if (data.dates.indexOf(dateFormatted) != -1) {
+                        showOptions(data.options[dateFormatted]);
+                    }
+                }
+            });
+        }
+
+        $.ajax({
+            // TODO get from const
+            url : 'http://local.dbtours.es/dbcatalog/ajax/ProductDates',
+            type : 'GET',
+            data : {
+                'productId' : "<?= $block->getProductId() ?>"
+            },
+            dataType:'json',
+            success : function(data) {
+                if(data.dates) {
+                    initDatepicker(data);
+                    $(".container-ajax-loader").css("display","none");
+                }
+            },
+            error : function(request,error)
+            {
+                alert("An error occurs, please refresh the current page");
+            }
+        });
+    });
+</script>
+
