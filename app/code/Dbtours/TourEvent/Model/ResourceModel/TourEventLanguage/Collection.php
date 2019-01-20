@@ -37,6 +37,28 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * @param $tourEvent
+     * @return $this
+     */
+    public function addTourEventFilter($tourEvent)
+    {
+        $this->addFieldToFilter(TourEventLanguage::TOUR_EVENT_ID, $tourEvent);
+
+        return $this;
+    }
+
+    /**
+     * @param $languageCode
+     * @return $this
+     */
+    public function addLanguageFilter($languageCode)
+    {
+        $this->addFieldToFilter(TourEventLanguage::LANGUAGE_CODE, $languageCode);
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function addDateTimesLanguageAvailability()

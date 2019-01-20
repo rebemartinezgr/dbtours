@@ -32,4 +32,12 @@ interface TourEventLanguageRepositoryInterface
      * @return \Dbtours\TourEvent\Api\Data\TourEventLanguageSearchResultsInterface
      */
     public function getInfoByProductId($productId);
+
+    /**
+     * @param $tourEventId
+     * @param $languageCode
+     * @return \Dbtours\TourEvent\Api\Data\TourEventLanguageInterface
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function getByIdAndLanguage($tourEventId, $languageCode);
 }

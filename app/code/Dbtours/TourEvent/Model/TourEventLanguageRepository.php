@@ -7,20 +7,16 @@
 namespace Dbtours\TourEvent\Model;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
-use Dbtours\TourEvent\Api\Data\TourEventSearchResultsInterface;
 use Dbtours\TourEvent\Api\Data\TourEventLanguageSearchResultsInterfaceFactory;
+use Dbtours\TourEvent\Api\Data\TourEventSearchResultsInterface;
 use Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface;
-use Dbtours\TourEvent\Model\TourEventLanguageFactory;
 use Dbtours\TourEvent\Model\ResourceModel\TourEventLanguage\Collection;
 use Dbtours\TourEvent\Model\ResourceModel\TourEventLanguage\CollectionFactory;
+use Dbtours\TourEvent\Model\TourEventLanguageFactory;
 use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
-use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
-use Magento\Framework\Exception\CouldNotDeleteException;
-use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Exception\ValidatorException;
-use Exception;
 
 /**
  * Class TourEventLanguageRepository
@@ -68,19 +64,11 @@ class TourEventLanguageRepository implements TourEventLanguageRepositoryInterfac
         CollectionProcessorInterface $collectionProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor
     ) {
-        $this->tourEventLanguageFactory = $tourEventLanguageFactory;
-        $this->tourEventLanguageCollectionFactory = $tourEventLanguageCollectionFactory;
+        $this->tourEventLanguageFactory                       = $tourEventLanguageFactory;
+        $this->tourEventLanguageCollectionFactory             = $tourEventLanguageCollectionFactory;
         $this->tourEventLanguageSearchResultsInterfaceFactory = $tourEventLanguageSearchResultsInterfaceFactory;
-        $this->collectionProcessor = $collectionProcessor;
-        $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getById($tourEventLanguageId)
-    {
-        return $this->get($tourEventLanguageId);
+        $this->collectionProcessor                            = $collectionProcessor;
+        $this->extensionAttributesJoinProcessor               = $extensionAttributesJoinProcessor;
     }
 
     /**
@@ -88,10 +76,10 @@ class TourEventLanguageRepository implements TourEventLanguageRepositoryInterfac
      */
     public function get($value, $attributeCode = null)
     {
-        /** @var TourEvent $tourEventLanguage */
+        /** @var TourEventLanguage $tourEventLanguage */
         $tourEventLanguage = $this->tourEventLanguageFactory->create()->load($value, $attributeCode);
 
-        if (!$tourEventLanguage->getId()) {
+        if (!$tourEventLanguage->getProductId() || !$tourEventLanguage->getTourEventId()) {
             throw new NoSuchEntityException(__('Unable to find tourEventLanguage'));
         }
 
@@ -126,14 +114,32 @@ class TourEventLanguageRepository implements TourEventLanguageRepositoryInterfac
         /** @var Collection $collection */
         $collection = $this->tourEventLanguageCollectionFactory->create();
         $this->extensionAttributesJoinProcessor->process($collection, TourEventLanguageInterface::class);
-        $collection
-            ->addProductIdFilter($productId)
-            ->addDateTimesLanguageAvailability();
+        $collection->addProductIdFilter($productId)->addDateTimesLanguageAvailability();
         /** @var TourEventSearchResultsInterface $searchResults */
         $searchResults = $this->tourEventLanguageSearchResultsInterfaceFactory->create();
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
 
         return $searchResults;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getByIdAndLanguage($tourEventId, $languageCode)
+    {
+        /** @var Collection $collection */
+        $collection = $this->tourEventLanguageCollectionFactory->create();
+        $this->extensionAttributesJoinProcessor->process($collection, TourEventLanguageInterface::class);
+        $collection->addTourEventFilter($tourEventId)
+            ->addLanguageFilter($languageCode);
+        /** @var TourEventLanguage $tourEventLanguage */
+        $tourEventLanguage = $collection->getFirstItem();
+
+        if (!$tourEventLanguage->getProductId() || !$tourEventLanguage->getTourEventId()) {
+            throw new NoSuchEntityException(__('Unable to find tourEventLanguage'));
+        }
+
+        return $tourEventLanguage;
     }
 }
