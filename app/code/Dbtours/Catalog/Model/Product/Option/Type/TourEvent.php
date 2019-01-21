@@ -7,12 +7,11 @@
 namespace Dbtours\Catalog\Model\Product\Option\Type;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
-use Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface as TourEventLanguageRepository;
+use Dbtours\TourEvent\Helper\Validator;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Stdlib\StringUtils;
 
 /**
@@ -37,9 +36,9 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
     protected $escaper = null;
 
     /**
-     * @var TourEventLanguageRepository
+     * @var Validator
      */
-    protected $tourEventLanguageRepository;
+    protected $tourEventLanguageValidator;
 
     /**
      * TourEvent constructor.
@@ -47,7 +46,7 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
      * @param ScopeConfigInterface $scopeConfig
      * @param Escaper $escaper
      * @param StringUtils $string
-     * @param TourEventLanguageRepository $tourEventLanguageRepository
+     * @param Validator $tourEventLanguageValidator
      * @param array $data
      */
     public function __construct(
@@ -55,13 +54,12 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
         ScopeConfigInterface $scopeConfig,
         Escaper $escaper,
         StringUtils $string,
-        TourEventLanguageRepository $tourEventLanguageRepository,
+        Validator $tourEventLanguageValidator,
         array $data = []
-    )
-    {
-        $this->escaper                     = $escaper;
-        $this->string                      = $string;
-        $this->tourEventLanguageRepository = $tourEventLanguageRepository;
+    ) {
+        $this->escaper                    = $escaper;
+        $this->string                     = $string;
+        $this->tourEventLanguageValidator = $tourEventLanguageValidator;
         parent::__construct($checkoutSession, $scopeConfig, $data);
     }
 
@@ -81,43 +79,22 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
 
         if (!isset($values[$option->getId()]) && $option->getIsRequire() && !$this->getSkipCheckRequiredOption()) {
             throw new LocalizedException(__('Please specify product\'s required option(s).'));
-        } elseif (isset($values[$option->getId()]) && !$this->validateAvailability($values[$option->getId()])) {
-            throw new LocalizedException(__('Selected option(s) are not longer available.'));
+        } elseif (isset($values[$option->getId()])) {
+            $tourEventLanguage = $this->tourEventLanguageValidator->getTourEventLanguage(
+                $values[$option->getId()]['tour_event_id'],
+                $values[$option->getId()]['language_code']
+            );
+            if (!$tourEventLanguage || !$tourEventLanguage->isAvailable()) {
+                throw new LocalizedException(__('Selected option(s) are not longer available.'));
+            }
+        }
+
+        if (isset($tourEventLanguage) && $tourEventLanguage->getStartTime()) {
+            $values[$option->getId()][TourEventLanguageInterface::START_TIME] = $tourEventLanguage->getStartTime();
         }
         $this->setUserValue($values[$option->getId()]);
         $this->setIsValid(true);
         return $this;
-    }
-
-    /**
-     * @param $value
-     * @return bool
-     */
-    private function validateAvailability($value)
-    {
-        if (isset($value['language_code']) && isset($value['tour_event_id'])) {
-            /** @var TourEventLanguageInterface $tourEventLanguage */
-            $tourEventLanguage = $this->getTourEventLanguage($value);
-            return $tourEventLanguage ? (bool)$tourEventLanguage->getAvailable() : false;
-        }
-        return false;
-    }
-
-    /**
-     * @param $value
-     * @return bool|TourEventLanguageInterface
-     */
-    private function getTourEventLanguage($value)
-    {
-        try {
-            $tourEventLanguage = $this->tourEventLanguageRepository->getByIdAndLanguage(
-                $value[TourEventLanguageInterface::TOUR_EVENT_ID],
-                $value[TourEventLanguageInterface::LANGUAGE_CODE]
-            );
-            return $tourEventLanguage;
-        } catch (NoSuchEntityException $e) {
-            return false;
-        }
     }
 
     /**
@@ -129,10 +106,6 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
     {
         if ($this->getIsValid() && ($this->getUserValue() !== '')) {
             $value             = $this->getUserValue();
-            $tourEventLanguage = $this->getTourEventLanguage($value);
-            if ($tourEventLanguage) {
-                $value[TourEventLanguageInterface::START_TIME] = $tourEventLanguage->getStartTime();
-            }
             return json_encode($value);
         } else {
             return null;
@@ -148,10 +121,15 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
     public function getFormattedOptionValue($value)
     {
         $value          = json_decode($value, true);
-        $startTime      = isset($value[TourEventLanguageInterface::START_TIME]) ?
-            $value[TourEventLanguageInterface::START_TIME] : '';
-        $languageCode   = isset($value[TourEventLanguageInterface::LANGUAGE_CODE]) ?
-            $value[TourEventLanguageInterface::LANGUAGE_CODE] : '';
+        $startTime      =
+            isset($value[TourEventLanguageInterface::START_TIME])
+            ? $value[TourEventLanguageInterface::START_TIME]
+            : '';
+
+        $languageCode   =
+            isset($value[TourEventLanguageInterface::LANGUAGE_CODE])
+            ? $value[TourEventLanguageInterface::LANGUAGE_CODE]
+            : '';
         $formattedValue = $startTime . ' - ' . $languageCode;
         // TODO format date&time
         // TODO load language Label

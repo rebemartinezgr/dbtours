@@ -110,7 +110,7 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
      *
      * @return int
      */
-    public function getAvailable();
+    public function isAvailable();
 
     /**
      * Set Available flag

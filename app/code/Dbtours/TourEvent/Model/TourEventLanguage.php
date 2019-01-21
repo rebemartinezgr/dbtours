@@ -124,9 +124,9 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
-    public function getAvailable()
+    public function isAvailable()
     {
-        return $this->_getData(self::AVAILABLE);
+        return (bool) $this->_getData(self::AVAILABLE);
     }
 
     /**
