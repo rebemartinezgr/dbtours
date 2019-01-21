@@ -49,7 +49,6 @@ class Recurring implements InstallSchemaInterface
      */
     private function createTourEventLanguageView(SchemaSetupInterface $setup)
     {
-        $offSet          = $this->getOffSet();
         $minHours        = $this->getMinHours();
         $tourEventStart  = 'te.start_time - INTERVAL COALESCE(blocked_before,0) MINUTE';
         $tourEventFinish = 'te.finish_time + INTERVAL COALESCE(blocked_after,0) MINUTE';
@@ -59,7 +58,9 @@ class Recurring implements InstallSchemaInterface
             te.product_id, 
             te.entity_id tour_event_id,
             te.start_time, 
-            te.finish_time,  
+            te.finish_time, 
+            te.blocked_before,
+            te.blocked_after,
             l.entity_id as language_id, 
             l.code AS language_code,
             GROUP_CONCAT(IF (ce.entity_id, null, gl.guide_id)) AS available_guides,
@@ -71,22 +72,11 @@ class Recurring implements InstallSchemaInterface
             ((' . $tourEventStart . ' <= ce.start_time AND ce.start_time < ' . $tourEventFinish . ') 
             OR (' . $tourEventStart . ' < ce.finish_time AND ce.finish_time <= ' . $tourEventFinish . ')
             OR (ce.start_time <= ' . $tourEventStart . ' AND ' . $tourEventFinish . ' <= ce.finish_time))
-            WHERE ' . $tourEventStart . ' >= NOW() - INTERVAL ' . $offSet . ' SECOND + INTERVAL ' . $minHours . ' HOUR
+            WHERE ' . $tourEventStart . ' >= NOW() + INTERVAL ' . $minHours . ' HOUR
             GROUP BY tour_event_id, language_id';
 
         $setup->getConnection()->query($sql1);
         $setup->getConnection()->query($sql2);
-    }
-
-    /**
-     * @return int
-     * @throws \Zend_Date_Exception
-     */
-    private function getOffSet()
-    {
-        $date   = new \Zend_Date();
-        $offSet = $date->setTimezone('Europe/Madrid')->getGmtOffset();
-        return $offSet;
     }
 
     /**

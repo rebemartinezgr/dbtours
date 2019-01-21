@@ -9,6 +9,8 @@ namespace Dbtours\TourEvent\Model\ResourceModel\TourEvent;
 use Dbtours\TourEvent\Model\TourEvent as ModelTourEvent;
 use Dbtours\TourEvent\Model\ResourceModel\TourEvent as ResourceModelTourEvent;
 use Dbtours\TourEvent\Model\TourEvent;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 /**
@@ -25,10 +27,10 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * Delete all Unbooked Tour Events
+     * Delete all Tour Events
      *
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws CouldNotDeleteException
+     * @throws CouldNotSaveException
      */
     public function deleteAll()
     {
