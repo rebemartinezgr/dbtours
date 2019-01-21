@@ -6,7 +6,6 @@
 namespace Dbtours\Catalog\Model\Quote\Item;
 
 use Dbtours\TourEvent\Helper\Validator;
-use Magento\Framework\Event\Observer;
 use Magento\Quote\Model\Quote\Item;
 use Magento\Framework\Phrase;
 
@@ -49,12 +48,10 @@ class AvailabilityValidator
     }
 
     /**
-     * @param Observer $observer
+     * @param Item $quoteItem
      */
-    public function validate(Observer $observer)
+    public function validate(Item $quoteItem)
     {
-        /* @var $quoteItem Item */
-        $quoteItem = $observer->getEvent()->getQuoteItem();
         if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote()) {
             return;
         }

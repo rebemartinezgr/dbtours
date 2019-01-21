@@ -8,6 +8,7 @@ namespace Dbtours\Catalog\Observer;
 use Dbtours\Catalog\Model\Quote\Item\AvailabilityValidator;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Quote\Model\Quote\Item;
 
 /**
  * Class AvailabilityValidatorObserver
@@ -34,6 +35,8 @@ class AvailabilityValidatorObserver implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $this->availabilityValidator->validate($observer);
+        /* @var $quoteItem Item */
+        $quoteItem = $observer->getEvent()->getQuoteItem();
+        $this->availabilityValidator->validate($quoteItem);
     }
 }
