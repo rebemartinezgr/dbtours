@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Dbtours\Catalog\Plugin\Model\Product\Option">
+        <arguments>
+            <argument name="optionGroupsToTypes" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="type" xsi:type="const">Dbtours\Catalog\Model\Product\Option\Type\TourEvent::OPTION_TYPE_NAME</item>
+                    <item name="group" xsi:type="const">Dbtours\Catalog\Model\Product\Option\Type\TourEvent::OPTION_GROUP_NAME</item>
+                </item>
+            </argument>
+            <argument name="optionGroupsToClass" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="group" xsi:type="const">Dbtours\Catalog\Model\Product\Option\Type\TourEvent::OPTION_GROUP_NAME</item>
+                    <item name="class" xsi:type="string">Dbtours\Catalog\Model\Product\Option\Type\TourEvent</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Catalog\Model\Product\Option">
+        <plugin name="catalog_product_option"
+                type="Dbtours\Catalog\Plugin\Model\Product\Option"/>
+    </type>
+</config>

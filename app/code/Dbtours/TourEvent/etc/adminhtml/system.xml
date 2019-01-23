@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="dbtours" translate="label" sortOrder="1" class="dbtours-tab">
+            <label>Db Tours</label>
+        </tab>
+        <section id="dbtours_tour_event" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Tour Events</label>
+            <tab>dbtours</tab>
+            <resource>Dbtours_TourEvent::config</resource>
+            <group id="generation" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
+                <label>TourEvent Generation</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <validate>required-entry</validate>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="day_in_advance" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Days in advance</label>
+                    <validate>required-entry validate-digits</validate>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="min_hours" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Min Hours in advance to reserve</label>
+                    <validate>required-entry validate-digits</validate>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
