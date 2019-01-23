@@ -73,7 +73,7 @@ class Collection extends AbstractCollection
             )->removeFieldFromSelect('entity_id')
             ->addExpressionFieldToSelect(
                 'time',
-                'TIME({{start_time}})',
+                'DATE_FORMAT({{start_time}}, \'%H:%i\')',
                 'start_time'
             )->addExpressionFieldToSelect(
                 'date',
