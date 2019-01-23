@@ -3,11 +3,12 @@
  * @author Rebeca Martínez García
  * @copyright  Copyright © 2018  Discover Barcelona
  */
+
 namespace Dbtours\Catalog\Model\Quote\Item;
 
 use Dbtours\TourEvent\Helper\Validator;
-use Magento\Quote\Model\Quote\Item;
 use Magento\Framework\Phrase;
+use Magento\Quote\Model\Quote\Item;
 
 /**
  * Class AvailabilityValidator
@@ -52,7 +53,10 @@ class AvailabilityValidator
      */
     public function validate(Item $quoteItem)
     {
-        if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote()) {
+        if (!$quoteItem ||
+            !$quoteItem->getProductId() ||
+            !$quoteItem->getQuote() ||
+            $quoteItem->getQuote()->getReservedOrderId()) {
             return;
         }
         foreach ($quoteItem->getOptions() as $option) {
