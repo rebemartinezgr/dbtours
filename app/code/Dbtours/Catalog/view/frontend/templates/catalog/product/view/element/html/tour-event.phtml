@@ -22,12 +22,14 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
 <div id="container-accordion"></div>
 
 <script type="text/javascript">
-    require(["jquery", "mage/calendar"], function($){
+    require(["jquery", "mage/calendar", "accordion"], function($){
         function showOptions(options, languagesData) {
             var html = '<div id="options-accordion">';
             for (var language in options) {
-                html += '<h3>' + languagesData[language] + '</h3>';
-                html += '<div class="language-option-container" class="language">';
+                html += '<div data-role="collapsible"> <div data-role="trigger"><h3>'
+                    +languagesData[language]+
+                    '</h3></div></div>';
+                html += '<div data-role="content" class="language-option-container" class="language">';
                 html += '<input hidden id="language-' + language +'"' +
                     'type="radio" ' +
                     'name="<?= $block->getName()?>[language_code]" ' +
