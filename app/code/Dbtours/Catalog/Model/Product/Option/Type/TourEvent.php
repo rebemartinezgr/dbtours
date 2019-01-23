@@ -15,7 +15,6 @@ use Magento\Framework\Escaper;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Stdlib\StringUtils;
 
-
 /**
  * Class TourEvent
  */

@@ -23,10 +23,10 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
 
 <script type="text/javascript">
     require(["jquery", "mage/calendar"], function($){
-        function showOptions(options) {
+        function showOptions(options, languagesData) {
             var html = '<div id="options-accordion">';
             for (var language in options) {
-                html += '<h3>' + language + '</h3>';
+                html += '<h3>' + languagesData[language] + '</h3>';
                 html += '<div class="language-option-container" class="language">';
                 html += '<input hidden id="language-' + language +'"' +
                     'type="radio" ' +
@@ -82,18 +82,17 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
                     var date = new Date(Date.parse($(this).datepicker('getDate')));
                     var dateFormatted = jQuery.datepicker.formatDate('yy-mm-dd', date);
                     if (data.dates.indexOf(dateFormatted) != -1) {
-                        showOptions(data.options[dateFormatted]);
+                        showOptions(data.options[dateFormatted], data.languages);
                     }
                 }
             });
         }
 
         $.ajax({
-            // TODO get from const
-            url : 'http://local.dbtours.es/dbcatalog/ajax/ProductDates',
+            url : "<?= $block->getDataUrl() ?>",
             type : 'GET',
             data : {
-                'productId' : "<?= $block->getProductId() ?>"
+                'productId' : "<?= $block->getProductId() ?>",
             },
             dataType:'json',
             success : function(data) {

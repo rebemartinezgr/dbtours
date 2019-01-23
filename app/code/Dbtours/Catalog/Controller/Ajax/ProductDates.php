@@ -9,6 +9,7 @@ namespace Dbtours\Catalog\Controller\Ajax;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
 use Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface as TourEventLanguageRepository;
+use Dbtours\TourEvent\Helper\Locale;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
@@ -25,15 +26,24 @@ class ProductDates extends Action
     private $tourEventLanguageRepository;
 
     /**
+     * @var Locale
+     */
+    private $localeHelper;
+
+    /**
      * ProductDates constructor.
      * @param Context $context
      * @param TourEventLanguageRepository $tourEventLanguageRepository
+     * @param Locale $localeHelper
      */
     public function __construct(
         Context $context,
-        TourEventLanguageRepository $tourEventLanguageRepository
+        TourEventLanguageRepository $tourEventLanguageRepository,
+        Locale $localeHelper
     ) {
+
         $this->tourEventLanguageRepository = $tourEventLanguageRepository;
+        $this->localeHelper                = $localeHelper;
         parent::__construct($context);
     }
 
@@ -51,7 +61,8 @@ class ProductDates extends Action
         $tourOptions    = $this->getTourOptions($productId);
         $result = [
             'dates'     => array_keys($tourOptions),
-            'options'   => $tourOptions
+            'options'   => $tourOptions,
+            'languages' => $this->getLanguagesOptions($tourOptions)
         ];
 
         return $resultJson->setData($result);
@@ -83,5 +94,27 @@ class ProductDates extends Action
             }
         }
         return $result;
+    }
+
+    /**
+     * @param $tourOptions
+     * @param $locale
+     * @return array
+     */
+    private function getLanguagesOptions($tourOptions)
+    {
+        $languageCodes = [];
+        array_map(function ($element) use (&$languageCodes) {
+            $languageCodes = array_unique(array_merge($languageCodes, array_keys($element)));
+            return $languageCodes;
+        }, $tourOptions);
+
+        $language = [];
+        array_map(function ($languageCode) use (&$language) {
+            $language[$languageCode] = $this->localeHelper->getFormattedLanguage($languageCode);
+            return $language;
+        }, $languageCodes);
+
+        return $language;
     }
 }

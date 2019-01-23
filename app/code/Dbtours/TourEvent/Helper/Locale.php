@@ -53,17 +53,21 @@ class Locale
     }
 
     /**
-     * @param string $languageCode
+     * @param $languageCode
+     * @param null $locale
      * @return string
      */
-    public function getFormattedLanguage($languageCode)
+    public function getFormattedLanguage($languageCode, $locale = null)
     {
         if (!isset($languageCode)) {
             return '';
         }
 
         try {
-            $locale     = $this->locale->getLocale();
+            if (!$locale) {
+                $locale     = $this->locale->getLocale();
+            }
+
             $language   = Zend_Locale::getTranslation($languageCode, 'language', $locale);
 
             return ucwords($language);
