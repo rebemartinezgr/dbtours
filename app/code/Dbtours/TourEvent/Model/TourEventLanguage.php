@@ -92,6 +92,38 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
+    public function getBlockedBefore()
+    {
+        return $this->_getData(self::BLOCKED_BEFORE);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setBlockedBefore($blockedBefore)
+    {
+        $this->setData(self::BLOCKED_BEFORE, $blockedBefore);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getBlockedAfter()
+    {
+        return $this->_getData(self::BLOCKED_AFTER);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setBlockedAfter($blockedAfter)
+    {
+        $this->setData(self::BLOCKED_AFTER, $blockedAfter);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getLanguageId()
     {
         return $this->_getData(self::LANGUAGE_ID);
@@ -142,7 +174,7 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
      */
     public function getAvailableGuides()
     {
-        return $this->_getData(self::AVAILABLE_GUIDES);
+        return $this->_getData(self::AVAILABLE_GUIDES) ? explode(",", $this->_getData(self::AVAILABLE_GUIDES)): null;
     }
 
     /**

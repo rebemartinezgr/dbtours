@@ -19,6 +19,8 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
     const TOUR_EVENT_ID     = 'tour_event_id';
     const START_TIME        = 'start_time';
     const FINISH_TIME       = 'finish_time';
+    const BLOCKED_AFTER     = 'blocked_after';
+    const BLOCKED_BEFORE    = 'blocked_before';
     const LANGUAGE_ID       = 'language_id';
     const LANGUAGE_CODE     = 'language_code';
     const AVAILABLE         = 'available';
@@ -76,6 +78,34 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
      * @param string $finishTime
      */
     public function setFinishTime($finishTime);
+
+    /**
+     * Retrieve Blocked Before
+     *
+     * @return string
+     */
+    public function getBlockedBefore();
+
+    /**
+     * Set Blocked Before
+     *
+     * @param string $blockedBefore
+     */
+    public function setBlockedBefore($blockedBefore);
+
+    /**
+     * Retrieve Blocked After
+     *
+     * @return string
+     */
+    public function getBlockedAfter();
+
+    /**
+     * Set Blocked After
+     *
+     * @param string $blockedAfter
+     */
+    public function setBlockedAfter($blockedAfter);
 
     /**
      * Retrieve Language Id
