@@ -8,11 +8,13 @@ namespace Dbtours\Catalog\Model\Product\Option\Type;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
 use Dbtours\TourEvent\Helper\Validator;
+use Dbtours\TourEvent\Helper\Locale;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Stdlib\StringUtils;
+
 
 /**
  * Class TourEvent
@@ -28,17 +30,22 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
      *
      * @var StringUtils
      */
-    protected $string;
+    private $string;
 
     /**
      * @var Escaper
      */
-    protected $escaper = null;
+    private $escaper = null;
 
     /**
      * @var Validator
      */
-    protected $tourEventLanguageValidator;
+    private $tourEventLanguageValidator;
+
+    /**
+     * @var Locale
+     */
+    private $localeHelper;
 
     /**
      * TourEvent constructor.
@@ -47,6 +54,7 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
      * @param Escaper $escaper
      * @param StringUtils $string
      * @param Validator $tourEventLanguageValidator
+     * @param Locale $localeHelper
      * @param array $data
      */
     public function __construct(
@@ -55,11 +63,13 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
         Escaper $escaper,
         StringUtils $string,
         Validator $tourEventLanguageValidator,
+        Locale $localeHelper,
         array $data = []
     ) {
-        $this->escaper                    = $escaper;
-        $this->string                     = $string;
-        $this->tourEventLanguageValidator = $tourEventLanguageValidator;
+        $this->escaper                      = $escaper;
+        $this->string                       = $string;
+        $this->tourEventLanguageValidator   = $tourEventLanguageValidator;
+        $this->localeHelper                 = $localeHelper;
         parent::__construct($checkoutSession, $scopeConfig, $data);
     }
 
@@ -105,7 +115,7 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
     public function prepareForCart()
     {
         if ($this->getIsValid() && ($this->getUserValue() !== '')) {
-            $value             = $this->getUserValue();
+            $value  = $this->getUserValue();
             return json_encode($value);
         } else {
             return null;
@@ -121,18 +131,10 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
     public function getFormattedOptionValue($value)
     {
         $value          = json_decode($value, true);
-        $startTime      =
-            isset($value[TourEventLanguageInterface::START_TIME])
-            ? $value[TourEventLanguageInterface::START_TIME]
-            : '';
+        $datetime       = $this->localeHelper->getFormattedDateTime($value[TourEventLanguageInterface::START_TIME]);
+        $language       = $this->localeHelper->getFormattedLanguage($value[TourEventLanguageInterface::LANGUAGE_CODE]);
+        $formattedValue = $datetime . ' - ' . $language;
 
-        $languageCode   =
-            isset($value[TourEventLanguageInterface::LANGUAGE_CODE])
-            ? $value[TourEventLanguageInterface::LANGUAGE_CODE]
-            : '';
-        $formattedValue = $startTime . ' - ' . $languageCode;
-        // TODO format date&time
-        // TODO load language Label
         return $this->escaper->escapeHtml($formattedValue);
     }
 }
