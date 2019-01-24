@@ -17,7 +17,13 @@
         "composer/composer": "@alpha",
         "avstudnitz/scopehint2": "^1.0",
         "mageplaza/magento-2-spanish-language-pack": "dev-master",
-        "mageplaza/magento-2-german-language-pack": "dev-master"
+        "mageplaza/magento-2-german-language-pack": "dev-master",
+        "mageplaza/magento-2-seo-extension": "^2.1",
+        "mageplaza/module-sitemap": "^1.0",
+        "mageplaza/magento-2-social-login": "^2.7",
+        "mageplaza/module-gdpr": "^1.2",
+        "mageplaza/module-google-recaptcha": "^1.0",
+        "mageplaza/module-smtp": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.2.0",
