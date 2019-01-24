@@ -15,7 +15,9 @@
     "require": {
         "magento/product-community-edition": "2.2.7",
         "composer/composer": "@alpha",
-        "avstudnitz/scopehint2": "^1.0"
+        "avstudnitz/scopehint2": "^1.0",
+        "mageplaza/magento-2-spanish-language-pack": "dev-master",
+        "mageplaza/magento-2-german-language-pack": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.2.0",
