@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Dbtours\Calendar\Api\Data\CalendarEventInterface" type="Dbtours\Calendar\Model\CalendarEvent"/>
+    <preference for="Dbtours\Calendar\Api\Data\CalendarEventSearchResultsInterface" type="Dbtours\Calendar\Model\CalendarEventSearchResults"/>
+    <preference for="Dbtours\Calendar\Api\CalendarEventRepositoryInterface" type="Dbtours\Calendar\Model\CalendarEventRepository"/>
+</config>

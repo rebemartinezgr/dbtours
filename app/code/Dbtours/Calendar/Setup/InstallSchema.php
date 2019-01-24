@@ -83,19 +83,25 @@ class InstallSchema implements InstallSchemaInterface
             Table::TYPE_DATETIME,
             null,
             ['nullable' => false],
-            'Start TourEvent Datetime'
+            'Start CalendarEvent Datetime'
         )->addColumn(
             'finish_time',
             Table::TYPE_DATETIME,
             null,
             ['nullable' => false],
-            'Finish TourEvent Datetime'
+            'Finish CalendarEvent Datetime'
         )->addColumn(
             'type_id',
             Table::TYPE_INTEGER,
             10,
             ['nullable' => true,  'unsigned' => true, 'length' => 10],
             'Calendar Event type'
+        )->addColumn(
+            'order_item_id',
+            Table::TYPE_INTEGER,
+            10,
+            ['nullable' => true,  'unsigned' => true, 'length' => 10],
+            'Calendar Order Id'
         )->setComment(
             'Dbtours Calendar Event'
         )->addForeignKey(
@@ -119,6 +125,17 @@ class InstallSchema implements InstallSchemaInterface
             'type_id',
             $setup->getTable(self::CALENDAR_EVENT_TYPE_TABLE_NAME),
             'entity_id',
+            Table::ACTION_SET_NULL
+        )->addForeignKey(
+            $setup->getFkName(
+                self::CALENDAR_EVENT_TABLE_NAME,
+                'order_item_id',
+                'sales_order_item',
+                'item_id'
+            ),
+            'order_item_id',
+            $setup->getTable('sales_order_item'),
+            'item_id',
             Table::ACTION_SET_NULL
         );
 
