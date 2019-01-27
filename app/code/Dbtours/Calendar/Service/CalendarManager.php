@@ -9,13 +9,9 @@ namespace Dbtours\Calendar\Service;
 use Dbtours\Calendar\Api\CalendarEventRepositoryInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterfaceFactory;
-use Dbtours\Catalog\Model\Product\Option\Type\TourEvent;
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface as TourEventLanguage;
-use Dbtours\TourEvent\Model\TourEventLanguageRepository;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Stdlib\Datetime;
-use Magento\Sales\Api\Data\OrderInterface;
-use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Api\Data\OrderItemInterface;
 
 /**
  * Class CalendarManager
@@ -33,99 +29,79 @@ class CalendarManager
     private $calendarEventFactory;
 
     /**
-     * @var TourEventLanguageRepository
-     */
-    private $tourEventLanguageRepository;
-
-    /**
-     * @var OrderRepositoryInterface
-     */
-    private $orderRepository;
-
-    /**
      * BookingManager constructor.
      * @param CalendarEventRepositoryInterface $calendarEventRepository
      * @param CalendarEventInterfaceFactory $calendarEventFactory
-     * @param TourEventLanguageRepository $tourEventLanguageRepository
-     * @param OrderRepositoryInterface $orderRepository
      */
     public function __construct(
         CalendarEventRepositoryInterface $calendarEventRepository,
-        CalendarEventInterfaceFactory $calendarEventFactory,
-        TourEventLanguageRepository $tourEventLanguageRepository,
-        OrderRepositoryInterface $orderRepository
+        CalendarEventInterfaceFactory $calendarEventFactory
     ) {
-        $this->calendarEventRepository      = $calendarEventRepository;
-        $this->calendarEventFactory         = $calendarEventFactory;
-        $this->tourEventLanguageRepository  = $tourEventLanguageRepository;
-        $this->orderRepository              = $orderRepository;
+        $this->calendarEventRepository = $calendarEventRepository;
+        $this->calendarEventFactory    = $calendarEventFactory;
     }
 
     /**
-     * @param OrderInterface $order
+     * @param TourEventLanguage $tourEventLanguage
+     * @param OrderItemInterface $orderItem
+     * @return array
+     * @throws \Zend_Date_Exception
      */
-    public function addCalendarEventsFromOrder($order)
+    public function getCalendarEvents($tourEventLanguage, $orderItem)
     {
-        $added = false;
-        foreach ($order->getItems() as $item) {
-            $options = $item->getProductOptions();
-            if (!isset($options['options'])) {
-                continue;
-            }
-            foreach ($options['options'] as $option) {
-                if (!(isset($option['option_type']) && $option['option_type'] == TourEvent::OPTION_TYPE_NAME)) {
-                    continue;
-                }
-                try {
-                    $tourEventLanguage = $this->getTourEventLanguageFromOption($option['option_value']);
-                    $guide = $tourEventLanguage->getAvailableGuides();
-                    if ($guide) {
-                        $guide = $guide[0];
-                    }
+        $newCalendarEvents = [];
+        if (!$tourEventLanguage) {
+            return $newCalendarEvents;
+        }
+        $commonData = [
+            CalendarEventInterface::ORDER_ITEM_ID => $orderItem->getItemId(),
+        ];
 
-                    $commonData = [
-                        CalendarEventInterface::ORDER_ITEM_ID   => $item->getItemId(),
-                        CalendarEventInterface::GUIDE_ID        => $guide
-                    ];
+        /** Create calendar event type booking for tour event*/
+        $data                = $this->getTourEventTimes($tourEventLanguage);
+        $newCalendarEvents[] = $this->createCalendarEvent(array_merge($data, $commonData));
 
-                    /** Create calendar event type booking for tour event*/
-                    $data = $this->getTourEventTimes($tourEventLanguage);
-                    $this->createCalendarEvent(array_merge($data, $commonData));
+        /** Create calendar event type journey before the tour event if needed */
+        if ($tourEventLanguage->getBlockedBefore()) {
+            $data                = $this->getBlockedBeforeTimes($tourEventLanguage);
+            $newCalendarEvents[] = $this->createCalendarEvent(array_merge($data, $commonData));
+        }
 
-                    /** Create calendar event type journey before the tour event if needed */
-                    if ($tourEventLanguage->getBlockedBefore()) {
-                        $data = $this->getBlockedBeforeTimes($tourEventLanguage);
-                        $this->createCalendarEvent(array_merge($data, $commonData));
-                    }
+        /** Create calendar event type journey after the tour event if needed*/
+        if ($tourEventLanguage->getBlockedAfter()) {
+            $data                = $this->getBlockedAfterTimes($tourEventLanguage);
+            $newCalendarEvents[] = $this->createCalendarEvent(array_merge($data, $commonData));
+        }
 
-                    /** Create calendar event type journey after the tour event if needed*/
-                    if ($tourEventLanguage->getBlockedAfter()) {
-                        $data = $this->getBlockedAfterTimes($tourEventLanguage);
-                        $this->createCalendarEvent(array_merge($data, $commonData));
-                    }
-                } catch (\Exception $e) {
-                    $added = false;
-                }
-            }
-            if (!$added) {
-                $order->setStatus('pending_assignment');
-                $this->orderRepository->save($order);
-            }
+        return $newCalendarEvents;
+    }
+
+    /**
+     * @param array $calendarEvents
+     * @param $guideId
+     */
+    public function assignToGuide(array $calendarEvents, $guideId)
+    {
+        /** @var  CalendarEventInterface $calendarEvent */
+        foreach ($calendarEvents as $calendarEvent) {
+            $calendarEvent->setGuideId($guideId);
+            $this->calendarEventRepository->save($calendarEvent);
         }
     }
 
     /**
      * @param $data
+     * @return CalendarEventInterface
      */
     private function createCalendarEvent($data)
     {
         /** @var CalendarEventInterface $calendarEvent */
         $calendarEvent = $this->calendarEventFactory->create();
-        $calendarEvent->setOrderItemId($data[CalendarEventInterface::ORDER_ITEM_ID]);
-        $calendarEvent->setStartTime($data[CalendarEventInterface::START]);
-        $calendarEvent->setFinishTime($data[CalendarEventInterface::FINISH]);
-        $calendarEvent->setGuideId($data[CalendarEventInterface::GUIDE_ID]);
-        $this->calendarEventRepository->save($calendarEvent);
+        $calendarEvent->setOrderItemId($data[CalendarEventInterface::ORDER_ITEM_ID] ?? '');
+        $calendarEvent->setStartTime($data[CalendarEventInterface::START] ?? '');
+        $calendarEvent->setFinishTime($data[CalendarEventInterface::FINISH] ?? '');
+
+        return $calendarEvent;
     }
 
     /**
@@ -135,8 +111,8 @@ class CalendarManager
     private function getTourEventTimes($tourEventLanguage)
     {
         return [
-            CalendarEventInterface::START       => $tourEventLanguage->getStartTime(),
-            CalendarEventInterface::FINISH      => $tourEventLanguage->getFinishTime(),
+            CalendarEventInterface::START  => $tourEventLanguage->getStartTime(),
+            CalendarEventInterface::FINISH => $tourEventLanguage->getFinishTime(),
         ];
     }
 
@@ -149,8 +125,8 @@ class CalendarManager
     {
         $startTimeBefore = $this->getStartTimeBlockedBefore($tourEventLanguage);
         return [
-            CalendarEventInterface::START       => $startTimeBefore,
-            CalendarEventInterface::FINISH      => $tourEventLanguage->getStartTime(),
+            CalendarEventInterface::START  => $startTimeBefore,
+            CalendarEventInterface::FINISH => $tourEventLanguage->getStartTime(),
         ];
     }
 
@@ -163,25 +139,9 @@ class CalendarManager
     {
         $finishTimeAfter = $this->getFinishTimeBlockedAfter($tourEventLanguage);
         return [
-            CalendarEventInterface::START       => $tourEventLanguage->getFinishTime(),
-            CalendarEventInterface::FINISH      => $finishTimeAfter,
+            CalendarEventInterface::START  => $tourEventLanguage->getFinishTime(),
+            CalendarEventInterface::FINISH => $finishTimeAfter,
         ];
-    }
-
-    /**
-     * @param $optionValue
-     * @return TourEventLanguage
-     * @throws NoSuchEntityException
-     */
-    private function getTourEventLanguageFromOption($optionValue)
-    {
-        $value             = json_decode($optionValue, true);
-        $tourEventId       = $value[TourEventLanguage::TOUR_EVENT_ID];
-        $languageCode      = $value[TourEventLanguage::LANGUAGE_CODE];
-        $tourEventLanguage = $this->tourEventLanguageRepository
-            ->getByIdAndLanguage($tourEventId, $languageCode);
-
-        return $tourEventLanguage;
     }
 
     /**
@@ -191,7 +151,7 @@ class CalendarManager
      */
     private function getStartTimeBlockedBefore($tourEventLanguage)
     {
-        $startTime  = $tourEventLanguage->getStartTime();
+        $startTime       = $tourEventLanguage->getStartTime();
         $startTimeBefore = new \Zend_Date($startTime, Datetime::DATETIME_INTERNAL_FORMAT);
         $startTimeBefore->subMinute($tourEventLanguage->getBlockedBefore());
 
@@ -205,7 +165,7 @@ class CalendarManager
      */
     private function getFinishTimeBlockedAfter($tourEventLanguage)
     {
-        $finishTime = $tourEventLanguage->getFinishTime();
+        $finishTime      = $tourEventLanguage->getFinishTime();
         $finishTimeAfter = new \Zend_Date($finishTime, Datetime::DATETIME_INTERNAL_FORMAT);
         $finishTimeAfter->addMinute($tourEventLanguage->getBlockedAfter());
 
