@@ -135,7 +135,7 @@ class InstallSchema implements InstallSchemaInterface
             Table::TYPE_INTEGER,
             null,
             ['nullable' => false, 'unsigned' => true],
-            'Guide ID'
+            'Language ID'
         )->setComment(
             'Dbtours Guide-Language'
         )->addIndex(

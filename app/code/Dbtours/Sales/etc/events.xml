@@ -4,7 +4,7 @@
   ~ @copyright  Copyright © 2018  Discover Barcelona
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="sales_model_service_quote_submit_success">
-        <observer name="calendar_new_booking" instance="Dbtours\Calendar\Observer\NewBookingObserver"/>
+    <event name="sales_order_item_save_after">
+        <observer name="db_order_item_save_after" instance="Dbtours\Sales\Observer\OrderItemObserver"/>
     </event>
 </config>
