@@ -23,7 +23,18 @@
         "mageplaza/magento-2-social-login": "^2.7",
         "mageplaza/module-gdpr": "^1.2",
         "mageplaza/module-google-recaptcha": "^1.0",
-        "mageplaza/module-smtp": "^1.2"
+        "mageplaza/module-smtp": "^1.2",
+        "ecg/base": "*",
+        "ecg/blog": "*",
+        "ecg/contentbuilder": "*",
+        "ecg/brand": "*",
+        "ecg/instagram": "*",
+        "ecg/megamenu": "*",
+        "ecg/popupnewsletter": "*",
+        "ecg/slideshow": "*",
+        "ecg/testimonial": "*",
+        "ecg/widget": "*",
+        "ecg/axon": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.2.0",
@@ -71,11 +82,10 @@
         },
         "local": {
             "type": "path",
-            "url": "i4modules/*"
-        },
-        "interactiv4": {
-            "type": "composer",
-            "url": "https://repo.devi4.com"
+            "url": "../ecg/*",
+            "options": {
+                "symlink": false
+            }
         }
     },
     "extra": {

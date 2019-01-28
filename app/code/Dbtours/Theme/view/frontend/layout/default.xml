@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../vendor/magento/framework/Module/etc/module.xsd">
-    <referenceBlock name="catalog.compare.link" remove="true"/>
-    <referenceBlock name="advanced-search-link" remove="true"/>
-</page>
