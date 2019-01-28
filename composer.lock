@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1eeff7eee2c2aaf62e9d7478533bc0e",
+    "content-hash": "7014550240ea10f54e089e9bde44e1ac",
     "packages": [
         {
             "name": "amzn/amazon-pay-and-login-with-amazon-core-module",
@@ -174,20 +174,20 @@
         },
         {
             "name": "avstudnitz/scopehint2",
-            "version": "1.0.1",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/avstudnitz/AvS_ScopeHint2.git",
-                "reference": "7e69f9c3aa3322884d4159414ca5955704587eb3"
+                "reference": "7f89f79ac7e277d33e4f02de9525a13dc29c59b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avstudnitz/AvS_ScopeHint2/zipball/7e69f9c3aa3322884d4159414ca5955704587eb3",
-                "reference": "7e69f9c3aa3322884d4159414ca5955704587eb3",
+                "url": "https://api.github.com/repos/avstudnitz/AvS_ScopeHint2/zipball/7f89f79ac7e277d33e4f02de9525a13dc29c59b5",
+                "reference": "7f89f79ac7e277d33e4f02de9525a13dc29c59b5",
                 "shasum": ""
             },
             "require": {
-                "magento/framework": "~100.0|~101.0"
+                "magento/framework": "~100.0|~101.0|~102.0"
             },
             "type": "magento2-module",
             "autoload": {
@@ -203,7 +203,7 @@
                 "OSL-3.0"
             ],
             "description": "N/A",
-            "time": "2017-10-20T09:44:45+00:00"
+            "time": "2019-01-25T12:25:20+00:00"
         },
         {
             "name": "braintree/braintree_php",
@@ -403,16 +403,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "8afa52cd417f4ec417b4bfe86b68106538a87660"
+                "reference": "558f321c52faeb4828c03e7dc0cfe39a09e09a2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/8afa52cd417f4ec417b4bfe86b68106538a87660",
-                "reference": "8afa52cd417f4ec417b4bfe86b68106538a87660",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/558f321c52faeb4828c03e7dc0cfe39a09e09a2d",
+                "reference": "558f321c52faeb4828c03e7dc0cfe39a09e09a2d",
                 "shasum": ""
             },
             "require": {
@@ -455,7 +455,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2018-10-18T06:09:13+00:00"
+            "time": "2019-01-28T09:30:10+00:00"
         },
         {
             "name": "composer/composer",
@@ -759,6 +759,324 @@
             "description": "dotmailer integration for magento 2"
         },
         {
+            "name": "ecg/axon",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/axon",
+                "reference": "b7f967f70551ac78bccbfad5b2a3b278d12bc491",
+                "shasum": null
+            },
+            "require": {
+                "magento/framework": "101.0.*",
+                "magento/theme-frontend-luma": "100.2.*",
+                "php": "~7.1.0"
+            },
+            "type": "magento2-theme",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Axon Frontend Theme",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/base",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/base",
+                "reference": "48f3e3662937854a315e7ac4e979d37aefbc3a4b",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Base\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Base",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/blog",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/blog",
+                "reference": "cd13c8b0134354bb8a027cf86e7b65ec77daaa7a",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Blog\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Blog",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/brand",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/brand",
+                "reference": "0843b70ae956b6b126bfab07189c669f599081bc",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Brand\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Brand",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/contentbuilder",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/contentbuilder",
+                "reference": "9cf9a0cd8a6c4ee98f50113e1bd15295594b99d6",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\ContentBuilder\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG ContentBuilder",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/instagram",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/instagram",
+                "reference": "4c4a1bdae0386debbcf43c6e77927aeffcf104f3",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Instagram\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Instagram",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/megamenu",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/megamenu",
+                "reference": "bc0d87701a03ec602b9eff4c6e6d1b2d9601232c",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Megamenu\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Megamenu",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/popupnewsletter",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/popupnewsletter",
+                "reference": "d211c287185a61e86001a87c642a07cb153b0cb3",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\PopupNewsletter\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG PopupNewsletter",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/slideshow",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/slideshow",
+                "reference": "cfe097b553ba5ab3f9b36b7a63915d728d151843",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Slideshow\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Slideshow",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/testimonial",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/testimonial",
+                "reference": "b487cbfd89a5f54ff979a9ab832534d96e97ce23",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Testimonial\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Testimonial",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
+            "name": "ecg/widget",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "../ecg/widget",
+                "reference": "6064421e124841938aa4110bd46a817f44ead6ef",
+                "shasum": null
+            },
+            "require": {
+                "php": "~7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ECG\\Widget\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "ECG Widget",
+            "transport-options": {
+                "symlink": false
+            }
+        },
+        {
             "name": "facebook/graph-sdk",
             "version": "5.7.0",
             "source": {
@@ -1048,16 +1366,16 @@
         },
         {
             "name": "hybridauth/hybridauth",
-            "version": "v2.12.0",
+            "version": "v2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "cfeee3fa948e2e17abc19a8d6e0ecbe637940c45"
+                "reference": "e7fb724aea4822b48e6d484e58ac8e541b205086"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/cfeee3fa948e2e17abc19a8d6e0ecbe637940c45",
-                "reference": "cfeee3fa948e2e17abc19a8d6e0ecbe637940c45",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/e7fb724aea4822b48e6d484e58ac8e541b205086",
+                "reference": "e7fb724aea4822b48e6d484e58ac8e541b205086",
                 "shasum": ""
             },
             "require": {
@@ -1101,27 +1419,27 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2018-08-10T12:36:54+00:00"
+            "time": "2019-01-10T10:34:15+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "5.2.7",
+            "version": "5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "8560d4314577199ba51bf2032f02cd1315587c23"
+                "reference": "dcb6e1006bb5fd1e392b4daa68932880f37550d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/8560d4314577199ba51bf2032f02cd1315587c23",
-                "reference": "8560d4314577199ba51bf2032f02cd1315587c23",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/dcb6e1006bb5fd1e392b4daa68932880f37550d4",
+                "reference": "dcb6e1006bb5fd1e392b4daa68932880f37550d4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.1",
+                "friendsofphp/php-cs-fixer": "~2.2.20",
                 "json-schema/json-schema-test-suite": "1.2.0",
                 "phpunit/phpunit": "^4.8.35"
             },
@@ -1167,7 +1485,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2018-02-14T22:26:30+00:00"
+            "time": "2019-01-14T23:55:14+00:00"
         },
         {
             "name": "klarna/module-core",
@@ -6766,12 +7084,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mageplaza/magento-2-german-language-pack.git",
-                "reference": "88bedb6a4ea2d59cbf0960600614509edef3c5a3"
+                "reference": "382dd762729ab227b18e6e120158456d2668ea52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mageplaza/magento-2-german-language-pack/zipball/88bedb6a4ea2d59cbf0960600614509edef3c5a3",
-                "reference": "88bedb6a4ea2d59cbf0960600614509edef3c5a3",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-german-language-pack/zipball/382dd762729ab227b18e6e120158456d2668ea52",
+                "reference": "382dd762729ab227b18e6e120158456d2668ea52",
                 "shasum": ""
             },
             "require": {
@@ -6797,7 +7115,7 @@
             ],
             "description": "German language package for Magento 2",
             "homepage": "https://www.mageplaza.com",
-            "time": "2019-01-22T09:06:37+00:00"
+            "time": "2019-01-26T16:30:58+00:00"
         },
         {
             "name": "mageplaza/magento-2-seo-extension",
@@ -6916,12 +7234,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mageplaza/magento-2-spanish-language-pack.git",
-                "reference": "4edfc8f448304bdea8b431f1274c502ec581b8cb"
+                "reference": "6cb3f39c040282b1e4fc8702614fa12dc7f55a38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mageplaza/magento-2-spanish-language-pack/zipball/4edfc8f448304bdea8b431f1274c502ec581b8cb",
-                "reference": "4edfc8f448304bdea8b431f1274c502ec581b8cb",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-spanish-language-pack/zipball/6cb3f39c040282b1e4fc8702614fa12dc7f55a38",
+                "reference": "6cb3f39c040282b1e4fc8702614fa12dc7f55a38",
                 "shasum": ""
             },
             "require": {
@@ -6947,7 +7265,7 @@
             ],
             "description": "Spanish language package for Magento 2",
             "homepage": "https://www.mageplaza.com",
-            "time": "2019-01-22T09:09:25+00:00"
+            "time": "2019-01-26T16:33:27+00:00"
         },
         {
             "name": "mageplaza/module-core",
@@ -7345,16 +7663,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.17",
+            "version": "v2.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "29af24f25bab834fcbb38ad2a69fa93b867e070d"
+                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/29af24f25bab834fcbb38ad2a69fa93b867e070d",
-                "reference": "29af24f25bab834fcbb38ad2a69fa93b867e070d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
+                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
                 "shasum": ""
             },
             "require": {
@@ -7390,7 +7708,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-07-04T16:31:37+00:00"
+            "time": "2019-01-03T20:59:08+00:00"
         },
         {
             "name": "paypal/rest-api-sdk-php",
@@ -7517,16 +7835,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.13",
+            "version": "2.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "42603ce3f42a27f7e14e54feab95db7b680ad473"
+                "reference": "8ebfcadbf30524aeb75b2c446bc2519d5b321478"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/42603ce3f42a27f7e14e54feab95db7b680ad473",
-                "reference": "42603ce3f42a27f7e14e54feab95db7b680ad473",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/8ebfcadbf30524aeb75b2c446bc2519d5b321478",
+                "reference": "8ebfcadbf30524aeb75b2c446bc2519d5b321478",
                 "shasum": ""
             },
             "require": {
@@ -7605,7 +7923,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2018-12-16T17:45:25+00:00"
+            "time": "2019-01-27T19:37:29+00:00"
         },
         {
             "name": "psr/container",
@@ -8077,16 +8395,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v4.2.1",
+            "version": "v4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "aa9fa526ba1b2ec087ffdfb32753803d999fcfcd"
+                "reference": "76dac1dbe2830213e95892c7c2ec1edd74113ea4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/aa9fa526ba1b2ec087ffdfb32753803d999fcfcd",
-                "reference": "aa9fa526ba1b2ec087ffdfb32753803d999fcfcd",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/76dac1dbe2830213e95892c7c2ec1edd74113ea4",
+                "reference": "76dac1dbe2830213e95892c7c2ec1edd74113ea4",
                 "shasum": ""
             },
             "require": {
@@ -8126,7 +8444,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11T19:52:12+00:00"
+            "time": "2019-01-03T09:07:35+00:00"
         },
         {
             "name": "symfony/debug",
@@ -8247,16 +8565,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.4.20",
+            "version": "v3.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "b49b1ca166bd109900e6a1683d9bb1115727ef2d"
+                "reference": "c24ce3d18ccc9bb9d7e1d6ce9330fcc6061cafde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/b49b1ca166bd109900e6a1683d9bb1115727ef2d",
-                "reference": "b49b1ca166bd109900e6a1683d9bb1115727ef2d",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/c24ce3d18ccc9bb9d7e1d6ce9330fcc6061cafde",
+                "reference": "c24ce3d18ccc9bb9d7e1d6ce9330fcc6061cafde",
                 "shasum": ""
             },
             "require": {
@@ -8293,20 +8611,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11T19:48:54+00:00"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.20",
+            "version": "v3.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "6cf2be5cbd0e87aa35c01f80ae0bf40b6798e442"
+                "reference": "3f2a2ab6315dd7682d4c16dcae1e7b95c8b8555e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/6cf2be5cbd0e87aa35c01f80ae0bf40b6798e442",
-                "reference": "6cf2be5cbd0e87aa35c01f80ae0bf40b6798e442",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/3f2a2ab6315dd7682d4c16dcae1e7b95c8b8555e",
+                "reference": "3f2a2ab6315dd7682d4c16dcae1e7b95c8b8555e",
                 "shasum": ""
             },
             "require": {
@@ -8342,7 +8660,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11T19:48:54+00:00"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -9431,16 +9749,16 @@
         },
         {
             "name": "zendframework/zend-http",
-            "version": "2.8.2",
+            "version": "2.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "2c8aed3d25522618573194e7cc51351f8cd4a45b"
+                "reference": "e70ed2a51f37b848c8c3829739d1b1f803854ffa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/2c8aed3d25522618573194e7cc51351f8cd4a45b",
-                "reference": "2c8aed3d25522618573194e7cc51351f8cd4a45b",
+                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/e70ed2a51f37b848c8c3829739d1b1f803854ffa",
+                "reference": "e70ed2a51f37b848c8c3829739d1b1f803854ffa",
                 "shasum": ""
             },
             "require": {
@@ -9482,7 +9800,7 @@
                 "zend",
                 "zf"
             ],
-            "time": "2018-08-13T18:47:03+00:00"
+            "time": "2019-01-08T15:55:38+00:00"
         },
         {
             "name": "zendframework/zend-hydrator",
@@ -9612,16 +9930,16 @@
         },
         {
             "name": "zendframework/zend-inputfilter",
-            "version": "2.9.0",
+            "version": "2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-inputfilter.git",
-                "reference": "c34ca7a1bffe2d089edbf96166435bffca8aa940"
+                "reference": "3dc2ff5a474bce824e2429564daa56b4c6b0d547"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-inputfilter/zipball/c34ca7a1bffe2d089edbf96166435bffca8aa940",
-                "reference": "c34ca7a1bffe2d089edbf96166435bffca8aa940",
+                "url": "https://api.github.com/repos/zendframework/zend-inputfilter/zipball/3dc2ff5a474bce824e2429564daa56b4c6b0d547",
+                "reference": "3dc2ff5a474bce824e2429564daa56b4c6b0d547",
                 "shasum": ""
             },
             "require": {
@@ -9665,7 +9983,7 @@
                 "inputfilter",
                 "zf"
             ],
-            "time": "2018-12-17T21:30:06+00:00"
+            "time": "2019-01-07T17:52:18+00:00"
         },
         {
             "name": "zendframework/zend-json",
@@ -12666,16 +12984,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v4.2.1",
+            "version": "v4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "005d9a083d03f588677d15391a716b1ac9b887c0"
+                "reference": "a7a7d0a0244cfc82f040729ccf769e6cf55a78fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/005d9a083d03f588677d15391a716b1ac9b887c0",
-                "reference": "005d9a083d03f588677d15391a716b1ac9b887c0",
+                "url": "https://api.github.com/repos/symfony/config/zipball/a7a7d0a0244cfc82f040729ccf769e6cf55a78fb",
+                "reference": "a7a7d0a0244cfc82f040729ccf769e6cf55a78fb",
                 "shasum": ""
             },
             "require": {
@@ -12725,7 +13043,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-30T22:21:14+00:00"
+            "time": "2019-01-03T09:07:35+00:00"
         },
         {
             "name": "symfony/contracts",
@@ -12797,16 +13115,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v4.2.1",
+            "version": "v4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "e4adc57a48d3fa7f394edfffa9e954086d7740e5"
+                "reference": "a28dda9df1d5494367454cad91e44751ac53921c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/e4adc57a48d3fa7f394edfffa9e954086d7740e5",
-                "reference": "e4adc57a48d3fa7f394edfffa9e954086d7740e5",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a28dda9df1d5494367454cad91e44751ac53921c",
+                "reference": "a28dda9df1d5494367454cad91e44751ac53921c",
                 "shasum": ""
             },
             "require": {
@@ -12866,20 +13184,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2018-12-02T15:59:36+00:00"
+            "time": "2019-01-05T16:37:49+00:00"
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v4.2.1",
+            "version": "v4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "a9c38e8a3da2c03b3e71fdffa6efb0bda51390ba"
+                "reference": "fbcb106aeee72f3450298bf73324d2cc00d083d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/a9c38e8a3da2c03b3e71fdffa6efb0bda51390ba",
-                "reference": "a9c38e8a3da2c03b3e71fdffa6efb0bda51390ba",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/fbcb106aeee72f3450298bf73324d2cc00d083d1",
+                "reference": "fbcb106aeee72f3450298bf73324d2cc00d083d1",
                 "shasum": ""
             },
             "require": {
@@ -12920,7 +13238,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2018-11-11T19:52:12+00:00"
+            "time": "2019-01-03T09:07:35+00:00"
         },
         {
             "name": "symfony/polyfill-php54",
@@ -13152,16 +13470,16 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v4.2.1",
+            "version": "v4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "ec076716412274e51f8a7ea675d9515e5c311123"
+                "reference": "af62b35760fc92c8dbdce659b4eebdfe0e6a0472"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/ec076716412274e51f8a7ea675d9515e5c311123",
-                "reference": "ec076716412274e51f8a7ea675d9515e5c311123",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/af62b35760fc92c8dbdce659b4eebdfe0e6a0472",
+                "reference": "af62b35760fc92c8dbdce659b4eebdfe0e6a0472",
                 "shasum": ""
             },
             "require": {
@@ -13198,7 +13516,7 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11T19:52:12+00:00"
+            "time": "2019-01-03T09:07:35+00:00"
         },
         {
             "name": "theseer/fdomdocument",
