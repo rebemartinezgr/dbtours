@@ -764,15 +764,23 @@
             "dist": {
                 "type": "path",
                 "url": "../ecg/axon",
-                "reference": "b7f967f70551ac78bccbfad5b2a3b278d12bc491",
+                "reference": "c7d9fa22e58e8bad8098327f21f12fdcef6402bc",
                 "shasum": null
             },
             "require": {
                 "magento/framework": "101.0.*",
+                "magento/magento-composer-installer": "*",
                 "magento/theme-frontend-luma": "100.2.*",
                 "php": "~7.1.0"
             },
             "type": "magento2-theme",
+            "extra": {
+                "installer-paths": {
+                    "app/design/ECG/axon": [
+                        "ecg/axon"
+                    ]
+                }
+            },
             "autoload": {
                 "files": [
                     "registration.php"
@@ -7084,12 +7092,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mageplaza/magento-2-german-language-pack.git",
-                "reference": "382dd762729ab227b18e6e120158456d2668ea52"
+                "reference": "2c816e3a976e0d96bbf6107cedf4fb0d681d7f71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mageplaza/magento-2-german-language-pack/zipball/382dd762729ab227b18e6e120158456d2668ea52",
-                "reference": "382dd762729ab227b18e6e120158456d2668ea52",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-german-language-pack/zipball/2c816e3a976e0d96bbf6107cedf4fb0d681d7f71",
+                "reference": "2c816e3a976e0d96bbf6107cedf4fb0d681d7f71",
                 "shasum": ""
             },
             "require": {
@@ -7115,7 +7123,7 @@
             ],
             "description": "German language package for Magento 2",
             "homepage": "https://www.mageplaza.com",
-            "time": "2019-01-26T16:30:58+00:00"
+            "time": "2019-01-29T09:05:44+00:00"
         },
         {
             "name": "mageplaza/magento-2-seo-extension",
@@ -7234,12 +7242,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mageplaza/magento-2-spanish-language-pack.git",
-                "reference": "6cb3f39c040282b1e4fc8702614fa12dc7f55a38"
+                "reference": "bfc9731a907d85d047cfeec476d1f76b8c6b4453"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mageplaza/magento-2-spanish-language-pack/zipball/6cb3f39c040282b1e4fc8702614fa12dc7f55a38",
-                "reference": "6cb3f39c040282b1e4fc8702614fa12dc7f55a38",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-spanish-language-pack/zipball/bfc9731a907d85d047cfeec476d1f76b8c6b4453",
+                "reference": "bfc9731a907d85d047cfeec476d1f76b8c6b4453",
                 "shasum": ""
             },
             "require": {
@@ -7265,7 +7273,7 @@
             ],
             "description": "Spanish language package for Magento 2",
             "homepage": "https://www.mageplaza.com",
-            "time": "2019-01-26T16:33:27+00:00"
+            "time": "2019-01-29T09:08:01+00:00"
         },
         {
             "name": "mageplaza/module-core",
@@ -10842,16 +10850,16 @@
         },
         {
             "name": "zendframework/zend-validator",
-            "version": "2.11.0",
+            "version": "2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-validator.git",
-                "reference": "f0789b4c4c099afdd2ecc58cc209a26c64bd4f17"
+                "reference": "3c28dfe4e5951ba38059cea895244d9d206190b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/f0789b4c4c099afdd2ecc58cc209a26c64bd4f17",
-                "reference": "f0789b4c4c099afdd2ecc58cc209a26c64bd4f17",
+                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/3c28dfe4e5951ba38059cea895244d9d206190b3",
+                "reference": "3c28dfe4e5951ba38059cea895244d9d206190b3",
                 "shasum": ""
             },
             "require": {
@@ -10911,7 +10919,7 @@
                 "validator",
                 "zf2"
             ],
-            "time": "2018-12-13T21:23:15+00:00"
+            "time": "2019-01-29T22:26:39+00:00"
         },
         {
             "name": "zendframework/zend-view",
@@ -11004,16 +11012,16 @@
     "packages-dev": [
         {
             "name": "composer/xdebug-handler",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "dc523135366eb68f22268d069ea7749486458562"
+                "reference": "d17708133b6c276d6e42ef887a877866b909d892"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/dc523135366eb68f22268d069ea7749486458562",
-                "reference": "dc523135366eb68f22268d069ea7749486458562",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/d17708133b6c276d6e42ef887a877866b909d892",
+                "reference": "d17708133b6c276d6e42ef887a877866b909d892",
                 "shasum": ""
             },
             "require": {
@@ -11044,7 +11052,7 @@
                 "Xdebug",
                 "performance"
             ],
-            "time": "2018-11-29T10:59:02+00:00"
+            "time": "2019-01-28T20:25:53+00:00"
         },
         {
             "name": "doctrine/annotations",
