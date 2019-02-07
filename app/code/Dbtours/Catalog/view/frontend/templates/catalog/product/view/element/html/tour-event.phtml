@@ -3,9 +3,16 @@
 $showTime           = $block->getTimeFormat() ? "showsTime: true," : "showsTime: false,";
 $timeFormat         = $block->getTimeFormat() ? "timeFormat: '" . $block->getTimeFormat() . "'," : "";
 $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYearsRange() . "'," : "";
+$alias = "prueba";
+$alias = "pruebalabel";
+$detailedInfoGroup = [
+       ["label1", "alias1", "content1"],
+       ["label2", "alias2", "content2"],
+       ["label3", "alias3", "content3"]
+];
+
 ?>
 
-<!-- TODO use styles css -->
 <div class="container-ajax-loader">
     <div class="ajax-loader"></div>
 </div>
@@ -14,17 +21,25 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
 
 </div>
 
-<div id="container-accordion"></div>
+<div id="container-tabs"></div>
 
 <script type="text/javascript">
-    require(["jquery", "mage/calendar", "accordion"], function($){
+    require(["jquery", "mage/calendar", "tabs"], function($){
         function showOptions(options, languagesData) {
-            var html = '<div id="language-accordion">';
+            var html = '<div id="language-tabs" class="product data items">';
             for (var language in options) {
-                html += '<div data-role="collapsible" class="option-header"> <div data-role="trigger"><a>'
-                    +languagesData[language]+
-                    '</a></div></div>';
-                html += '<div data-role="content" class="option-content"><div class="option-content-elements">';
+                html +=  '<div class="data item title option-header" aria-labeledby="tab-label-' + language + 
+                    '-title" ' +
+                    'data-role="collapsible"' +
+                    ' id="tab-label-' + language + '">' +
+                    '<a class="data switch"' +
+                    'tabindex="-1" ' +
+                    'data-toggle="switch"' +
+                    'href="' + language + '"' +
+                    'id="tab-label-' + language + '-title">' +
+                     languagesData[language]  + '</a></div>';
+                html += '<div class="data item content option-content" id="' + language + '" data-role="content">'
+                html +=  '<div class="option-content-elements">'
                 html += '<input class="language-option" id="language-' + language +'"' +
                     'type="radio" ' +
                     'name="<?= $block->getName()?>[language_code]" ' +
@@ -43,13 +58,13 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
                         html += 'disabled>';
                         html += '<label for="' + tourEventId+language +'" class="disabled">' + time + '</label>';
                     }
-
                 }
                 html += '</div></div>';
             }
             html += '</div>';
-            $("#container-accordion").html(html);
-            $("#language-accordion").accordion();
+            
+            $("#container-tabs").html(html);
+            $("#language-tabs").tabs();
             $('input.time-option:radio').click(function(e) {
                 // reset selected language
                 $('input.language-option:radio').attr('checked',false);
