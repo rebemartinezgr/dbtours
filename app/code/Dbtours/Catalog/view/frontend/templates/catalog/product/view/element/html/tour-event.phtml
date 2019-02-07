@@ -6,13 +6,8 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
 ?>
 
 <!-- TODO use styles css -->
-<div class="container-ajax-loader"
-     style="opacity: 0.8;z-index: 1001;width:371px;height:288px;">
-    <div style="background-image: url('//d17yw2zwrx4t83.cloudfront.net/js/jquery/ajaxloader/ajax-loader.gif?ts=1547454667');
-    background-position: center center;background-repeat: no-repeat;height:100%;width:100%;background-color: transparent;"
-         class="ajax-loader">
-
-    </div>
+<div class="container-ajax-loader">
+    <div class="ajax-loader"></div>
 </div>
 
 <div id="div-<?= $block->getId()?>">
@@ -30,7 +25,7 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
                     +languagesData[language]+
                     '</a></div></div>';
                 html += '<div data-role="content" class="option-content"><div class="option-content-elements">';
-                html += '<input class="language-option" hidden id="language-' + language +'"' +
+                html += '<input class="language-option" id="language-' + language +'"' +
                     'type="radio" ' +
                     'name="<?= $block->getName()?>[language_code]" ' +
                     'value="' + language +'">';
@@ -42,31 +37,26 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
                         'type="radio" ' +
                         'name="<?= $block->getName()?>[tour_event_id]" ';
                     if (tourEventId > 0) {
-                        html +='value="' + tourEventId +'" ';
+                        html +='value="' + tourEventId +'">';
+                        html += '<label for="' + tourEventId+language +'">' + time + '</label>';
                     } else {
-                        html += 'disabled ';
+                        html += 'disabled>';
+                        html += '<label for="' + tourEventId+language +'" class="disabled">' + time + '</label>';
                     }
-                    html += '>';
-                    html += '<label for="' + tourEventId+language +'">' + time + '</label>';
+
                 }
                 html += '</div></div>';
             }
             html += '</div>';
             $("#container-accordion").html(html);
             $("#language-accordion").accordion();
-            // $('input.time-option:radio').click(function(e) {
-            //     e.preventDefault();
-            //
-            //     // reset selected element
-            //     $('input.time-option:radio').attr('checked',false);
-            //     $('input.language-option:radio').attr('checked',false);
-            //
-            //     //mark as checked current elements
-            //     var selectedLanguage = $(this).data("language");
-            //     $(this).attr('checked', true);
-            //     $("#language-" + selectedLanguage).attr('checked', true);
-            //
-            // });
+            $('input.time-option:radio').click(function(e) {
+                // reset selected language
+                $('input.language-option:radio').attr('checked',false);
+                 //mark as checked current language
+                var selectedLanguage = $(this).data("language");
+                $("#language-" + selectedLanguage).attr('checked', true);
+            });
         }
         function initDatepicker(data) {
             $(<?= "'#div-" . $block->getId() . "'"?>).datepicker({

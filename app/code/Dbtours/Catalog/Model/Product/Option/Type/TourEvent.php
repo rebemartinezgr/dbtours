@@ -7,8 +7,8 @@
 namespace Dbtours\Catalog\Model\Product\Option\Type;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
-use Dbtours\TourEvent\Helper\Validator;
 use Dbtours\TourEvent\Helper\Locale;
+use Dbtours\TourEvent\Helper\Validator;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Escaper;
@@ -65,10 +65,10 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
         Locale $localeHelper,
         array $data = []
     ) {
-        $this->escaper                      = $escaper;
-        $this->string                       = $string;
-        $this->tourEventLanguageValidator   = $tourEventLanguageValidator;
-        $this->localeHelper                 = $localeHelper;
+        $this->escaper                    = $escaper;
+        $this->string                     = $string;
+        $this->tourEventLanguageValidator = $tourEventLanguageValidator;
+        $this->localeHelper               = $localeHelper;
         parent::__construct($checkoutSession, $scopeConfig, $data);
     }
 
@@ -89,11 +89,14 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
         if (!isset($values[$option->getId()]) && $option->getIsRequire() && !$this->getSkipCheckRequiredOption()) {
             throw new LocalizedException(__('Please specify product\'s required option(s).'));
         } elseif (isset($values[$option->getId()])) {
-            $tourEventLanguage = $this->tourEventLanguageValidator->getTourEventLanguage(
-                $values[$option->getId()]['tour_event_id'],
-                $values[$option->getId()]['language_code']
-            );
-            if (!$tourEventLanguage || !$tourEventLanguage->isAvailable()) {
+            if (isset($values[$option->getId()]['tour_event_id']) &&
+                isset($values[$option->getId()]['language_code'])) {
+                $tourEventLanguage = $this->tourEventLanguageValidator->getTourEventLanguage(
+                    $values[$option->getId()]['tour_event_id'],
+                    $values[$option->getId()]['language_code']
+                );
+            }
+            if (!isset($tourEventLanguage) || !$tourEventLanguage->isAvailable()) {
                 throw new LocalizedException(__('Selected option(s) are not longer available.'));
             }
         }
@@ -114,7 +117,7 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
     public function prepareForCart()
     {
         if ($this->getIsValid() && ($this->getUserValue() !== '')) {
-            $value  = $this->getUserValue();
+            $value = $this->getUserValue();
             return json_encode($value);
         } else {
             return null;
