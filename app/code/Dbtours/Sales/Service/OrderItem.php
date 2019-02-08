@@ -8,14 +8,22 @@ namespace Dbtours\Sales\Service;
 
 use Dbtours\Booking\Service\BookingManager;
 use Dbtours\Calendar\Service\CalendarManager;
-use Magento\Sales\Api\Data\OrderItemInterface;
 use Dbtours\TourEvent\Helper\Option;
+use Dbtours\Base\Logger\Logger;
+use Magento\Sales\Api\Data\OrderItemInterface;
+use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Class OrderItem
  */
 class OrderItem
 {
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+
     /**
      * @var CalendarManager $calendarManager
      */
@@ -40,11 +48,13 @@ class OrderItem
     public function __construct(
         CalendarManager $calendarManager,
         BookingManager $bookingManager,
-        Option $option
+        Option $option,
+        Logger $logger
     ) {
-        $this->calendarManager  = $calendarManager;
-        $this->bookingManager   = $bookingManager;
-        $this->option           = $option;
+        $this->calendarManager = $calendarManager;
+        $this->bookingManager  = $bookingManager;
+        $this->option          = $option;
+        $this->logger          = $logger;
     }
 
     /**
@@ -56,18 +66,29 @@ class OrderItem
             // $tourEventLanguage == null => if item has not tour event options
             // $tourEventLanguage == false => tour event does not exist any more
             $tourEventLanguage = $this->option->getTourEventLanguage($orderItem);
+            if ($tourEventLanguage == false) {
+                throw new LocalizedException(
+                    __(
+                        "OrderItem %1 has been created without related booking",
+                        $orderItem->getItemId()
+                    )
+                );
+            }
             if ($tourEventLanguage) {
-                $calendarEvents = $this->calendarManager->getCalendarEvents($tourEventLanguage, $orderItem);
-                $booking        = $this->bookingManager->getBooking($tourEventLanguage, $orderItem);
-                $guide          = $tourEventLanguage->getAvailableGuides();
-                if (is_array($guide)) {
-                    $guide = $guide[0];
+                $booking = $this->bookingManager->addNewBooking($tourEventLanguage, $orderItem);
+                if (!$booking->getGuideId()) {
+                    throw new LocalizedException(
+                        __(
+                            "Booking Id %1 has been created unassigned to any guide",
+                            $booking->getEntityId()
+                        )
+                    );
                 }
-                $this->bookingManager->assignToGuide($booking, $guide);
-                $this->calendarManager->assignToGuide($calendarEvents, $guide);
+                $this->calendarManager->addCalendarEvents($booking);
             }
         } catch (\Exception $e) {
-            /** notify error for order Item */
+            $this->logger->error("Dbtours\Sales\Service\OrderItem::execute() : " . $e->getMessage());
+            /** TODO notify error */
         }
     }
 }

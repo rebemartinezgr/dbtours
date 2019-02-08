@@ -9,12 +9,13 @@ namespace Dbtours\Sales\Observer;
 use Dbtours\Sales\Service\OrderItem;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
 
 /**
- * Class OrderItemObserver
+ * Class OrderObserver
  */
-class OrderItemObserver implements ObserverInterface
+class OrderObserver implements ObserverInterface
 {
     /**
      * @var OrderItem
@@ -32,17 +33,18 @@ class OrderItemObserver implements ObserverInterface
     }
 
     /**
-     * @event sales_order_item_save_after
+     * @event sales_model_service_quote_submit_success
      *
      * @param Observer $observer
      * @return void
      */
     public function execute(Observer $observer)
     {
+        /** @var  OrderInterface $order */
+        $order  = $observer->getEvent()->getOrder();
         /** @var  OrderItemInterface $orderItem */
-        $orderItem      = $observer->getEvent()->getItem();
-
-        /** TODO: difference when is new item than existing one */
-        $this->orderItemService->execute($orderItem);
+        foreach ($order->getAllItems() as $orderItem) {
+            $this->orderItemService->execute($orderItem);
+        }
     }
 }

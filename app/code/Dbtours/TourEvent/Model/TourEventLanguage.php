@@ -9,7 +9,6 @@ namespace Dbtours\TourEvent\Model;
 use Dbtours\TourEvent\Api\Data\TourEventLanguageExtensionInterface;
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
 use Dbtours\TourEvent\Model\ResourceModel\TourEventLanguage as ResourceModelTourEventLanguage;
-
 use Magento\Framework\Model\AbstractExtensibleModel;
 
 /**
@@ -158,7 +157,7 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
      */
     public function isAvailable()
     {
-        return (bool) $this->_getData(self::AVAILABLE);
+        return (bool)$this->_getData(self::AVAILABLE);
     }
 
     /**
@@ -172,9 +171,15 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
-    public function getAvailableGuides()
+    public function getAvailableGuide()
     {
-        return $this->_getData(self::AVAILABLE_GUIDES) ? explode(",", $this->_getData(self::AVAILABLE_GUIDES)): null;
+        $guide = $this->_getData(self::AVAILABLE_GUIDES)
+            ? explode(",", $this->_getData(self::AVAILABLE_GUIDES))
+            : null;
+        if ($guide && is_array($guide)) {
+            $guide = $guide[0];
+        }
+        return $guide;
     }
 
     /**

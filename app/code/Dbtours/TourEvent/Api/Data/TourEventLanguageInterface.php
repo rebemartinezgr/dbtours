@@ -154,7 +154,7 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
      *
      * @return int
      */
-    public function getAvailableGuides();
+    public function getAvailableGuide();
 
     /**
      * Set Available Guides

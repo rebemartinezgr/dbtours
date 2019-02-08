@@ -6,12 +6,12 @@
 
 namespace Dbtours\Calendar\Service;
 
+use Dbtours\Booking\Api\Data\BookingInterface;
 use Dbtours\Calendar\Api\CalendarEventRepositoryInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterfaceFactory;
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface as TourEventLanguage;
 use Magento\Framework\Stdlib\Datetime;
-use Magento\Sales\Api\Data\OrderItemInterface;
 
 /**
  * Class CalendarManager
@@ -42,34 +42,47 @@ class CalendarManager
     }
 
     /**
-     * @param TourEventLanguage $tourEventLanguage
-     * @param OrderItemInterface $orderItem
+     * @param BookingInterface $booking
+     * @throws \Zend_Date_Exception
+     */
+    public function addCalendarEvents($booking)
+    {
+        if ($booking->getGuideId()) {
+            $calendarEvents = $this->getCalendarEvents($booking, $booking->getOrderItem());
+            $this->assignToGuide($calendarEvents, $booking->getGuideId());
+        }
+    }
+
+    /**
+     * @param TourEventLanguage | BookingInterface $object
+     * @param int $orderItemId
      * @return array
      * @throws \Zend_Date_Exception
      */
-    public function getCalendarEvents($tourEventLanguage, $orderItem)
+    public function getCalendarEvents($object, $orderItemId)
     {
         $newCalendarEvents = [];
-        if (!$tourEventLanguage) {
+        if (!$object) {
             return $newCalendarEvents;
         }
+
         $commonData = [
-            CalendarEventInterface::ORDER_ITEM_ID => $orderItem->getItemId(),
+            CalendarEventInterface::ORDER_ITEM_ID => $orderItemId,
         ];
 
         /** Create calendar event type booking for tour event*/
-        $data                = $this->getTourEventTimes($tourEventLanguage);
+        $data                = $this->getTourEventTimes($object);
         $newCalendarEvents[] = $this->createCalendarEvent(array_merge($data, $commonData));
 
         /** Create calendar event type journey before the tour event if needed */
-        if ($tourEventLanguage->getBlockedBefore()) {
-            $data                = $this->getBlockedBeforeTimes($tourEventLanguage);
+        if ($object->getBlockedBefore()) {
+            $data                = $this->getBlockedBeforeTimes($object);
             $newCalendarEvents[] = $this->createCalendarEvent(array_merge($data, $commonData));
         }
 
         /** Create calendar event type journey after the tour event if needed*/
-        if ($tourEventLanguage->getBlockedAfter()) {
-            $data                = $this->getBlockedAfterTimes($tourEventLanguage);
+        if ($object->getBlockedAfter()) {
+            $data                = $this->getBlockedAfterTimes($object);
             $newCalendarEvents[] = $this->createCalendarEvent(array_merge($data, $commonData));
         }
 
@@ -105,69 +118,69 @@ class CalendarManager
     }
 
     /**
-     * @param TourEventLanguage $tourEventLanguage
+     * @param TourEventLanguage | BookingInterface $object
      * @return array
      */
-    private function getTourEventTimes($tourEventLanguage)
+    private function getTourEventTimes($object)
     {
         return [
-            CalendarEventInterface::START  => $tourEventLanguage->getStartTime(),
-            CalendarEventInterface::FINISH => $tourEventLanguage->getFinishTime(),
+            CalendarEventInterface::START  => $object->getStartTime(),
+            CalendarEventInterface::FINISH => $object->getFinishTime(),
         ];
     }
 
     /**
-     * @param TourEventLanguage $tourEventLanguage
+     * @param TourEventLanguage | BookingInterface $object
      * @return array
      * @throws \Zend_Date_Exception
      */
-    private function getBlockedBeforeTimes($tourEventLanguage)
+    private function getBlockedBeforeTimes($object)
     {
-        $startTimeBefore = $this->getStartTimeBlockedBefore($tourEventLanguage);
+        $startTimeBefore = $this->getStartTimeBlockedBefore($object);
         return [
             CalendarEventInterface::START  => $startTimeBefore,
-            CalendarEventInterface::FINISH => $tourEventLanguage->getStartTime(),
+            CalendarEventInterface::FINISH => $object->getStartTime(),
         ];
     }
 
     /**
-     * @param TourEventLanguage $tourEventLanguage
+     * @param TourEventLanguage | BookingInterface $object
      * @return array
      * @throws \Zend_Date_Exception
      */
-    private function getBlockedAfterTimes($tourEventLanguage)
+    private function getBlockedAfterTimes($object)
     {
-        $finishTimeAfter = $this->getFinishTimeBlockedAfter($tourEventLanguage);
+        $finishTimeAfter = $this->getFinishTimeBlockedAfter($object);
         return [
-            CalendarEventInterface::START  => $tourEventLanguage->getFinishTime(),
+            CalendarEventInterface::START  => $object->getFinishTime(),
             CalendarEventInterface::FINISH => $finishTimeAfter,
         ];
     }
 
     /**
-     * @param $tourEventLanguage
+     * @param $object
      * @return string
      * @throws \Zend_Date_Exception
      */
-    private function getStartTimeBlockedBefore($tourEventLanguage)
+    private function getStartTimeBlockedBefore($object)
     {
-        $startTime       = $tourEventLanguage->getStartTime();
+        $startTime       = $object->getStartTime();
         $startTimeBefore = new \Zend_Date($startTime, Datetime::DATETIME_INTERNAL_FORMAT);
-        $startTimeBefore->subMinute($tourEventLanguage->getBlockedBefore());
+        $startTimeBefore->subMinute($object->getBlockedBefore());
 
         return $startTimeBefore->toString(Datetime::DATETIME_INTERNAL_FORMAT);
     }
 
     /**
-     * @param $tourEventLanguage
+     * @param $object
      * @return string
      * @throws \Zend_Date_Exception
      */
-    private function getFinishTimeBlockedAfter($tourEventLanguage)
+    private function getFinishTimeBlockedAfter($object)
     {
-        $finishTime      = $tourEventLanguage->getFinishTime();
+        $finishTime      = $object->getFinishTime();
         $finishTimeAfter = new \Zend_Date($finishTime, Datetime::DATETIME_INTERNAL_FORMAT);
-        $finishTimeAfter->addMinute($tourEventLanguage->getBlockedAfter());
+        $finishTimeAfter->addMinute($object->getBlockedAfter());
 
         return $finishTimeAfter->toString(Datetime::DATETIME_INTERNAL_FORMAT);
     }

@@ -16,6 +16,7 @@ interface BookingInterface extends CustomAttributesDataInterface
     const TABLE             = 'db_booking';
     const ID                = 'entity_id';
     const ORDER_ITEM_ID     = 'order_item_id';
+    const TOUR              = 'tour';
     const START             = 'start_time';
     const FINISH            = 'finish_time';
     const BLOCKED_AFTER     = 'blocked_after';
@@ -40,6 +41,20 @@ interface BookingInterface extends CustomAttributesDataInterface
      * @param string $orderItem
      */
     public function setOrderItem($orderItem);
+
+    /**
+     * Retrieve Tour
+     *
+     * @return string
+     */
+    public function getTour();
+
+    /**
+     * Set Tour
+     *
+     * @param string $tour
+     */
+    public function setTour($tour);
 
     /**
      * Retrieve Start Time

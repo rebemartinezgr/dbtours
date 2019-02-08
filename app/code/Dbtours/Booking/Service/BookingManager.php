@@ -36,8 +36,23 @@ class BookingManager
         BookingInterfaceFactory $bookingFactory,
         BookingRepositoryInterface $bookingRepository
     ) {
-        $this->bookingFactory       = $bookingFactory;
-        $this->bookingRepository    = $bookingRepository;
+        $this->bookingFactory    = $bookingFactory;
+        $this->bookingRepository = $bookingRepository;
+    }
+
+    /**
+     * @param TourEventLanguage $tourEventLanguage
+     * @param $orderItem
+     * @return BookingInterface
+     */
+    public function addNewBooking($tourEventLanguage, $orderItem)
+    {
+        $guide   = $tourEventLanguage->getAvailableGuide();
+        $booking = $this->getBooking($tourEventLanguage, $orderItem);
+        if ($guide) {
+            $booking = $this->assignToGuide($booking, $guide);
+        }
+        return $booking;
     }
 
     /**
@@ -48,23 +63,18 @@ class BookingManager
     public function getBooking($tourEventLanguage, $orderItem)
     {
         /** @var BookingInterface $booking */
-        $booking    = $this->bookingFactory->create();
-
-        try {
-            $product = $orderItem->getProduct();
-            $booking->setOrderItem($orderItem->getItemId());
-            $booking->setLanguage($tourEventLanguage->getLanguageCode());
-            $booking->setStartTime($tourEventLanguage->getStartTime());
-            $booking->setFinishTime($tourEventLanguage->getFinishTime());
-            $booking->setBlockedBefore($tourEventLanguage->getBlockedBefore());
-            $booking->setBlockedAfter($tourEventLanguage->getBlockedAfter());
-            $booking->setTips($product->getData('db_tips'));
-            $booking->setDuration($product->getData('db_duration'));
-            $booking->setIncluded($product->getData('db_included'));
-
-        } catch (\Exception $e) {
-            return $booking;
-        }
+        $booking = $this->bookingFactory->create();
+        $product = $orderItem->getProduct();
+        $booking->setOrderItem($orderItem->getItemId());
+        $booking->setTour($orderItem->getSku());
+        $booking->setLanguage($tourEventLanguage->getLanguageCode());
+        $booking->setStartTime($tourEventLanguage->getStartTime());
+        $booking->setFinishTime($tourEventLanguage->getFinishTime());
+        $booking->setBlockedBefore($tourEventLanguage->getBlockedBefore());
+        $booking->setBlockedAfter($tourEventLanguage->getBlockedAfter());
+        $booking->setTips($product->getData('db_tips'));
+        $booking->setDuration($product->getData('db_duration'));
+        $booking->setIncluded($product->getData('db_included'));
 
         return $booking;
     }
@@ -72,10 +82,11 @@ class BookingManager
     /**
      * @param BookingInterface $booking
      * @param int $guideId
+     * @return BookingInterface
      */
     public function assignToGuide($booking, $guideId)
     {
         $booking->setGuideId($guideId);
-        $this->bookingRepository->save($booking);
+        return $this->bookingRepository->save($booking);
     }
 }

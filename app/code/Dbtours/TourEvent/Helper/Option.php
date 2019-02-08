@@ -42,16 +42,6 @@ class Option
     }
 
     /**
-     * @param array $option
-     * @return bool
-     */
-    public function hasPaxOption($option)
-    {
-        /* todo */
-        return false;
-    }
-
-    /**
      * @param $optionValue
      * @return TourEventLanguage
      * @throws NoSuchEntityException
@@ -85,7 +75,6 @@ class Option
             try {
                 $tourEventLanguage = $this->getTourEventLanguageFromOption($option['option_value']);
             } catch (\Exception $e) {
-                // todo log
                 return false;
             }
         }

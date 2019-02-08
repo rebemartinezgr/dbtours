@@ -44,6 +44,22 @@ class Booking extends AbstractExtensibleModel implements BookingInterface
     /**
      * @inheritdoc
      */
+    public function getTour()
+    {
+        return $this->_getData(self::TOUR);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setTour($tour)
+    {
+        $this->setData(self::TOUR, $tour);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getStartTime()
     {
         return $this->_getData(self::START);

@@ -52,11 +52,11 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => true, 'unsigned' => true, 'length' => 10],
             'Order Item Id'
         )->addColumn(
-            'pax',
-            Table::TYPE_INTEGER,
-            10,
-            ['nullable' => true, 'unsigned' => true],
-            'Pax'
+            'tour',
+            Table::TYPE_TEXT,
+            255,
+            [],
+            'Tour'
         )->addColumn(
             'start_time',
             Table::TYPE_DATETIME,
@@ -89,10 +89,10 @@ class InstallSchema implements InstallSchemaInterface
             'Guide ID'
         )->addColumn(
             'language_code',
-            Table::TYPE_INTEGER,
+            Table::TYPE_TEXT,
             10,
-            ['nullable' => true, 'unsigned' => true, 'length' => 10],
-            'Language ID'
+            [],
+            'Language Code'
         )->addColumn(
             'duration',
             Table::TYPE_TEXT,
