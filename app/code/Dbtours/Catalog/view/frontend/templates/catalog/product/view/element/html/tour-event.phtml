@@ -25,6 +25,7 @@ $detailedInfoGroup = [
 
 <script type="text/javascript">
     require(["jquery", "mage/calendar", "tabs"], function($){
+        $("#product-addtocart-button").attr('disabled', true);
         function showOptions(options, languagesData) {
             var html = '<div id="language-tabs" class="product data items">';
             for (var language in options) {
@@ -47,7 +48,7 @@ $detailedInfoGroup = [
                 for (var time in options[language]) {
                     var tourEventId = options[language][time];
                     html += '<input class="time-option" ' +
-                        'id="' + tourEventId+language + '" ' +
+                        'id="' + tourEventId + language + '" ' +
                         'data-language="' + language + '" ' +
                         'type="radio" ' +
                         'name="<?= $block->getName()?>[tour_event_id]" ';
@@ -64,8 +65,14 @@ $detailedInfoGroup = [
             html += '</div>';
             
             $("#container-tabs").html(html);
-            $("#language-tabs").tabs();
+            $("#language-tabs").tabs({
+                activate: function(event, ui) {
+                    alert("PRESSED TAB!");
+                    $("#product-addtocart-button").attr('disabled', true);
+                }
+            });
             $('input.time-option:radio').click(function(e) {
+                $("#product-addtocart-button").attr('disabled', false);
                 // reset selected language
                 $('input.language-option:radio').attr('checked',false);
                  //mark as checked current language
@@ -73,6 +80,7 @@ $detailedInfoGroup = [
                 $("#language-" + selectedLanguage).attr('checked', true);
             });
         }
+
         function initDatepicker(data) {
             $(<?= "'#div-" . $block->getId() . "'"?>).datepicker({
                 <?= $showTime ?>
@@ -92,6 +100,7 @@ $detailedInfoGroup = [
                     return [data.dates.indexOf(string) != -1];
                 },
                 onSelect: function(dateText, inst) {
+                    $("#product-addtocart-button").attr('disabled', true);
                     var date = new Date(Date.parse($(this).datepicker('getDate')));
                     var dateFormatted = jQuery.datepicker.formatDate('yy-mm-dd', date);
                     if (data.dates.indexOf(dateFormatted) != -1) {
@@ -112,6 +121,8 @@ $detailedInfoGroup = [
                 if(data.dates) {
                     initDatepicker(data);
                     $(".container-ajax-loader").css("display","none");
+                } else {
+                    // todo
                 }
             },
             error : function(request,error)

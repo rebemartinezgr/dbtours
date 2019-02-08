@@ -66,7 +66,7 @@ class OrderItem
             // $tourEventLanguage == null => if item has not tour event options
             // $tourEventLanguage == false => tour event does not exist any more
             $tourEventLanguage = $this->option->getTourEventLanguage($orderItem);
-            if ($tourEventLanguage == false) {
+            if ($tourEventLanguage === false) {
                 throw new LocalizedException(
                     __(
                         "OrderItem %1 has been created without related booking",
