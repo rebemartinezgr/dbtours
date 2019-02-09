@@ -3,29 +3,20 @@
 $showTime           = $block->getTimeFormat() ? "showsTime: true," : "showsTime: false,";
 $timeFormat         = $block->getTimeFormat() ? "timeFormat: '" . $block->getTimeFormat() . "'," : "";
 $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYearsRange() . "'," : "";
-$alias = "prueba";
-$alias = "pruebalabel";
-$detailedInfoGroup = [
-       ["label1", "alias1", "content1"],
-       ["label2", "alias2", "content2"],
-       ["label3", "alias3", "content3"]
-];
-
 ?>
 
 <div class="container-ajax-loader">
     <div class="ajax-loader"></div>
 </div>
 
-<div id="div-<?= $block->getId()?>">
-
-</div>
+<div id="div-<?= $block->getId()?>"></div>
 
 <div id="container-tabs"></div>
 
 <script type="text/javascript">
     require(["jquery", "mage/calendar", "tabs"], function($){
         $("#product-addtocart-button").attr('disabled', true);
+
         function showOptions(options, languagesData) {
             var html = '<div id="language-tabs" class="product data items">';
             for (var language in options) {
@@ -66,11 +57,13 @@ $detailedInfoGroup = [
             
             $("#container-tabs").html(html);
             $("#language-tabs").tabs({
-                activate: function(event, ui) {
-                    alert("PRESSED TAB!");
-                    $("#product-addtocart-button").attr('disabled', true);
-                }
+                openedState: 'active-tab',
             });
+
+            $(".option-header .data.switch").click(function(e) {
+                $("#product-addtocart-button").attr('disabled', true);
+            });
+
             $('input.time-option:radio').click(function(e) {
                 $("#product-addtocart-button").attr('disabled', false);
                 // reset selected language
@@ -79,6 +72,15 @@ $detailedInfoGroup = [
                 var selectedLanguage = $(this).data("language");
                 $("#language-" + selectedLanguage).attr('checked', true);
             });
+        }
+
+        function init(data) {
+            if(data.dates.length) {
+                initDatepicker(data);
+                $(".container-ajax-loader").css("display","none");
+            } else {
+                $(<?= "'#div-" . $block->getId() . "'"?>).html('<p style="color:red">' +  '<?= __("This tour is not available online for the moment")?>' + '</p>');
+            }
         }
 
         function initDatepicker(data) {
@@ -118,15 +120,10 @@ $detailedInfoGroup = [
             },
             dataType:'json',
             success : function(data) {
-                if(data.dates) {
-                    initDatepicker(data);
-                    $(".container-ajax-loader").css("display","none");
-                } else {
-                    // todo
-                }
+               init(data);
+               $(".container-ajax-loader").css("display","none");
             },
-            error : function(request,error)
-            {
+            error : function(request,error) {
                 alert("An error occurs, please refresh the current page");
             }
         });
