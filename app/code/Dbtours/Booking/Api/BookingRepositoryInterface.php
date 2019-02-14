@@ -12,24 +12,24 @@ namespace Dbtours\Booking\Api;
 interface BookingRepositoryInterface
 {
     /**
-     * Save tour event
+     * Save booking
      *
-     * @param \Dbtours\Booking\Api\Data\BookingInterface $tourEvent
+     * @param \Dbtours\Booking\Api\Data\BookingInterface $booking
      * @return \Dbtours\Booking\Api\Data\BookingInterface
      */
-    public function save(\Dbtours\Booking\Api\Data\BookingInterface $tourEvent);
+    public function save(\Dbtours\Booking\Api\Data\BookingInterface $booking);
 
     /**
-     * Retrieve tour event by ID
+     * Retrieve booking by ID
      *
-     * @param int $tourEventId
+     * @param int $bookingId
      * @return \Dbtours\Booking\Api\Data\BookingInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getById($tourEventId);
+    public function getById($bookingId);
 
     /**
-     * Retrieve tour event by attribute
+     * Retrieve booking by attribute
      *
      * @param $value
      * @param string|null $attributeCode
@@ -39,25 +39,25 @@ interface BookingRepositoryInterface
     public function get($value, $attributeCode);
 
     /**
-     * Delete tour event
+     * Delete booking
      *
-     * @param \Dbtours\Booking\Api\Data\BookingInterface $tourEvent
+     * @param \Dbtours\Booking\Api\Data\BookingInterface $booking
      * @return boolean
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function delete(\Dbtours\Booking\Api\Data\BookingInterface $tourEvent);
+    public function delete(\Dbtours\Booking\Api\Data\BookingInterface $booking);
 
     /**
-     * Delete tour event by ID
+     * Delete booking by ID
      *
-     * @param int $tourEvent
+     * @param int $booking
      * @return boolean
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function deleteById($tourEvent);
+    public function deleteById($booking);
 
     /**
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria

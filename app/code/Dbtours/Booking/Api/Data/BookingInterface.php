@@ -29,6 +29,21 @@ interface BookingInterface extends CustomAttributesDataInterface
     const INCLUDED          = 'included';
 
     /**
+     * Retrieve Id
+     *
+     * @return int
+     */
+    public function getId();
+
+    /**
+     * Set Id
+     *
+     * @param  $entityId
+     * @return $this
+     */
+    public function setId($entityId);
+
+    /**
      * Retrieve Order Item
      *
      * @return string

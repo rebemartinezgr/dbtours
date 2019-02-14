@@ -62,25 +62,25 @@ class InstallSchema implements InstallSchemaInterface
             Table::TYPE_DATETIME,
             null,
             ['nullable' => true],
-            'Start TourEvent Datetime'
+            'Start Booking Datetime'
         )->addColumn(
             'finish_time',
             Table::TYPE_DATETIME,
             null,
             ['nullable' => true],
-            'Finish TourEvent Datetime'
+            'Finish Booking Datetime'
         )->addColumn(
             'blocked_before',
             Table::TYPE_INTEGER,
             null,
             ['nullable' => true],
-            'Min Blocked Before Event'
+            'Min Blocked Before Booking'
         )->addColumn(
             'blocked_after',
             Table::TYPE_INTEGER,
             null,
             ['nullable' => true],
-            'Min Blocked After Event'
+            'Min Blocked After Booking'
         )->addColumn(
             'guide_id',
             Table::TYPE_INTEGER,

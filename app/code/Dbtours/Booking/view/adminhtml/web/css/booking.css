@@ -1,0 +1,9 @@
+/*
+ * @author Rebeca Martínez García
+ * @copyright  Copyright © 2018  Discover Barcelona
+ */
+
+.booking-booking-edit ._has-datepicker.admin__control-text
+{
+    width: inherit;
+}

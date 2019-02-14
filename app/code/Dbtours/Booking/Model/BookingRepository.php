@@ -28,19 +28,19 @@ use Exception;
 class BookingRepository implements BookingRepositoryInterface
 {
     /**
-     * @var BookingFactory $tourEventFactory
+     * @var BookingFactory $bookingFactory
      */
-    private $tourEventFactory;
+    private $bookingFactory;
 
     /**
-     * @var CollectionFactory $tourEventCollectionFactory
+     * @var CollectionFactory $bookingCollectionFactory
      */
-    private $tourEventCollectionFactory;
+    private $bookingCollectionFactory;
 
     /**
-     * @var BookingSearchResultsInterfaceFactory $tourEventSearchResultsInterfaceFactory
+     * @var BookingSearchResultsInterfaceFactory $bookingSearchResultsInterfaceFactory
      */
-    private $tourEventSearchResultsInterfaceFactory;
+    private $bookingSearchResultsInterfaceFactory;
 
     /**
      * @var CollectionProcessorInterface $collectionProcessor
@@ -55,22 +55,22 @@ class BookingRepository implements BookingRepositoryInterface
     /**
      * BookingRepository constructor.
      *
-     * @param BookingFactory $tourEventFactory
-     * @param CollectionFactory $tourEventCollectionFactory
-     * @param BookingSearchResultsInterfaceFactory $tourEventSearchResultsInterfaceFactory
+     * @param BookingFactory $bookingFactory
+     * @param CollectionFactory $bookingCollectionFactory
+     * @param BookingSearchResultsInterfaceFactory $bookingSearchResultsInterfaceFactory
      * @param CollectionProcessorInterface $collectionProcessor
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      */
     public function __construct(
-        BookingFactory $tourEventFactory,
-        CollectionFactory $tourEventCollectionFactory,
-        BookingSearchResultsInterfaceFactory $tourEventSearchResultsInterfaceFactory,
+        BookingFactory $bookingFactory,
+        CollectionFactory $bookingCollectionFactory,
+        BookingSearchResultsInterfaceFactory $bookingSearchResultsInterfaceFactory,
         CollectionProcessorInterface $collectionProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor
     ) {
-        $this->tourEventFactory = $tourEventFactory;
-        $this->tourEventCollectionFactory = $tourEventCollectionFactory;
-        $this->tourEventSearchResultsInterfaceFactory = $tourEventSearchResultsInterfaceFactory;
+        $this->bookingFactory = $bookingFactory;
+        $this->bookingCollectionFactory = $bookingCollectionFactory;
+        $this->bookingSearchResultsInterfaceFactory = $bookingSearchResultsInterfaceFactory;
         $this->collectionProcessor = $collectionProcessor;
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
     }
@@ -78,20 +78,20 @@ class BookingRepository implements BookingRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function save(BookingInterface $tourEvent)
+    public function save(BookingInterface $booking)
     {
-        $tourEvent->getResource()->save($tourEvent);
+        $booking->getResource()->save($booking);
 
-        return $tourEvent;
+        return $booking;
     }
 
 
     /**
      * @inheritdoc
      */
-    public function getById($tourEventId)
+    public function getById($bookingId)
     {
-        return $this->get($tourEventId);
+        return $this->get($bookingId);
     }
 
     /**
@@ -99,30 +99,30 @@ class BookingRepository implements BookingRepositoryInterface
      */
     public function get($value, $attributeCode = null)
     {
-        /** @var Booking $tourEvent */
-        $tourEvent = $this->tourEventFactory->create()->load($value, $attributeCode);
+        /** @var Booking $booking */
+        $booking = $this->bookingFactory->create()->load($value, $attributeCode);
 
-        if (!$tourEvent->getId()) {
-            throw new NoSuchEntityException(__('Unable to find tourEvent'));
+        if (!$booking->getId()) {
+            throw new NoSuchEntityException(__('Unable to find booking'));
         }
 
-        return $tourEvent;
+        return $booking;
     }
 
     /**
      * @inheritdoc
      */
-    public function delete(BookingInterface $tourEvent)
+    public function delete(BookingInterface $booking)
     {
 
-        $tourEventId = $tourEvent->getId();
+        $bookingId = $booking->getId();
         try {
-            $tourEvent->getResource()->delete($tourEvent);
+            $booking->getResource()->delete($booking);
         } catch (ValidatorException $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         } catch (Exception $e) {
             throw new CouldNotDeleteException(
-                __('Unable to remove tourEvent %1', $tourEventId)
+                __('Unable to remove booking %1', $bookingId)
             );
         }
 
@@ -132,11 +132,11 @@ class BookingRepository implements BookingRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function deleteById($tourEventId)
+    public function deleteById($bookingId)
     {
-        $tourEvent = $this->getById($tourEventId);
+        $booking = $this->getById($bookingId);
 
-        return $this->delete($tourEvent);
+        return $this->delete($booking);
     }
 
     /**
@@ -145,13 +145,13 @@ class BookingRepository implements BookingRepositoryInterface
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
         /** @var Collection $collection */
-        $collection = $this->tourEventCollectionFactory->create();
+        $collection = $this->bookingCollectionFactory->create();
 
         $this->extensionAttributesJoinProcessor->process($collection, BookingInterface::class);
         $this->collectionProcessor->process($searchCriteria, $collection);
 
         /** @var BookingSearchResultsInterface $searchResults */
-        $searchResults = $this->tourEventSearchResultsInterfaceFactory->create();
+        $searchResults = $this->bookingSearchResultsInterfaceFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
@@ -165,7 +165,7 @@ class BookingRepository implements BookingRepositoryInterface
     public function deleteAll()
     {
         /** @var Collection $collection */
-        $collection = $this->tourEventCollectionFactory->create();
+        $collection = $this->bookingCollectionFactory->create();
         $collection->deleteAll();
     }
 }

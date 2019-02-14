@@ -28,6 +28,22 @@ class Booking extends AbstractExtensibleModel implements BookingInterface
     /**
      * @inheritdoc
      */
+    public function getId()
+    {
+        return $this->_getData(self::ID) ?: null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setId($entityId)
+    {
+        $this->setData(self::ID, $entityId);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getOrderItem()
     {
         return $this->_getData(self::ORDER_ITEM_ID);

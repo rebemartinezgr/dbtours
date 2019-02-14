@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dbtours_Booking::booking" title="Booking" module="Dbtours_Booking" sortOrder="10" parent="Dbtours_Base::base" resource="Dbtours_Booking::booking"/>
+        <add id="Dbtours_Booking::manage_booking" title="Manage Bookings" module="Dbtours_Booking" sortOrder="20" parent="Dbtours_Booking::booking" action="booking/booking/"  resource="Dbtours_Booking::manage_booking"/>
+    </menu>
+</config>
