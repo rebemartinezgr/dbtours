@@ -104,7 +104,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Date to</item>
-                    <!--<item name="disabled" xsi:type="boolean">true</item>-->
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">date</item>
                     <item name="validation" xsi:type="array">

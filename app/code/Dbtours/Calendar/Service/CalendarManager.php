@@ -63,7 +63,9 @@ class CalendarManager
             if ($orderItem) {
                 // todo CONTROL ONE TRANSACTION
                 $this->calendarEventRepository->deleteByOrderItemId($orderItem);
-                $this->addCalendarEvents($booking);
+                if (!$booking->isDeleted()) {
+                    $this->addCalendarEvents($booking);
+                }
             }
         } catch (\Exception $e) {
             // todo log

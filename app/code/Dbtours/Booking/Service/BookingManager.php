@@ -96,7 +96,8 @@ class BookingManager
      */
     public function shouldAdjustCalendar($booking)
     {
-        return $this->hasGuideChanges($booking) || $this->hasDateChanges($booking);
+        return (!$booking->isObjectNew() && ($this->hasGuideChanges($booking) || $this->hasDateChanges($booking)))
+            || $booking->isDeleted();
     }
 
     /**

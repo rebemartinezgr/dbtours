@@ -5,6 +5,9 @@
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="dbtours_booking_save_after">
-        <observer name="db_calendar_from_booking" instance="Dbtours\Calendar\Observer\BookingObserver"/>
+        <observer name="db_calendar_save_booking" instance="Dbtours\Calendar\Observer\BookingObserver"/>
+    </event>
+    <event name="dbtours_booking_delete_after">
+        <observer name="db_calendar_delete_booking" instance="Dbtours\Calendar\Observer\BookingObserver"/>
     </event>
 </config>
