@@ -64,4 +64,11 @@ interface CalendarEventRepositoryInterface
      * @return \Dbtours\Calendar\Api\Data\CalendarEventSearchResultsInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
+
+    /**
+     * @param int $orderItemId
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     */
+    public function deleteByOrderItemId($orderItemId);
 }

@@ -96,7 +96,8 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
                     $values[$option->getId()]['language_code']
                 );
             }
-            if (!isset($tourEventLanguage) || !$tourEventLanguage->isAvailable()) {
+            if ($this->tourEventLanguageValidator->shouldValidate() &&
+                (!isset($tourEventLanguage) || !$tourEventLanguage->isAvailable())) {
                 throw new LocalizedException(__('Selected option(s) are not longer available.'));
             }
         }
@@ -132,9 +133,15 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
      */
     public function getFormattedOptionValue($value)
     {
-        $value          = json_decode($value, true);
-        $datetime       = $this->localeHelper->getFormattedDateTime($value[TourEventLanguageInterface::START_TIME]);
-        $language       = $this->localeHelper->getFormattedLanguage($value[TourEventLanguageInterface::LANGUAGE_CODE]);
+        $value = json_decode($value, true);
+        $datetime       = isset($value[TourEventLanguageInterface::START_TIME]) ?
+            $this->localeHelper->getFormattedDateTime($value[TourEventLanguageInterface::START_TIME])
+            : '';
+
+        $language       =  isset($value[TourEventLanguageInterface::LANGUAGE_CODE]) ?
+            $this->localeHelper->getFormattedLanguage($value[TourEventLanguageInterface::LANGUAGE_CODE])
+            : '';
+
         $formattedValue = $datetime . ' - ' . $language;
 
         return $this->escaper->escapeHtml($formattedValue);

@@ -21,4 +21,14 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Dbtours\TourEvent\Helper\Validator">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="validate_area" xsi:type="array">
+                    <item name="0" xsi:type="string">frontend</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>

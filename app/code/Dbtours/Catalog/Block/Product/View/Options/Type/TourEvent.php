@@ -6,11 +6,6 @@
 namespace Dbtours\Catalog\Block\Product\View\Options\Type;
 
 use Magento\Catalog\Block\Product\View\Options\Type\Date;
-use Magento\Catalog\Helper\Data as CatalogHelper;
-use Magento\Catalog\Model\Product\Option\Type\Date as MagentoDate;
-use Magento\Framework\Pricing\Helper\Data as PricingHelper;
-use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\Locale\ResolverInterface;
 
 /**
  * Class TourEvent
@@ -18,32 +13,6 @@ use Magento\Framework\Locale\ResolverInterface;
 class TourEvent extends Date
 {
     const PRODUCT_DATE_OPTION_URL_PATH = 'dbcatalog/ajax/ProductDates';
-
-    /**
-     * @var ResolverInterface
-     */
-    private $locale;
-
-    /**
-     * TourEvent constructor.
-     * @param Context $context
-     * @param PricingHelper $pricingHelper
-     * @param CatalogHelper $catalogData
-     * @param MagentoDate $catalogProductOptionTypeDate
-     * @param ResolverInterface $locale
-     * @param array $data
-     */
-    public function __construct(
-        Context $context,
-        PricingHelper $pricingHelper,
-        CatalogHelper $catalogData,
-        MagentoDate $catalogProductOptionTypeDate,
-        ResolverInterface $locale,
-        array $data = []
-    ) {
-        $this->locale = $locale;
-        parent::__construct($context, $pricingHelper, $catalogData, $catalogProductOptionTypeDate, $data);
-    }
 
     /**
      * @return string

@@ -54,6 +54,23 @@ class CalendarManager
     }
 
     /**
+     * @param BookingInterface $booking
+     */
+    public function adjustCalendarEvents($booking)
+    {
+        try {
+            $orderItem = $booking->getOrderItem();
+            if ($orderItem) {
+                // todo CONTROL ONE TRANSACTION
+                $this->calendarEventRepository->deleteByOrderItemId($orderItem);
+                $this->addCalendarEvents($booking);
+            }
+        } catch (\Exception $e) {
+            // todo log
+        }
+    }
+
+    /**
      * @param TourEventLanguage | BookingInterface $object
      * @param int $orderItemId
      * @return array

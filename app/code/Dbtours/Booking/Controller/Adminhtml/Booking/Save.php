@@ -83,9 +83,6 @@ class Save extends ControllerBooking
 
             if (empty($bookingId)) {
                 $model = $this->bookingFactory->create();
-//                if (empty($data['entity_id'])) {
-//                    unset($data['entity_id']);
-//                }
             }
 
             try {

@@ -8,7 +8,10 @@ namespace Dbtours\TourEvent\Helper;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
 use Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface as TourEventLanguageRepository;
+use Magento\Framework\App\State;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Quote\Model\Quote\Item;
 
 /**
  * Class TourEvent
@@ -18,17 +21,34 @@ class Validator
     /**
      * @var TourEventLanguageRepository
      */
-    protected $tourEventLanguageRepository;
+    private $tourEventLanguageRepository;
+
+    /**
+     * @var State
+     */
+    private $state;
+
+    /**
+     * @var array
+     */
+    private $validateAreas;
 
     /**
      * Validator constructor.
      * @param TourEventLanguageRepository $tourEventLanguageRepository
+     * @param State $state
+     * @param array $data
      */
     public function __construct(
-        TourEventLanguageRepository $tourEventLanguageRepository
-
+        TourEventLanguageRepository $tourEventLanguageRepository,
+        State $state,
+        $data = []
     ) {
-        $this->tourEventLanguageRepository = $tourEventLanguageRepository;
+        $this->tourEventLanguageRepository  = $tourEventLanguageRepository;
+        $this->state                        = $state;
+        if (!empty($data) && isset($data['validate_area'])) {
+            $this->validateAreas            = $data['validate_area'];
+        }
     }
 
     /**
@@ -59,5 +79,32 @@ class Validator
         } catch (NoSuchEntityException $e) {
             return false;
         }
+    }
+
+    /**
+     * @param Item|null $quoteItem
+     * @return bool
+     */
+    public function shouldValidate($quoteItem = null)
+    {
+        $validateByArea = false;
+        try {
+            $currentArea = $this->state->getAreaCode();
+            if (in_array($currentArea, $this->validateAreas)) {
+                $validateByArea = true;
+            }
+        } catch (LocalizedException $e) {
+
+        }
+
+        if ($quoteItem == null) {
+            return $validateByArea;
+        }
+
+        return !(!$validateByArea ||
+            !$quoteItem ||
+            !$quoteItem->getProductId() ||
+            !$quoteItem->getQuote() ||
+            $quoteItem->getQuote()->getReservedOrderId());
     }
 }

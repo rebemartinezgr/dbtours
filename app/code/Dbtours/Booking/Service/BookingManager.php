@@ -89,4 +89,32 @@ class BookingManager
         $booking->setGuideId($guideId);
         return $this->bookingRepository->save($booking);
     }
+
+    /**
+     * @param $booking
+     * @return bool
+     */
+    public function shouldAdjustCalendar($booking)
+    {
+        return $this->hasGuideChanges($booking) || $this->hasDateChanges($booking);
+    }
+
+    /**
+     * @param BookingInterface $booking
+     * @return bool
+     */
+    public function hasGuideChanges($booking)
+    {
+        return $booking->getOrigData(BookingInterface::GUIDE_ID) != $booking->getData(BookingInterface::GUIDE_ID);
+    }
+
+    /**
+     * @param BookingInterface $booking
+     * @return bool
+     */
+    public function hasDateChanges($booking)
+    {
+        return $booking->getOrigData(BookingInterface::START) != $booking->getData(BookingInterface::START)
+            || $booking->getOrigData(BookingInterface::FINISH) != $booking->getData(BookingInterface::FINISH);
+    }
 }

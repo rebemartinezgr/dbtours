@@ -24,7 +24,7 @@ class DeleteButton extends AbstractGenericButton implements ButtonProviderInterf
         $data = [];
         if ($this->getId()) {
             $data = [
-                'label' => __('Delete Booking'),
+                'label' => __('Delete'),
                 'class' => 'delete',
                 'on_click' => 'deleteConfirm(\''
                     . __('Are you sure you want to delete this booking?')

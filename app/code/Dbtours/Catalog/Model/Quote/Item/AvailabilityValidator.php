@@ -53,10 +53,7 @@ class AvailabilityValidator
      */
     public function validate(Item $quoteItem)
     {
-        if (!$quoteItem ||
-            !$quoteItem->getProductId() ||
-            !$quoteItem->getQuote() ||
-            $quoteItem->getQuote()->getReservedOrderId()) {
+        if (!$this->tourEventLanguageValidator->shouldValidate($quoteItem)) {
             return;
         }
         foreach ($quoteItem->getOptions() as $option) {

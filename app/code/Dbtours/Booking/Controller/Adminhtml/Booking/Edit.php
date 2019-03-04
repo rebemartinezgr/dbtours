@@ -65,7 +65,9 @@ class Edit extends ControllerBooking
         if ($bookingId) {
             try {
                 /** @var  ModelBooking $model */
-                $model = $bookingId ? $this->bookingRepository->getById(intval($bookingId)) : $this->bookingFactory->create();
+                $model = $bookingId ?
+                    $this->bookingRepository->getById(intval($bookingId)) :
+                    $this->bookingFactory->create();
             } catch (NoSuchEntityException $e) {
                 $this->messageManager->addErrorMessage(__('This booking no longer exists.'));
                 /** @var Redirect $resultRedirect */

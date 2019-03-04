@@ -75,4 +75,10 @@ class Locale
             return '';
         }
     }
+
+    public function getLanguagesList()
+    {
+        /** TODO GET ADMIN LOCALE */
+        return Zend_Locale::getTranslationList('language', 'en_GB');
+    }
 }

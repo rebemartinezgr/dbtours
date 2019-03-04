@@ -17,6 +17,7 @@ use Magento\Framework\Model\AbstractExtensibleModel;
  */
 class Booking extends AbstractExtensibleModel implements BookingInterface
 {
+    protected $_eventPrefix = 'dbtours_booking';
     /**
      * Initialize resource model
      */
