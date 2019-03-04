@@ -6,30 +6,30 @@
 
 namespace Dbtours\Sales\Observer;
 
-use Dbtours\Sales\Service\Order\NewItem as NewOrderItemService;
+use Dbtours\Sales\Service\Order\CancelItem as OrderItem;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
 
 /**
- * Class OrderObserver
+ * Class CancelObserver
  */
-class OrderObserver implements ObserverInterface
+class CancelObserver implements ObserverInterface
 {
     /**
-     * @var NewOrderItemService
+     * @var OrderItem
      */
-    private $newOrderItemService;
+    private $orderItemService;
 
     /**
-     * OrderObserver constructor.
-     * @param NewOrderItemService $newOrderItemService
+     * NewBooking constructor.
+     * @param OrderItem $orderItemService
      */
     public function __construct(
-        NewOrderItemService $newOrderItemService
+        OrderItem $orderItemService
     ) {
-        $this->newOrderItemService = $newOrderItemService;
+        $this->orderItemService = $orderItemService;
     }
 
     /**
@@ -44,7 +44,7 @@ class OrderObserver implements ObserverInterface
         $order  = $observer->getEvent()->getOrder();
         /** @var  OrderItemInterface $orderItem */
         foreach ($order->getAllItems() as $orderItem) {
-            $this->newOrderItemService->execute($orderItem);
+            $this->orderItemService->execute($orderItem);
         }
     }
 }

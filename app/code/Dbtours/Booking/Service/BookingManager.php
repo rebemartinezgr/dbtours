@@ -41,6 +41,16 @@ class BookingManager
     }
 
     /**
+     * @param $booking
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     */
+    public function cancelBooking($booking)
+    {
+        $this->bookingRepository->delete($booking);
+    }
+
+    /**
      * @param TourEventLanguage $tourEventLanguage
      * @param $orderItem
      * @return BookingInterface
