@@ -19,6 +19,12 @@ interface GuideInterface extends CustomAttributesDataInterface
     const LASTNAME  = 'lastname';
     const TELEPHONE = 'telephone';
     const EMAIL     = 'email';
+    const PRIORITY  = 'priority';
+    const LANGUAGES = 'languages';
+
+    const LANGUAGE_TABLE         = 'db_guide_language';
+    const LANGUAGE_GUIDE_ID      = 'guide_id';
+    const LANGUAGE_LANGUAGE_CODE = 'language_code';
 
     /**
      * Retrieve Id
@@ -90,6 +96,20 @@ interface GuideInterface extends CustomAttributesDataInterface
      * @param string $email
      */
     public function setEmail($email);
+
+    /**
+     * Retrieve Priority
+     *
+     * @return int
+     */
+    public function getPriority();
+
+    /**
+     * Set Priority
+     *
+     * @param int $priority
+     */
+    public function setPriority($priority);
 
 
     /**

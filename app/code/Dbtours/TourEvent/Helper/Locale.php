@@ -76,6 +76,9 @@ class Locale
         }
     }
 
+    /**
+     * @return array
+     */
     public function getLanguagesList()
     {
         /** TODO GET ADMIN LOCALE */

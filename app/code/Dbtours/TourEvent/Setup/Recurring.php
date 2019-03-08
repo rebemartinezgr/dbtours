@@ -61,19 +61,17 @@ class Recurring implements InstallSchemaInterface
             te.finish_time, 
             te.blocked_before,
             te.blocked_after,
-            l.entity_id as language_id, 
-            l.code AS language_code,
+            gl.language_code AS language_code,
             GROUP_CONCAT(IF (ce.entity_id, null, gl.guide_id)) AS available_guides,
             MAX(IF (ce.entity_id, 0, 1)) AS available
             FROM db_tour_event te
-            INNER JOIN db_language l
-            INNER JOIN db_guide_language gl on l.entity_id = gl.language_id
+            INNER JOIN db_guide_language gl
             LEFT JOIN db_calendar_event ce on gl.guide_id = ce.guide_id and 
             ((' . $tourEventStart . ' <= ce.start_time AND ce.start_time < ' . $tourEventFinish . ') 
             OR (' . $tourEventStart . ' < ce.finish_time AND ce.finish_time <= ' . $tourEventFinish . ')
             OR (ce.start_time <= ' . $tourEventStart . ' AND ' . $tourEventFinish . ' <= ce.finish_time))
             WHERE ' . $tourEventStart . ' >= NOW() + INTERVAL ' . $minHours . ' HOUR
-            GROUP BY tour_event_id, language_id';
+            GROUP BY tour_event_id, language_code';
 
         $setup->getConnection()->query($sql1);
         $setup->getConnection()->query($sql2);

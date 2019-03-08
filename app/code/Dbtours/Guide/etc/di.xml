@@ -8,4 +8,20 @@
     <preference for="Dbtours\Guide\Api\Data\GuideInterface" type="Dbtours\Guide\Model\Guide"/>
     <preference for="Dbtours\Guide\Api\Data\GuideSearchResultsInterface" type="Dbtours\Guide\Model\GuideSearchResults"/>
     <preference for="Dbtours\Guide\Api\GuideRepositoryInterface" type="Dbtours\Guide\Model\GuideRepository"/>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="dbtours_guide_guide_listing_data_source" xsi:type="string">Dbtours\Guide\Model\ResourceModel\Guide\Grid\Collection</item>
+                <item name="dbtours_guide_guide_form_data_source" xsi:type="string">Dbtours\Guide\Model\ResourceModel\Guide\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Dbtours\Guide\Model\ResourceModel\Guide\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">db_guide</argument>
+            <argument name="resourceModel" xsi:type="string">Dbtours\Guide\Model\ResourceModel\Guide</argument>
+        </arguments>
+    </virtualType>
 </config>

@@ -8,10 +8,8 @@ namespace Dbtours\Guide\Model\ResourceModel\Guide;
 
 use Dbtours\Guide\Model\Guide as ModelGuide;
 use Dbtours\Guide\Model\ResourceModel\Guide as ResourceModelGuide;
-use Dbtours\Guide\Model\Guide;
-use Magento\Framework\Exception\CouldNotDeleteException;
-use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use Dbtours\Guide\Api\Data\GuideInterface;
 
 /**
  * Class Collection
@@ -30,10 +28,36 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * Initialize select object
+     *
+     * @return $this
+     */
+    protected function _initSelect()
+    {
+        parent::_initSelect();
+        $this->addLanguageData();
+
+        return $this;
+    }
+
+    /**
      * @param $guideIds
      */
     public function addGuideFilter($guideIds)
     {
         $this->addFieldToFilter($this->_idFieldName, ['in' => $guideIds]);
+    }
+
+    /**
+     * @return $this
+     */
+    private function addLanguageData()
+    {
+        $selectedField = ['group_concat(l.' . GuideInterface::LANGUAGE_LANGUAGE_CODE . ') as languages'];
+        $cond = 'main_table.' . $this->_idFieldName . '= l.' . GuideInterface::LANGUAGE_GUIDE_ID;
+        $table = ['l' => GuideInterface::LANGUAGE_TABLE];
+        $this->getSelect()->joinLeft($table, $cond, $selectedField);
+
+        return $this;
     }
 }

@@ -108,6 +108,22 @@ class Guide extends AbstractExtensibleModel implements GuideInterface
     /**
      * @inheritdoc
      */
+    public function getPriority()
+    {
+        return $this->_getData(self::PRIORITY);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setPriority($priority)
+    {
+        $this->setData(self::PRIORITY, $priority);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getExtensionAttributes()
     {
         return $this->_getExtensionAttributes();

@@ -31,7 +31,6 @@ class InstallSchema implements InstallSchemaInterface
     ) {
         $setup->startSetup();
         $this->createGuideTable($setup);
-        $this->createLanguageTable($setup);
         $this->createGuideLanguageTable($setup);
         $setup->endSetup();
     }
@@ -74,43 +73,14 @@ class InstallSchema implements InstallSchemaInterface
             255,
             [],
             'Telephone Guide'
+        )->addColumn(
+            'priority',
+            Table::TYPE_INTEGER,
+            8,
+            [],
+            'Priority'
         )->setComment(
             'Dbtours Guide'
-        );
-
-        $setup->getConnection()->createTable($table);
-    }
-
-    /**
-     * @param SchemaSetupInterface $setup
-     * @throws \Zend_Db_Exception
-     */
-    private function createLanguageTable(SchemaSetupInterface $setup)
-    {
-        $table = $setup->getConnection()->newTable(
-            $setup->getTable(self::LANGUAGE_TABLE_NAME)
-        )->addColumn(
-            'entity_id',
-            Table::TYPE_INTEGER,
-            null,
-            ['identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true],
-            'Entity ID'
-        )->addColumn(
-            'code',
-            Table::TYPE_TEXT,
-            100,
-            ['nullable' => false],
-            'Code Language'
-        )->addIndex(
-            $setup->getIdxName(
-                self::LANGUAGE_TABLE_NAME,
-                ['code'],
-                AdapterInterface::INDEX_TYPE_UNIQUE
-            ),
-            ['code'],
-            ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
-        )->setComment(
-            'Dbtours Language'
         );
 
         $setup->getConnection()->createTable($table);
@@ -131,20 +101,20 @@ class InstallSchema implements InstallSchemaInterface
             ['identity' => true, 'nullable' => false, 'unsigned' => true],
             'Guide ID'
         )->addColumn(
-            'language_id',
-            Table::TYPE_INTEGER,
-            null,
-            ['nullable' => false, 'unsigned' => true],
-            'Language ID'
+            'language_code',
+            Table::TYPE_TEXT,
+            100,
+            ['nullable' => false],
+            'Code Language'
         )->setComment(
             'Dbtours Guide-Language'
         )->addIndex(
             $setup->getIdxName(
                 self::GUIDE_LANGUAGE_TABLE_NAME,
-                ['guide_id', 'language_id'],
+                ['guide_id', 'language_code'],
                 AdapterInterface::INDEX_TYPE_UNIQUE
             ),
-            ['guide_id', 'language_id'],
+            ['guide_id', 'language_code'],
             ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
         )->addForeignKey(
             $setup->getFkName(
@@ -155,17 +125,6 @@ class InstallSchema implements InstallSchemaInterface
             ),
             'guide_id',
             $setup->getTable(self::GUIDE_TABLE_NAME),
-            'entity_id',
-            Table::ACTION_CASCADE
-        )->addForeignKey(
-            $setup->getFkName(
-                self::GUIDE_LANGUAGE_TABLE_NAME,
-                'language_id',
-                self::LANGUAGE_TABLE_NAME,
-                'entity_id'
-            ),
-            'language_id',
-            $setup->getTable(self::LANGUAGE_TABLE_NAME),
             'entity_id',
             Table::ACTION_CASCADE
         );
