@@ -6,7 +6,6 @@
 
 namespace Dbtours\Booking\Ui\Component\Listing\Column;
 
-use Klarna\Core\Api\OrderRepositoryInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\View\Element\UiComponentFactory;

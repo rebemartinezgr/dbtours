@@ -62,10 +62,11 @@ class Recurring implements InstallSchemaInterface
             te.blocked_before,
             te.blocked_after,
             gl.language_code AS language_code,
-            GROUP_CONCAT(IF (ce.entity_id, null, gl.guide_id)) AS available_guides,
+            GROUP_CONCAT(IF (ce.entity_id, null, gl.guide_id) order by g.priority asc) AS available_guides,
             MAX(IF (ce.entity_id, 0, 1)) AS available
             FROM db_tour_event te
             INNER JOIN db_guide_language gl
+            LEFT JOIN db_guide g on g.entity_id = gl.guide_id
             LEFT JOIN db_calendar_event ce on gl.guide_id = ce.guide_id and 
             ((' . $tourEventStart . ' <= ce.start_time AND ce.start_time < ' . $tourEventFinish . ') 
             OR (' . $tourEventStart . ' < ce.finish_time AND ce.finish_time <= ' . $tourEventFinish . ')

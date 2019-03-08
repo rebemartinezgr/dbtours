@@ -17,6 +17,8 @@ use Dbtours\Booking\Controller\Adminhtml\Booking as ControllerBooking;
 use Dbtours\Booking\Api\BookingRepositoryInterface;
 use Dbtours\Booking\Model\Booking as ModelBooking;
 use Dbtours\Booking\Api\Data\BookingInterfaceFactory as BookingFactory;
+use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface as TourEventLanguage;
+use Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface;
 
 /**
  * Class Save
@@ -34,21 +36,29 @@ class Save extends ControllerBooking
     private $bookingFactory;
 
     /**
-     * Edit constructor.
-     *
+     * @var TourEventLanguageRepositoryInterface
+     */
+    private $tourEventLanguageRepository;
+
+    /**
+     * Save constructor.
      * @param Context $context
      * @param Registry $coreRegistry
      * @param BookingRepositoryInterface $bookingRepository
      * @param BookingFactory $bookingFactory
+     * @param TourEventLanguageRepositoryInterface $tourEventLanguageRepository
+     *
      */
     public function __construct(
         Context $context,
         Registry $coreRegistry,
         BookingRepositoryInterface $bookingRepository,
-        BookingFactory $bookingFactory
+        BookingFactory $bookingFactory,
+        TourEventLanguageRepositoryInterface $tourEventLanguageRepository
     ) {
         $this->bookingRepository = $bookingRepository;
         $this->bookingFactory    = $bookingFactory;
+         $this->tourEventLanguageRepository = $tourEventLanguageRepository;
         parent::__construct($context, $coreRegistry);
     }
 
@@ -86,8 +96,8 @@ class Save extends ControllerBooking
             }
 
             try {
-                $dataArray     = $this->prepareDataFieldset($data);
-                $model->setData($dataArray);
+                $dataArray  = $this->prepareDataFieldset($data);
+                $model = $this->prepareData($model, $dataArray);
                 $this->bookingRepository->save($model);
                 $bookingId = $model->getId();
                 $this->messageManager->addSuccessMessage(__('The booking has been saved.'));
@@ -117,5 +127,35 @@ class Save extends ControllerBooking
         }
 
         return $resultRedirect->setPath('*/*');
+    }
+
+    /**
+     * @param ModelBooking $booking
+     * @param $data
+     * @return ModelBooking
+     * @throws NoSuchEntityException
+     */
+    private function prepareData($booking, $data)
+    {
+        $data[ModelBooking::GUIDE_ID] = $data[ModelBooking::GUIDE_ID] ?: null;
+        $booking->setData($data);
+
+        if (isset($data['toureventlanguage']) && strpos($data['toureventlanguage'], "-")) {
+            $value = explode("-", $data['toureventlanguage']);
+            if (is_array($value) && count($value) == 2) {
+                $languageCode   =  $value[1];
+                $tourEventId    = $value[0];
+                /** @var  TourEventLanguage $tourEventLanguage */
+                $tourEventLanguage = $this->tourEventLanguageRepository
+                    ->getByIdAndLanguage($tourEventId, $languageCode);
+                $booking->setLanguage($tourEventLanguage->getLanguageCode());
+                $booking->setStartTime($tourEventLanguage->getStartTime());
+                $booking->setFinishTime($tourEventLanguage->getFinishTime());
+                $booking->setBlockedBefore($tourEventLanguage->getBlockedBefore());
+                $booking->setBlockedAfter($tourEventLanguage->getBlockedAfter());
+            }
+
+        }
+        return $booking;
     }
 }

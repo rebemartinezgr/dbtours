@@ -52,8 +52,7 @@ class BookingObserver implements ObserverInterface
         if (isset($data['object'])) {
             /** @var  BookingInterface $booking */
             $booking = $data['object'];
-            if ($booking->getId() &&
-                $this->bookingManager->shouldAdjustCalendar($booking)) {
+            if ($booking->getId() && $this->bookingManager->shouldAdjustCalendar($booking)) {
                 $this->calendarManager->adjustCalendarEvents($booking);
             }
         }

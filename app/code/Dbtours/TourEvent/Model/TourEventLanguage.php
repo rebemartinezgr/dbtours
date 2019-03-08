@@ -35,25 +35,9 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
-    public function setProductId($productId)
-    {
-        $this->setData(self::PRODUCT_ID, $productId);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getTourEventId()
     {
         return $this->_getData(self::TOUR_EVENT_ID);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setTourEventId($tourEventId)
-    {
-        $this->setData(self::TOUR_EVENT_ID, $tourEventId);
     }
 
     /**
@@ -67,25 +51,9 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
-    public function setStartTime($startTime)
-    {
-        $this->setData(self::START_TIME, $startTime);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getFinishTime()
     {
         return $this->_getData(self::FINISH_TIME);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setFinishTime($finishTime)
-    {
-        $this->setData(self::FINISH_TIME, $finishTime);
     }
 
     /**
@@ -99,49 +67,9 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
-    public function setBlockedBefore($blockedBefore)
-    {
-        $this->setData(self::BLOCKED_BEFORE, $blockedBefore);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getBlockedAfter()
     {
         return $this->_getData(self::BLOCKED_AFTER);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setBlockedAfter($blockedAfter)
-    {
-        $this->setData(self::BLOCKED_AFTER, $blockedAfter);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getLanguageId()
-    {
-        return $this->_getData(self::LANGUAGE_ID);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setLanguageId($languageId)
-    {
-        $this->setData(self::LANGUAGE_ID, $languageId);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setLanguageCode($languageCode)
-    {
-        $this->setData(self::LANGUAGE_CODE, $languageCode);
     }
 
     /**
@@ -163,14 +91,6 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
-    public function setAvailable($available)
-    {
-        $this->setData(self::AVAILABLE, $available);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getAvailableGuide()
     {
         $guide = $this->_getData(self::AVAILABLE_GUIDES)
@@ -185,24 +105,8 @@ class TourEventLanguage extends AbstractExtensibleModel implements TourEventLang
     /**
      * @inheritdoc
      */
-    public function setAvailableGuides($availableGuides)
-    {
-        $this->setData(self::AVAILABLE_GUIDES, $availableGuides);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getExtensionAttributes()
     {
         return $this->_getExtensionAttributes();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setExtensionAttributes(TourEventLanguageExtensionInterface $extensionAttributes)
-    {
-        $this->_setExtensionAttributes($extensionAttributes);
     }
 }

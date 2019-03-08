@@ -21,7 +21,6 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
     const FINISH_TIME       = 'finish_time';
     const BLOCKED_AFTER     = 'blocked_after';
     const BLOCKED_BEFORE    = 'blocked_before';
-    const LANGUAGE_ID       = 'language_id';
     const LANGUAGE_CODE     = 'language_code';
     const AVAILABLE         = 'available';
     const AVAILABLE_GUIDES  = 'available_guides';
@@ -32,24 +31,11 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
     public function getProductId();
 
     /**
-     * @param $productId
-     * @return mixed
-     */
-    public function setProductId($productId);
-
-    /**
      * Retrieve Tour Event Id
      *
      * @return int
      */
     public function getTourEventId();
-
-    /**
-     * Set Tour Event Id
-     *
-     * @param int $tourEventId
-     */
-    public function setTourEventId($tourEventId);
 
     /**
      * Retrieve Start Time
@@ -59,25 +45,11 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
     public function getStartTime();
 
     /**
-     * Set Start Time
-     *
-     * @param string $startTime
-     */
-    public function setStartTime($startTime);
-
-    /**
      * Retrieve Finish Time
      *
      * @return string
      */
     public function getFinishTime();
-
-    /**
-     * Set Finish Time
-     *
-     * @param string $finishTime
-     */
-    public function setFinishTime($finishTime);
 
     /**
      * Retrieve Blocked Before
@@ -87,39 +59,11 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
     public function getBlockedBefore();
 
     /**
-     * Set Blocked Before
-     *
-     * @param string $blockedBefore
-     */
-    public function setBlockedBefore($blockedBefore);
-
-    /**
      * Retrieve Blocked After
      *
      * @return string
      */
     public function getBlockedAfter();
-
-    /**
-     * Set Blocked After
-     *
-     * @param string $blockedAfter
-     */
-    public function setBlockedAfter($blockedAfter);
-
-    /**
-     * Retrieve Language Id
-     *
-     * @return int
-     */
-    public function getLanguageId();
-
-    /**
-     * Set Language Id
-     *
-     * @param int $languageId
-     */
-    public function setLanguageId($languageId);
 
     /**
      * Retrieve Language Code
@@ -129,25 +73,11 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
     public function getLanguageCode();
 
     /**
-     * Set Language Code
-     *
-     * @param int $languageCode
-     */
-    public function setLanguageCode($languageCode);
-
-    /**
      * Retrieve Available flag
      *
      * @return int
      */
     public function isAvailable();
-
-    /**
-     * Set Available flag
-     *
-     * @param int $available
-     */
-    public function setAvailable($available);
 
     /**
      * Retrieve Available Guides
@@ -157,25 +87,9 @@ interface TourEventLanguageInterface extends CustomAttributesDataInterface
     public function getAvailableGuide();
 
     /**
-     * Set Available Guides
-     *
-     * @param int $availableGuides
-     */
-    public function setAvailableGuides($availableGuides);
-    
-    /**
      * Retrieve existing extension attributes object or create a new one.
      *
      * @return \Dbtours\TourEvent\Api\Data\TourEventLanguageExtensionInterface|null
      */
     public function getExtensionAttributes();
-
-    /**
-     * Set an extension attributes object.
-     *
-     * @param \Dbtours\TourEvent\Api\Data\TourEventLanguageExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(\Dbtours\TourEvent\Api\Data\TourEventLanguageExtensionInterface
-                                           $extensionAttributes);
 }

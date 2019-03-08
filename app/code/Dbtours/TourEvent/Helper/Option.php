@@ -8,7 +8,7 @@ namespace Dbtours\TourEvent\Helper;
 
 use Dbtours\Catalog\Model\Product\Option\Type\TourEvent;
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface as TourEventLanguage;
-use Dbtours\TourEvent\Model\TourEventLanguageRepository;
+use Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface as TourEventLanguageRepository;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 /**

@@ -87,14 +87,6 @@
                 </item>
             </argument>
         </column>
-        <column name="email">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Email</item>
-                </item>
-            </argument>
-        </column>
         <column name="firstname">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -119,6 +111,23 @@
                 </item>
             </argument>
         </column>
+        <column name="email">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Email</item>
+                </item>
+            </argument>
+        </column>
+        <column name="priority">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Priority</item>
+                </item>
+            </argument>
+        </column>
+
         <actionsColumn name="actions" class="Dbtours\Guide\Ui\Component\Listing\Column\GuideActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

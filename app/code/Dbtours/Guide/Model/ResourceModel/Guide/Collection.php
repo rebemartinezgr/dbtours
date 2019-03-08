@@ -56,7 +56,9 @@ class Collection extends AbstractCollection
         $selectedField = ['group_concat(l.' . GuideInterface::LANGUAGE_LANGUAGE_CODE . ') as languages'];
         $cond = 'main_table.' . $this->_idFieldName . '= l.' . GuideInterface::LANGUAGE_GUIDE_ID;
         $table = ['l' => GuideInterface::LANGUAGE_TABLE];
-        $this->getSelect()->joinLeft($table, $cond, $selectedField);
+        $this->getSelect()
+            ->joinLeft($table, $cond, $selectedField)
+            ->group($this->_idFieldName);
 
         return $this;
     }
