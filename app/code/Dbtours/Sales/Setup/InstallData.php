@@ -45,8 +45,7 @@ class InstallData implements InstallDataInterface
     public function __construct(
         StatusFactory $statusFactory,
         StatusResourceFactory $statusResourceFactory
-    )
-    {
+    ) {
         $this->statusFactory         = $statusFactory;
         $this->statusResourceFactory = $statusResourceFactory;
     }
@@ -83,7 +82,7 @@ class InstallData implements InstallDataInterface
             ],
             [
                 'code'  => 'db_process_unassigned',
-                'label' => 'Unassigned',
+                'label' => 'Unassigned (Paid)',
                 'state' => 'processing',
             ],
             [
@@ -93,7 +92,7 @@ class InstallData implements InstallDataInterface
             ],
             [
                 'code'  => 'db_process_partial_performed',
-                'label' => 'Partial Performed',
+                'label' => 'Partial Performed (Paid)',
                 'state' => 'processing',
             ],
             [
@@ -103,7 +102,7 @@ class InstallData implements InstallDataInterface
             ],
             [
                 'code'  => 'db_process_performed',
-                'label' => 'Performed',
+                'label' => 'Performed (Paid)',
                 'state' => 'processing',
             ]
         ];

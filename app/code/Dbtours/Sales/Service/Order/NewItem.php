@@ -8,6 +8,7 @@ namespace Dbtours\Sales\Service\Order;
 
 use Dbtours\Booking\Service\BookingManager;
 use Dbtours\Calendar\Service\CalendarManager;
+use Dbtours\Sales\Service\Order\Status as OrderStatus;
 use Dbtours\TourEvent\Helper\Option;
 use Dbtours\Base\Logger\Logger;
 use Magento\Sales\Api\Data\OrderItemInterface;
@@ -39,22 +40,30 @@ class NewItem
     private $option;
 
     /**
-     * OrderItem constructor.
+     * @var Status
+     */
+    private $orderStatus;
+
+    /**
+     * NewItem constructor.
      * @param CalendarManager $calendarManager
      * @param BookingManager $bookingManager
      * @param Option $option
      * @param Logger $logger
+     * @param OrderStatus $orderStatus
      */
     public function __construct(
         CalendarManager $calendarManager,
         BookingManager $bookingManager,
         Option $option,
-        Logger $logger
+        Logger $logger,
+        OrderStatus $orderStatus
     ) {
         $this->calendarManager = $calendarManager;
         $this->bookingManager  = $bookingManager;
         $this->option          = $option;
         $this->logger          = $logger;
+        $this->orderStatus     = $orderStatus;
     }
 
     /**
@@ -87,8 +96,8 @@ class NewItem
                 $this->calendarManager->addCalendarEvents($booking);
             }
         } catch (\Exception $e) {
-            $this->logger->error("Dbtours\Sales\Service\Order\Item\NewItem::execute() : " . $e->getMessage());
-            /** TODO notify error */
+            $this->logger->error(__CLASS__ ."::" . __METHOD__ . " : " . $e->getMessage());
+            $this->orderStatus->setUnassignedStatus($orderItem->getOrder(), $e->getMessage());
         }
     }
 }
