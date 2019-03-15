@@ -15,6 +15,9 @@
                         </resource>
                     </resource>
                 </resource>
+                <resource id="Dbtours_TourEvent::tourevent" title="Tour Events" sortOrder="20">
+                    <resource id="Dbtours_TourEvent::tourevent_generation" title="Tour Events - Generation" sortOrder="20"/>
+                </resource>
             </resource>
         </resources>
     </acl>

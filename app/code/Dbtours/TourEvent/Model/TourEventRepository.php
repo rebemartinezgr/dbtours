@@ -118,8 +118,6 @@ class TourEventRepository implements TourEventRepositoryInterface
         $tourEventId = $tourEvent->getId();
         try {
             $tourEvent->getResource()->delete($tourEvent);
-        } catch (ValidatorException $e) {
-            throw new CouldNotSaveException(__($e->getMessage()));
         } catch (Exception $e) {
             throw new CouldNotDeleteException(
                 __('Unable to remove tourEvent %1', $tourEventId)
@@ -142,6 +140,19 @@ class TourEventRepository implements TourEventRepositoryInterface
     /**
      * @inheritdoc
      */
+    public function deleteAll($productId = null)
+    {
+        /** @var Collection $collection */
+        $collection = $this->tourEventCollectionFactory->create();
+        if ($productId) {
+            $collection->addFieldToFilter('product_id', ['in' => $productId]);
+        }
+        $collection->deleteAll();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
         /** @var Collection $collection */
@@ -157,15 +168,5 @@ class TourEventRepository implements TourEventRepositoryInterface
         $searchResults->setTotalCount($collection->getSize());
 
         return $searchResults;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function deleteAll()
-    {
-        /** @var Collection $collection */
-        $collection = $this->tourEventCollectionFactory->create();
-        $collection->deleteAll();
     }
 }

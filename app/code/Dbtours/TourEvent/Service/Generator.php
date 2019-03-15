@@ -5,15 +5,15 @@ declare(strict_types=1);
  * @author Rebeca Martínez García
  * @copyright  Copyright © 2018  Discover Barcelona
  */
+
 namespace Dbtours\TourEvent\Service;
 
 use Dbtours\Base\Logger\Logger;
 use Dbtours\TourEvent\Api\Config\Db\TourEvent\GenerationInterface;
-use Dbtours\TourEvent\Api\TourEventRepositoryInterface;
 use Dbtours\TourEvent\Api\Data\TourEventInterface;
 use Dbtours\TourEvent\Api\Data\TourEventInterfaceFactory;
+use Dbtours\TourEvent\Api\TourEventRepositoryInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollection;
 use Magento\Framework\Stdlib\Datetime;
 
@@ -78,17 +78,18 @@ class Generator
         ProductCollection $productCollection,
         TourEventInterfaceFactory $tourEventFactory
     ) {
-        $this->logger               = $logger;
-        $this->generationConfig     =  $generationConfig;
-        $this->tourEventRepository  = $tourEventRepository;
-        $this->productCollection    = $productCollection;
+        $this->logger              = $logger;
+        $this->generationConfig    = $generationConfig;
+        $this->tourEventRepository = $tourEventRepository;
+        $this->productCollection   = $productCollection;
         $this->tourEventFactory    = $tourEventFactory;
     }
 
     /**
+     * @param string|null $productId
      * @return $this
      */
-    public function execute()
+    public function execute($productId = null)
     {
         $this->logger->info('Running Tour Event Service Generator');
         if (!$this->generationConfig->isEnabled()) {
@@ -96,33 +97,38 @@ class Generator
             return $this;
         }
 
-        $this->cleanTourEvents();
-        $this->generateTourEvents();
+        $this->cleanTourEvents($productId);
+        $this->generateTourEvents($productId);
 
         return $this;
     }
 
     /**
-     * Clear existing unbooked TourEvents
+     * Clear existing tour events
+     *
+     * @param string|null $productId
      */
-    private function cleanTourEvents()
+    private function cleanTourEvents($productId = null)
     {
         try {
-            $this->tourEventRepository->deleteAll();
+            $this->tourEventRepository->deleteAll($productId);
         } catch (\Exception $e) {
             $this->logger->error('Generator::cleanTourEvents ' . $e->getMessage());
         }
     }
 
     /**
-     * Generate new TourEvents for each product
+     * Generate new TourEvents for each product or given products
+     *
+     * @param null $productId
+     * @throws \Zend_Date_Exception
      */
-    private function generateTourEvents()
+    private function generateTourEvents($productId = null)
     {
         $intervalDates = $this->getIntervalDatesByWeekDay();
 
         /** @var ProductInterface $product */
-        foreach ($this->getProductCollection() as $product) {
+        foreach ($this->getProductCollection($productId) as $product) {
             if (!$product->getDbDurationMin()) {
                 continue;
             }
@@ -135,14 +141,18 @@ class Generator
     }
 
     /**
-     * @return Collection
+     * @param string|null $productId
+     * @return mixed
      */
-    private function getProductCollection()
+    private function getProductCollection($productId = null)
     {
+        /** @var  $productCollection */
         $productCollection = $this->productCollection->create();
-        $selectAttributes = array_merge(self::WEEK_ATTRIBUTES_MAP, self::TIME_ATTRIBUTES);
+        $selectAttributes  = array_merge(self::WEEK_ATTRIBUTES_MAP, self::TIME_ATTRIBUTES);
         $productCollection->addAttributeToSelect($selectAttributes);
-
+        if ($productId) {
+            $productCollection->addFieldToFilter('entity_id', ['in' => $productId]);
+        }
         return $productCollection;
     }
 
@@ -159,9 +169,9 @@ class Generator
             if (!$startTimes) {
                 continue;
             }
-            $duration       = $product->getDbDurationMin();
-            $partialResult  = $this->getProductDateTimes($intervalDates[$k], $startTimes, $duration);
-            $result         = array_merge($result, $partialResult);
+            $duration      = $product->getDbDurationMin();
+            $partialResult = $this->getProductDateTimes($intervalDates[$k], $startTimes, $duration);
+            $result        = array_merge($result, $partialResult);
         }
 
         return $result;
@@ -176,14 +186,17 @@ class Generator
      */
     private function fillTourEventsData($product, $tourEventsDates)
     {
-        return array_map(function ($element) use ($product) {
-            /** @var \Magento\UrlRewrite\Service\V1\Data\UrlRewrite $url */
-            $element[TourEventInterface::PRODUCT_ID]        = $product->getId();
-            $element[TourEventInterface::BLOCKED_BEFORE]    = $product->getDbBlockedBefore();
-            $element[TourEventInterface::BLOCKED_AFTER]     = $product->getDbBlockedAfter();
+        return array_map(
+            function ($element) use ($product) {
+                /** @var \Magento\UrlRewrite\Service\V1\Data\UrlRewrite $url */
+                $element[TourEventInterface::PRODUCT_ID]     = $product->getId();
+                $element[TourEventInterface::BLOCKED_BEFORE] = $product->getDbBlockedBefore();
+                $element[TourEventInterface::BLOCKED_AFTER]  = $product->getDbBlockedAfter();
 
-            return $element;
-        }, $tourEventsDates);
+                return $element;
+            },
+            $tourEventsDates
+        );
     }
 
     /**
@@ -210,15 +223,15 @@ class Generator
      */
     private function getProductDateTimes($dates, $startTimes, $duration)
     {
-        $result = [];
+        $result     = [];
         $startTimes = explode(',', $startTimes);
         /** @var \Zend_Date $date */
         foreach ($dates as $date) {
             foreach ($startTimes as $startTime) {
                 $startTime = trim($startTime);
-                $result[] = [
-                    TourEventInterface::START   => $this->getStartDatetime($date, $startTime),
-                    TourEventInterface::FINISH  => $this->getFinishDatetime($date, $duration)
+                $result[]  = [
+                    TourEventInterface::START  => $this->getStartDatetime($date, $startTime),
+                    TourEventInterface::FINISH => $this->getFinishDatetime($date, $duration)
                 ];
             }
         }
@@ -233,9 +246,7 @@ class Generator
      */
     private function getStartDatetime($date, $startTime)
     {
-        $from = $date
-            ->setTime($startTime, 'HH:mm')
-            ->toString(Datetime::DATETIME_INTERNAL_FORMAT);
+        $from = $date->setTime($startTime, 'HH:mm')->toString(Datetime::DATETIME_INTERNAL_FORMAT);
 
         return $from;
     }
@@ -247,9 +258,7 @@ class Generator
      */
     private function getFinishDatetime($date, $duration)
     {
-        $to = $date
-            ->addMinute($duration)
-            ->toString(Datetime::DATETIME_INTERNAL_FORMAT);
+        $to = $date->addMinute($duration)->toString(Datetime::DATETIME_INTERNAL_FORMAT);
 
         return $to;
     }
@@ -260,10 +269,10 @@ class Generator
      */
     private function getIntervalDatesByWeekDay()
     {
-        $daysInAdvance  = $this->generationConfig->getDaysInAdvance();
-        $result         = [];
-        $from           = new \Zend_Date();
-        $to             = new \Zend_Date();
+        $daysInAdvance = $this->generationConfig->getDaysInAdvance();
+        $result        = [];
+        $from          = new \Zend_Date();
+        $to            = new \Zend_Date();
         $from->setTime(0);
         $to->addDay($daysInAdvance);
         $to = $to->setTime(0);

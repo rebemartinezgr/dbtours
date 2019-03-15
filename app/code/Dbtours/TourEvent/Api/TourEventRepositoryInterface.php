@@ -60,15 +60,19 @@ interface TourEventRepositoryInterface
     public function deleteById($tourEvent);
 
     /**
+     * Delete tour event by product id
+     *
+     * @param int|null $productId
+     * @return boolean
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     */
+    public function deleteAll($productId = null);
+
+    /**
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Dbtours\TourEvent\Api\Data\TourEventSearchResultsInterface
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
-
-    /**
-     * @return void
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     */
-    public function deleteAll();
 }

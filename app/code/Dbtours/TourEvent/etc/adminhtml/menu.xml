@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dbtours_TourEvent::tourevent" title="Tour Events" module="Dbtours_TourEvent" sortOrder="10" parent="Dbtours_Base::base" resource="Dbtours_TourEvent::tourevent"/>
+        <add id="Dbtours_TourEvent::tourevent_generation" title="Generation" module="Dbtours_TourEvent"
+             sortOrder="20" parent="Dbtours_TourEvent::tourevent" action="tourevent/generation/"
+             resource="Dbtours_TourEvent::tourevent_generation"/>
+    </menu>
+</config>
