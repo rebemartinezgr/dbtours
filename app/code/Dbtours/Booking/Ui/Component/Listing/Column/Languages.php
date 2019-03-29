@@ -10,7 +10,6 @@ namespace Dbtours\Booking\Ui\Component\Listing\Column;
 
 use Dbtours\TourEvent\Helper\Locale;
 use Magento\Framework\Data\OptionSourceInterface;
-use Dbtours\Guide\Api\Data\GuideInterface;
 
 /**
  * Class Languages
@@ -44,7 +43,6 @@ class Languages implements OptionSourceInterface
     {
         if ($this->options === null) {
             $this->options = [['label' => 'Select a language', 'value' => '']];
-            /** @var GuideInterface $guide */
             foreach ($this->helper->getLanguagesList() as $code => $language) {
                 $this->options[] = [
                     'label' => $language,
