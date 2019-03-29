@@ -8,6 +8,7 @@ namespace Dbtours\Calendar\Service;
 
 use Dbtours\Booking\Api\Data\BookingInterface;
 use Dbtours\Calendar\Api\CalendarEventRepositoryInterface;
+use Dbtours\Calendar\Api\Config\Db\CalendarEvent\GeneralInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterfaceFactory;
 use Dbtours\Calendar\Api\Data\TourEventLanguageInterface as TourEventLanguage;
@@ -29,16 +30,24 @@ class CalendarManager
     private $calendarEventFactory;
 
     /**
-     * BookingManager constructor.
+     * @var GeneralInterface
+     */
+    private $generalConfig;
+
+    /**
+     * CalendarManager constructor.
      * @param CalendarEventRepositoryInterface $calendarEventRepository
      * @param CalendarEventInterfaceFactory $calendarEventFactory
+     * @param GeneralInterface $generalConfig
      */
     public function __construct(
         CalendarEventRepositoryInterface $calendarEventRepository,
-        CalendarEventInterfaceFactory $calendarEventFactory
+        CalendarEventInterfaceFactory $calendarEventFactory,
+        GeneralInterface $generalConfig
     ) {
         $this->calendarEventRepository = $calendarEventRepository;
         $this->calendarEventFactory    = $calendarEventFactory;
+        $this->generalConfig           = $generalConfig;
     }
 
     /**
@@ -87,6 +96,7 @@ class CalendarManager
 
         $commonData = [
             CalendarEventInterface::ORDER_ITEM_ID => $orderItemId,
+            CalendarEventInterface::TYPE_ID => $this->generalConfig->getBookingCalendarEvent()
         ];
 
         /** Create calendar event type booking for tour event*/
@@ -132,6 +142,7 @@ class CalendarManager
         $calendarEvent->setOrderItemId($data[CalendarEventInterface::ORDER_ITEM_ID] ?? '');
         $calendarEvent->setStartTime($data[CalendarEventInterface::START] ?? '');
         $calendarEvent->setFinishTime($data[CalendarEventInterface::FINISH] ?? '');
+        $calendarEvent->setTypeId($data[CalendarEventInterface::TYPE_ID] ?? null);
 
         return $calendarEvent;
     }

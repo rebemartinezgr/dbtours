@@ -9,6 +9,9 @@
     <preference for="Dbtours\Calendar\Api\Data\CalendarEventSearchResultsInterface" type="Dbtours\Calendar\Model\CalendarEventSearchResults"/>
     <preference for="Dbtours\Calendar\Api\CalendarEventRepositoryInterface" type="Dbtours\Calendar\Model\CalendarEventRepository"/>
 
+    <preference for="Dbtours\Calendar\Api\Config\Db\CalendarEventInterface" type="Dbtours\Calendar\Model\Config\Db\CalendarEvent"/>
+    <preference for="Dbtours\Calendar\Api\Config\Db\CalendarEvent\GeneralInterface" type="Dbtours\Calendar\Model\Config\Db\CalendarEvent\General"/>
+    
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
