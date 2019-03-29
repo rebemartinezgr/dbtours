@@ -4,10 +4,10 @@
  * @copyright  Copyright © 2018  Discover Barcelona
  */
 
-namespace Dbtours\Calendar\Model\ResourceModel\CalendarEvent;
+namespace Dbtours\Calendar\Model\ResourceModel\CalendarEventType;
 
-use Dbtours\Calendar\Model\CalendarEvent as ModelCalendarEvent;
-use Dbtours\Calendar\Model\ResourceModel\CalendarEvent as ResourceModelCalendarEvent;
+use Dbtours\Calendar\Model\CalendarEventType as ModelCalendarEventType;
+use Dbtours\Calendar\Model\ResourceModel\CalendarEventType as ResourceModelCalendarEventType;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 /**
@@ -20,6 +20,6 @@ class Collection extends AbstractCollection
      */
     protected function _construct()
     {
-        $this->_init(ModelCalendarEvent::class, ResourceModelCalendarEvent::class);
+        $this->_init(ModelCalendarEventType::class, ResourceModelCalendarEventType::class);
     }
 }

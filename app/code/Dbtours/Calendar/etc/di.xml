@@ -8,4 +8,23 @@
     <preference for="Dbtours\Calendar\Api\Data\CalendarEventInterface" type="Dbtours\Calendar\Model\CalendarEvent"/>
     <preference for="Dbtours\Calendar\Api\Data\CalendarEventSearchResultsInterface" type="Dbtours\Calendar\Model\CalendarEventSearchResults"/>
     <preference for="Dbtours\Calendar\Api\CalendarEventRepositoryInterface" type="Dbtours\Calendar\Model\CalendarEventRepository"/>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="dbtours_calendar_calendarevent_listing_data_source" xsi:type="string">Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Grid\Collection</item>
+                <item name="dbtours_calendar_calendarevent_form_data_source" xsi:type="string">Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">db_calendar_event</argument>
+            <argument name="resourceModel" xsi:type="string">Dbtours\Calendar\Model\ResourceModel\CalendarEvent</argument>
+        </arguments>
+    </virtualType>
+
+
+
 </config>
