@@ -10,7 +10,7 @@ use Dbtours\Booking\Api\Data\BookingInterface;
 use Dbtours\Calendar\Api\CalendarEventRepositoryInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterfaceFactory;
-use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface as TourEventLanguage;
+use Dbtours\Calendar\Api\Data\TourEventLanguageInterface as TourEventLanguage;
 use Magento\Framework\Stdlib\Datetime;
 
 /**
