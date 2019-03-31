@@ -21,4 +21,10 @@ interface GeneralInterface extends CalendarEventInterface
      * @return int
      */
     public function getBookingCalendarEvent($storeId = null): int;
+
+    /**
+     * @param int $storeId
+     * @return int
+     */
+    public function getTransferCalendarEvent($storeId = null): int;
 }

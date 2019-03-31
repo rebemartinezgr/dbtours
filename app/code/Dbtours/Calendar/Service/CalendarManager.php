@@ -96,7 +96,6 @@ class CalendarManager
 
         $commonData = [
             CalendarEventInterface::ORDER_ITEM_ID => $orderItemId,
-            CalendarEventInterface::TYPE_ID => $this->generalConfig->getBookingCalendarEvent()
         ];
 
         /** Create calendar event type booking for tour event*/
@@ -156,6 +155,7 @@ class CalendarManager
         return [
             CalendarEventInterface::START  => $object->getStartTime(),
             CalendarEventInterface::FINISH => $object->getFinishTime(),
+            CalendarEventInterface::TYPE_ID => $this->generalConfig->getBookingCalendarEvent()
         ];
     }
 
@@ -170,6 +170,7 @@ class CalendarManager
         return [
             CalendarEventInterface::START  => $startTimeBefore,
             CalendarEventInterface::FINISH => $object->getStartTime(),
+            CalendarEventInterface::TYPE_ID => $this->generalConfig->getTransferCalendarEvent()
         ];
     }
 
@@ -184,6 +185,7 @@ class CalendarManager
         return [
             CalendarEventInterface::START  => $object->getFinishTime(),
             CalendarEventInterface::FINISH => $finishTimeAfter,
+            CalendarEventInterface::TYPE_ID => $this->generalConfig->getTransferCalendarEvent()
         ];
     }
 

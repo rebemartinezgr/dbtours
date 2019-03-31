@@ -38,4 +38,12 @@ class General extends CalendarEvent implements GeneralInterface
     {
         return (int)$this->scopeConfig->getValue($this->getXmlBaseGroupPath() . 'booking_event_type');
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTransferCalendarEvent($storeId = null): int
+    {
+        return (int)$this->scopeConfig->getValue($this->getXmlBaseGroupPath() . 'transfer_event_type');
+    }
 }

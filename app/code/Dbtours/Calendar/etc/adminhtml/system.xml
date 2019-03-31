@@ -20,6 +20,12 @@
                     <validate>required-entry</validate>
                     <source_model>Dbtours\Calendar\Ui\Component\Listing\Column\EventType</source_model>
                 </field>
+                <field id="transfer_event_type" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Transfer Calendar Event Type</label>
+                    <validate>required-entry</validate>
+                    <source_model>Dbtours\Calendar\Ui\Component\Listing\Column\EventType</source_model>
+                </field>
             </group>
         </section>
     </system>
