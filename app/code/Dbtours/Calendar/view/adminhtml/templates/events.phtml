@@ -1,0 +1,20 @@
+<?php $view = $block->getViewModel(); ?>
+<?php $events = $view->getCalendarEvents(); ?>
+
+<div id='calendar'></div>
+
+<script>
+    var entries = JSON.parse('<?php echo($events)?>');
+
+        var calendar = new Calendar({
+            target: document.querySelector("#calendar"),
+            data: {
+                escape: false,
+                view: 'calendar',
+                dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]
+            }
+        });
+        calendar.set({message: 'loading...'});
+        calendar.set({entries: entries, message: ''});
+</script>
+

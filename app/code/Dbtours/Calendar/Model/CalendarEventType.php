@@ -43,6 +43,22 @@ class CalendarEventType extends AbstractExtensibleModel implements CalendarEvent
     /**
      * @inheritdoc
      */
+    public function getColor()
+    {
+        return $this->_getData(self::COLOR);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setColor($color)
+    {
+        $this->setData(self::COLOR, $color);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getExtensionAttributes()
     {
         return $this->_getExtensionAttributes();

@@ -11,5 +11,8 @@
         <add id="Dbtours_Calendar::calendar_events" title="Manage Events" module="Dbtours_Calendar"
              sortOrder="20" parent="Dbtours_Calendar::calendar" action="calendar/calendarevent/"
              resource="Dbtours_Calendar::manage_calendarevents"/>
+        <add id="Dbtours_Calendar::calendar_widget" title="Calendar" module="Dbtours_Calendar"
+             sortOrder="30" parent="Dbtours_Calendar::calendar" action="calendar/events/widget"
+             resource="Dbtours_Calendar::manage_calendarevents"/>
     </menu>
 </config>

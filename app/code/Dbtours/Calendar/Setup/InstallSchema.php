@@ -54,6 +54,12 @@ class InstallSchema implements InstallSchemaInterface
             255,
             ['nullable' => false],
             'Calendar Event Type Code'
+        )->addColumn(
+            'hexa_color',
+            Table::TYPE_TEXT,
+            255,
+            ['nullable' => true],
+            'Hexadecimal Color Code'
         );
         $setup->getConnection()->createTable($table);
     }

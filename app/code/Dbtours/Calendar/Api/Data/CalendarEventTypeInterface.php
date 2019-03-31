@@ -16,7 +16,7 @@ interface CalendarEventTypeInterface extends CustomAttributesDataInterface
     const TABLE = 'db_calendar_event_type';
     const ID    = 'entity_id';
     const CODE  = 'code';
-
+    const COLOR = 'hexa_color';
 
     /**
      * Retrieve Code
@@ -31,6 +31,20 @@ interface CalendarEventTypeInterface extends CustomAttributesDataInterface
      * @param string $code
      */
     public function setCode($code);
+
+    /**
+     * Retrieve Color
+     *
+     * @return string
+     */
+    public function getColor();
+
+    /**
+     * Set Color
+     *
+     * @param string $color
+     */
+    public function setColor($color);
 
     /**
      * Retrieve existing extension attributes object or create a new one.
