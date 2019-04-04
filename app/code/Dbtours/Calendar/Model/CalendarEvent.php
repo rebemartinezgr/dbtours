@@ -28,6 +28,22 @@ class CalendarEvent extends AbstractExtensibleModel implements CalendarEventInte
     /**
      * @inheritdoc
      */
+    public function getId()
+    {
+        return $this->_getData(self::ID) ?: null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setId($entityId)
+    {
+        $this->setData(self::ID, $entityId);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getGuideId()
     {
         return $this->_getData(self::GUIDE_ID);

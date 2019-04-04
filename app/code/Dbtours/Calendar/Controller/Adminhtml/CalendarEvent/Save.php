@@ -89,8 +89,10 @@ class Save extends ControllerCalendarEvent
                 $model->setData($data);
                 $this->calendarEventRepository->save($model);
                 $calendarEventId = $model->getId();
+                if (!$calendarEventId) {
+                    throw new \Exception('New Calendar Event was not saved');
+                }
                 $this->messageManager->addSuccessMessage(__('The calendar event has been saved.'));
-
                 $this->_getSession()->setFormData(false);
 
                 $returnToEdit = (bool)$this->getRequest()->getParam('back', false);

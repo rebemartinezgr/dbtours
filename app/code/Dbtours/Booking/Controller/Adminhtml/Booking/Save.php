@@ -100,6 +100,9 @@ class Save extends ControllerBooking
                 $model = $this->prepareData($model, $dataArray);
                 $this->bookingRepository->save($model);
                 $bookingId = $model->getId();
+                if (!$bookingId) {
+                    throw new \Exception('Booking was not saved');
+                }
                 $this->messageManager->addSuccessMessage(__('The booking has been saved.'));
 
                 $this->_getSession()->setFormData(false);

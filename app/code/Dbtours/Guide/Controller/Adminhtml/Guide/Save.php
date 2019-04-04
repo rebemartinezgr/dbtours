@@ -89,6 +89,9 @@ class Save extends ControllerGuide
                 $model->setData($data);
                 $this->guideRepository->save($model);
                 $guideId = $model->getId();
+                if (!$guideId) {
+                    throw new \Exception('Guide was not saved');
+                }
                 $this->messageManager->addSuccessMessage(__('The guide has been saved.'));
 
                 $this->_getSession()->setFormData(false);
