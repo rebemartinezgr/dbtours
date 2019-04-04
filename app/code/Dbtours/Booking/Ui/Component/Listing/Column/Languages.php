@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Dbtours\Booking\Ui\Component\Listing\Column;
 
-use Dbtours\TourEvent\Helper\Locale;
+use Dbtours\Base\Helper\Locale;
 use Magento\Framework\Data\OptionSourceInterface;
 
 /**

@@ -4,7 +4,7 @@
  * @copyright  Copyright © 2018  Discover Barcelona
  */
 
-namespace Dbtours\TourEvent\Helper;
+namespace Dbtours\Base\Helper;
 
 use Zend_Date;
 use Zend_Locale;
@@ -81,7 +81,6 @@ class Locale
      */
     public function getLanguagesList()
     {
-        /** TODO GET ADMIN LOCALE */
         return Zend_Locale::getTranslationList('language', 'en_GB');
     }
 }

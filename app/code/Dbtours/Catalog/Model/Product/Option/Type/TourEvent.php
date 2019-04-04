@@ -7,7 +7,7 @@
 namespace Dbtours\Catalog\Model\Product\Option\Type;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
-use Dbtours\TourEvent\Helper\Locale;
+use Dbtours\Base\Helper\Locale;
 use Dbtours\TourEvent\Helper\Validator;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -73,7 +73,7 @@ class TourEvent extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
     }
 
     /**
-     * Validate user input for tour event
+     * V alidate user input for tour event
      *
      * @param array $values All product option values, i.e. array (option_id => mixed, option_id => mixed...)
      * @return $this

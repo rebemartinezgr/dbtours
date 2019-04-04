@@ -9,7 +9,7 @@ namespace Dbtours\Catalog\Controller\Ajax;
 
 use Dbtours\TourEvent\Api\Data\TourEventLanguageInterface;
 use Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface as TourEventLanguageRepository;
-use Dbtours\TourEvent\Helper\Locale;
+use Dbtours\Base\Helper\Locale;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
