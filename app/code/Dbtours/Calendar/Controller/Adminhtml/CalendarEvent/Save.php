@@ -8,15 +8,16 @@ declare(strict_types=1);
 
 namespace Dbtours\Calendar\Controller\Adminhtml\CalendarEvent;
 
+use Dbtours\Base\Helper\Date;
+use Dbtours\Calendar\Api\CalendarEventRepositoryInterface;
+use Dbtours\Calendar\Api\Data\CalendarEventInterfaceFactory as CalendarEventFactory;
+use Dbtours\Calendar\Controller\Adminhtml\CalendarEvent as ControllerCalendarEvent;
+use Dbtours\Calendar\Model\CalendarEvent as ModelCalendarEvent;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Registry;
-use Dbtours\Calendar\Controller\Adminhtml\CalendarEvent as ControllerCalendarEvent;
-use Dbtours\Calendar\Api\CalendarEventRepositoryInterface;
-use Dbtours\Calendar\Model\CalendarEvent as ModelCalendarEvent;
-use Dbtours\Calendar\Api\Data\CalendarEventInterfaceFactory as CalendarEventFactory;
 
 /**
  * Class Save
@@ -34,21 +35,28 @@ class Save extends ControllerCalendarEvent
     private $calendarEventFactory;
 
     /**
-     * Edit constructor.
-     *
+     * @var Date
+     */
+    private $helperDate;
+
+    /**
+     * Save constructor.
      * @param Context $context
      * @param Registry $coreRegistry
      * @param CalendarEventRepositoryInterface $calendarEventRepository
      * @param CalendarEventFactory $calendarEventFactory
+     * @param Date $helperDate
      */
     public function __construct(
         Context $context,
         Registry $coreRegistry,
         CalendarEventRepositoryInterface $calendarEventRepository,
-        CalendarEventFactory $calendarEventFactory
+        CalendarEventFactory $calendarEventFactory,
+        Date $helperDate
     ) {
         $this->calendarEventRepository = $calendarEventRepository;
         $this->calendarEventFactory    = $calendarEventFactory;
+        $this->helperDate              = $helperDate;
         parent::__construct($context, $coreRegistry);
     }
 
@@ -66,12 +74,14 @@ class Save extends ControllerCalendarEvent
         $calendarEventId = $this->getRequest()->getParam(ControllerCalendarEvent::PARAM_CRUD_ID);
 
         if ($data = $this->getRequest()->getPostValue()) {
+            $data['start_time']  = $this->helperDate->convertToDBTimeZone($data['start_time']);
+            $data['finish_time'] = $this->helperDate->convertToDBTimeZone($data['finish_time']);
             if ($calendarEventId) {
                 try {
                     /** @var  ModelCalendarEvent $model */
-                    $model = $calendarEventId ?
-                        $this->calendarEventRepository->getById(intval($calendarEventId))
-                        : $this->calendarEventFactory->create();
+                    $model =
+                        $calendarEventId ? $this->calendarEventRepository->getById(intval($calendarEventId)) :
+                            $this->calendarEventFactory->create();
                 } catch (NoSuchEntityException $e) {
                     $this->messageManager->addErrorMessage(__('This calendar event no longer exists.'));
                     /** @var Redirect $resultRedirect */
