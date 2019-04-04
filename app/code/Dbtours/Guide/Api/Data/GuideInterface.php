@@ -20,6 +20,7 @@ interface GuideInterface extends CustomAttributesDataInterface
     const TELEPHONE = 'telephone';
     const EMAIL     = 'email';
     const PRIORITY  = 'priority';
+    const CODE      = 'code';
     const LANGUAGES = 'languages';
 
     const LANGUAGE_TABLE         = 'db_guide_language';
@@ -40,6 +41,20 @@ interface GuideInterface extends CustomAttributesDataInterface
      * @return $this
      */
     public function setId($entityId);
+
+    /**
+     * Retrieve Code
+     *
+     * @return string
+     */
+    public function getCode();
+
+    /**
+     * Set Code
+     *
+     * @param string $code
+     */
+    public function setCode($code);
 
     /**
      * Retrieve FirstName

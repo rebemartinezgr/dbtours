@@ -44,6 +44,22 @@ class Guide extends AbstractExtensibleModel implements GuideInterface
     /**
      * @inheritdoc
      */
+    public function getCode()
+    {
+        return $this->_getData(self::CODE) ?: null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCode($code)
+    {
+        $this->setData(self::CODE, $code);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getFirstName()
     {
         return $this->_getData(self::FIRSTNAME);
@@ -52,9 +68,9 @@ class Guide extends AbstractExtensibleModel implements GuideInterface
     /**
      * @inheritdoc
      */
-    public function setFirstName($firstName)
+    public function setFirstName($code)
     {
-        $this->setData(self::FIRSTNAME, $firstName);
+        $this->setData(self::FIRSTNAME, $code);
     }
 
     /**

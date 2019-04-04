@@ -56,6 +56,12 @@ class InstallSchema implements InstallSchemaInterface
             [],
             'Email Guide'
         )->addColumn(
+            'code',
+            Table::TYPE_TEXT,
+            255,
+            [],
+            'Code'
+        )->addColumn(
             'firstname',
             Table::TYPE_TEXT,
             255,
@@ -79,6 +85,14 @@ class InstallSchema implements InstallSchemaInterface
             8,
             [],
             'Priority'
+        )->addIndex(
+            $setup->getIdxName(
+                self::GUIDE_TABLE_NAME,
+                ['code'],
+                AdapterInterface::INDEX_TYPE_UNIQUE
+            ),
+            ['code'],
+            ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
         )->setComment(
             'Dbtours Guide'
         );
