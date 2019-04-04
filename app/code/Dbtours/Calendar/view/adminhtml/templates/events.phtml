@@ -1,7 +1,7 @@
 <?php $view = $block->getViewModel(); ?>
 <?php $events = $view->getCalendarEvents(); ?>
 
-<div id='calendar'></div>
+<div id='calendar' style="max-width:1000px; margin:0 auto"></div>
 
 <script>
     var entries = JSON.parse('<?php echo($events)?>');

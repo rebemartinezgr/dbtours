@@ -6,6 +6,7 @@
 
 namespace Dbtours\Calendar\ViewModel;
 
+use Dbtours\Base\Helper\Locale;
 use Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Collection;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 
@@ -20,13 +21,21 @@ class Events implements ArgumentInterface
     private $eventCollection;
 
     /**
+     * @var Locale
+     */
+    private $localeHelper;
+
+    /**
      * Events constructor.
      * @param Collection $eventCollection
+     * @param Locale $localeHelper
      */
     public function __construct(
-        Collection $eventCollection
+        Collection $eventCollection,
+        Locale $localeHelper
     ) {
         $this->eventCollection = $eventCollection;
+        $this->localeHelper    = $localeHelper;
     }
 
     /**
@@ -46,7 +55,7 @@ class Events implements ArgumentInterface
                 "id"      => $item->getId(),
                 "content" => $this->getEventContent($item),
                 "guide"   => $item->getGuideId(),
-                "type"   =>  $item->getTypeId()
+                "type"    => $item->getTypeId()
 
             ];
         }
@@ -60,14 +69,17 @@ class Events implements ArgumentInterface
     private function getEventContent($event)
     {
         //Event
-        $content = '<p>' . 'Type: ' . $event->getCode() . '</p>';
+        $content = '<p>' . '<b>Type:  </b>' . $event->getCode() . '</p>';
 
         //Booking
-        $content .= $event->getTour() ? '<p>' . 'Tour: ' . $event->getTour() . '</p>' : '';
-        $content .= $event->getLanguageCode() ? '<p>' . 'Language: ' . $event->getLanguageCode() . '</p>' : '';
+        $content .= $event->getTour() ? '<p>' . '<b>Tour: </b>' . $event->getTour() . '</p>' : '';
+        $content .= $event->getLanguageCode() ?
+            '<p>' . '<b>Language: </b>' . $this->localeHelper->getFormattedLanguage($event->getLanguageCode()) . '</p>' : '';
 
         //Guide Info
-        $content .= '<p>' . 'Guide: ' . $event->getFirstname() . " " . $event->getLastname() . '</p>';
+        $content .= '<p>' .
+            '<b>Guide:  </b>' . $event->getFirstname() . " " . $event->getLastname() .
+            ' [' . $event->getGuideCode() . ']</p>';
 
         return $content;
     }
@@ -78,9 +90,6 @@ class Events implements ArgumentInterface
      */
     private function getEventTitle($event)
     {
-        $title = "[" . $event->getFirstname() . "] ";
-        $title .= $event->getTour() ?? $event->getCode();
-
-        return $title;
+        return ' [' . $event->getGuideCode() . '] ' . $event->getCode();
     }
 }

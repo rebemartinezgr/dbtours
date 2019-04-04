@@ -62,7 +62,7 @@ class Collection extends AbstractCollection
             '.' .
             CalendarEventTypeInterface::ID,
             [
-                'type_id'                           => $eventTypeAlias . '.' . CalendarEventTypeInterface::ID,
+                'type_id'                        => $eventTypeAlias . '.' . CalendarEventTypeInterface::ID,
                 CalendarEventTypeInterface::CODE => $eventTypeAlias . '.' . CalendarEventTypeInterface::CODE,
                 'color'                          => $eventTypeAlias . '.' . CalendarEventTypeInterface::COLOR
             ]
@@ -71,6 +71,7 @@ class Collection extends AbstractCollection
             $eventTableAlias . '.' . CalendarEventInterface::GUIDE_ID . '=' . $guideAlias . '.' . GuideInterface::ID,
             [
                 'guide_id'                => GuideInterface::ID,
+                'guide_code'              => GuideInterface::CODE,
                 GuideInterface::FIRSTNAME => GuideInterface::FIRSTNAME,
                 GuideInterface::LASTNAME  => GuideInterface::LASTNAME
             ]

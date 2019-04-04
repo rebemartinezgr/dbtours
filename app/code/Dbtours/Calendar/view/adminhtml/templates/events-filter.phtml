@@ -13,6 +13,7 @@ $view = $block->getViewModel();
     </label>
     <?= $view->getEventTpeSelect()?>
     <button class="search">Filter</button>
+    <button class="reset">Reset</button>
 </div>
 
 <script>
@@ -20,9 +21,13 @@ $view = $block->getViewModel();
         $("button.search").click(function () {
             var guideId = $("#guide-filter").val();
             var typeId = $("#type-filter").val();
-            console.log(guideId);
-            console.log(typeId);
             search(guideId, typeId);
+        });
+        $("button.reset").click(function () {
+            $("#guide-filter").val('');
+            $("#type-filter").val('');
+            $("button.search").click();
+
         });
     });
 </script>
@@ -31,7 +36,8 @@ $view = $block->getViewModel();
 
 <style type="text/css">
     .event-filter {
-        margin-bottom:30px
+        max-width:1000px;
+        margin:30px auto;
     }
     .event-filter .admin__field-label span {
         margin-bottom:10px
