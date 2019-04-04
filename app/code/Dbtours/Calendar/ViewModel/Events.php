@@ -7,14 +7,15 @@
 namespace Dbtours\Calendar\ViewModel;
 
 use Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Collection;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 /**
  * Class Events
  */
-class Events implements \Magento\Framework\View\Element\Block\ArgumentInterface
+class Events implements ArgumentInterface
 {
     /**
-     * @var CalendarEventRepository
+     * @var Collection
      */
     private $eventCollection;
 
@@ -43,7 +44,10 @@ class Events implements \Magento\Framework\View\Element\Block\ArgumentInterface
                 "title"   => $this->getEventTitle($item),
                 "color"   => $item->getColor(),
                 "id"      => $item->getId(),
-                "content" => $this->getEventContent($item)
+                "content" => $this->getEventContent($item),
+                "guide"   => $item->getGuideId(),
+                "type"   =>  $item->getTypeId()
+
             ];
         }
         return json_encode($result);

@@ -7,12 +7,12 @@
 namespace Dbtours\Calendar\Model\ResourceModel\CalendarEvent;
 
 use Dbtours\Booking\Api\Data\BookingInterface;
+use Dbtours\Calendar\Api\Data\CalendarEventInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventTypeInterface;
-use Dbtours\Guide\Api\Data\GuideInterface;
 use Dbtours\Calendar\Model\CalendarEvent as ModelCalendarEvent;
 use Dbtours\Calendar\Model\ResourceModel\CalendarEvent as ResourceModelCalendarEvent;
+use Dbtours\Guide\Api\Data\GuideInterface;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
-use Dbtours\Calendar\Api\Data\CalendarEventInterface;
 
 /**
  * Class Collection
@@ -49,8 +49,8 @@ class Collection extends AbstractCollection
                 CalendarEventInterface::FINISH        => $eventTableAlias . '.' . CalendarEventInterface::FINISH,
                 CalendarEventInterface::ORDER_ITEM_ID => $eventTableAlias . '.' . CalendarEventInterface::ORDER_ITEM_ID,
                 CalendarEventInterface::TYPE_ID       => $eventTableAlias . '.' . CalendarEventInterface::TYPE_ID,
-                BookingInterface::TOUR            => $bookingTableAlias . '.' . BookingInterface::TOUR,
-                BookingInterface::LANGUAGE        => $bookingTableAlias . '.' . BookingInterface::LANGUAGE
+                BookingInterface::TOUR                => $bookingTableAlias . '.' . BookingInterface::TOUR,
+                BookingInterface::LANGUAGE            => $bookingTableAlias . '.' . BookingInterface::LANGUAGE
             ]
         )->joinLeft(
             [$eventTypeAlias => CalendarEventTypeInterface::TABLE],
@@ -62,21 +62,17 @@ class Collection extends AbstractCollection
             '.' .
             CalendarEventTypeInterface::ID,
             [
+                'type_id'                           => $eventTypeAlias . '.' . CalendarEventTypeInterface::ID,
                 CalendarEventTypeInterface::CODE => $eventTypeAlias . '.' . CalendarEventTypeInterface::CODE,
-                'color' => $eventTypeAlias . '.' . CalendarEventTypeInterface::COLOR
+                'color'                          => $eventTypeAlias . '.' . CalendarEventTypeInterface::COLOR
             ]
         )->joinLeft(
             [$guideAlias => GuideInterface::TABLE],
-            $eventTableAlias .
-            '.' .
-            CalendarEventInterface::GUIDE_ID .
-            '=' .
-            $guideAlias .
-            '.' .
-            GuideInterface::ID,
+            $eventTableAlias . '.' . CalendarEventInterface::GUIDE_ID . '=' . $guideAlias . '.' . GuideInterface::ID,
             [
+                'guide_id'                => GuideInterface::ID,
                 GuideInterface::FIRSTNAME => GuideInterface::FIRSTNAME,
-                GuideInterface::LASTNAME => GuideInterface::LASTNAME
+                GuideInterface::LASTNAME  => GuideInterface::LASTNAME
             ]
         );
 

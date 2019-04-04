@@ -14,7 +14,13 @@
     </head>
     <body>
         <referenceContainer name="content">
-            <block name="calendar.events" class="Magento\Backend\Block\Template" template="Dbtours_Calendar::events.phtml">
+            <block name="calendar.events.filter" class="Magento\Backend\Block\Template" template="Dbtours_Calendar::events-filter.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Dbtours\Calendar\ViewModel\Events\Filter</argument>
+                </arguments>
+            </block>
+            <block name="calendar.events" class="Magento\Backend\Block\Template"
+                   template="Dbtours_Calendar::events.phtml">
                 <arguments>
                     <argument name="view_model" xsi:type="object">Dbtours\Calendar\ViewModel\Events</argument>
                 </arguments>

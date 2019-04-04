@@ -5,16 +5,35 @@
 
 <script>
     var entries = JSON.parse('<?php echo($events)?>');
+    var calendar = new Calendar({
+        target: document.querySelector("#calendar"),
+        data: {
+            escape: false,
+            view: 'calendar',
+            dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        }
+    });
+    calendar.set({entries: entries, message: ''});
 
-        var calendar = new Calendar({
-            target: document.querySelector("#calendar"),
-            data: {
-                escape: false,
-                view: 'calendar',
-                dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]
-            }
-        });
+    function search(guideId, typeId) {
         calendar.set({message: 'loading...'});
-        calendar.set({entries: entries, message: ''});
+        var filteredEntries  = [];
+        for (var k in entries) {
+            var included = true;
+            var entry = entries[k];
+            if (guideId && entry['guide'] !== guideId) {
+                included = false;
+            }
+            if (typeId && entry['type'] !== typeId) {
+                included = false;
+            }
+
+            if (included) {
+                filteredEntries.push(entry);
+            }
+        }
+        calendar.set({entries: filteredEntries, message: ''});
+    }
+
 </script>
 
