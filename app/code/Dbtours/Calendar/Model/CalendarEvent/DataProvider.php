@@ -23,9 +23,9 @@ class DataProvider extends AbstractDataProvider
 
     /**
      * DataProvider constructor.
-     * @param $name
-     * @param $primaryFieldName
-     * @param $requestFieldName
+     * @param string $name
+     * @param string $primaryFieldName
+     * @param string $requestFieldName
      * @param CollectionFactory $calendarEventCollectionFactory
      * @param Date $helperDate
      * @param array $meta
@@ -37,7 +37,6 @@ class DataProvider extends AbstractDataProvider
         $requestFieldName,
         CollectionFactory $calendarEventCollectionFactory,
         Date $helperDate,
-
         array $meta = [],
         array $data = []
     ) {
