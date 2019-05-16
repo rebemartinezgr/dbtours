@@ -126,8 +126,17 @@ class CalendarManager
         /** @var  CalendarEventInterface $calendarEvent */
         foreach ($calendarEvents as $calendarEvent) {
             $calendarEvent->setGuideId($guideId);
-            $this->calendarEventRepository->save($calendarEvent);
+            $this->saveCalendarEvent($calendarEvent);
         }
+    }
+
+    /**
+     * @param $calendarEvent
+     * @return CalendarEventInterface
+     */
+    public function saveCalendarEvent($calendarEvent)
+    {
+        return $this->calendarEventRepository->save($calendarEvent);
     }
 
     /**

@@ -59,10 +59,9 @@ class BookingManager
     {
         $guide   = $tourEventLanguage->getAvailableGuide();
         $booking = $this->getBooking($tourEventLanguage, $orderItem);
-        if ($guide) {
-            $booking = $this->assignToGuide($booking, $guide);
-        }
-        return $booking;
+        return  $guide ?
+            $this->assignToGuide($booking, $guide) :
+            $this->saveBooking($booking);
     }
 
     /**
@@ -97,6 +96,15 @@ class BookingManager
     public function assignToGuide($booking, $guideId)
     {
         $booking->setGuideId($guideId);
+        return $this->saveBooking($booking);
+    }
+
+    /**
+     * @param BookingInterface $booking
+     * @return BookingInterface
+     */
+    public function saveBooking($booking)
+    {
         return $this->bookingRepository->save($booking);
     }
 
