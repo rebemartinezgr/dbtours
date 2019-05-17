@@ -8,8 +8,10 @@ namespace Dbtours\Calendar\ViewModel;
 
 use Dbtours\Base\Helper\Locale;
 use Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Collection;
+use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-
+use Magento\Sales\Api\OrderItemRepositoryInterface;
+use Magento\Sales\Api\Data\OrderInterface;
 /**
  * Class Events
  */
@@ -26,16 +28,32 @@ class Events implements ArgumentInterface
     private $localeHelper;
 
     /**
+     * @var
+     */
+    private $orderItemRepository;
+
+    /**
+     * @var UrlInterface
+     */
+    private $backendUrl;
+
+    /**
      * Events constructor.
      * @param Collection $eventCollection
      * @param Locale $localeHelper
+     * @param OrderItemRepositoryInterface $orderItemRepository
+     * @param UrlInterface $backendUrl
      */
     public function __construct(
         Collection $eventCollection,
-        Locale $localeHelper
+        Locale $localeHelper,
+        OrderItemRepositoryInterface $orderItemRepository,
+        UrlInterface $backendUrl
     ) {
-        $this->eventCollection = $eventCollection;
-        $this->localeHelper    = $localeHelper;
+        $this->eventCollection      = $eventCollection;
+        $this->localeHelper         = $localeHelper;
+        $this->orderItemRepository  = $orderItemRepository;
+        $this->backendUrl           = $backendUrl;
     }
 
     /**
@@ -81,6 +99,10 @@ class Events implements ArgumentInterface
             '<b>Guide:  </b>' . $event->getFirstname() . " " . $event->getLastname() .
             ' [' . $event->getGuideCode() . ']</p>';
 
+        // Order
+        $orderUrl = $this->getOrderLink($event->getOrderItemId());
+        $content .= $orderUrl ? '<p>' . '<b>Order: </b>' . $orderUrl . '</p>' : '';
+
         return $content;
     }
 
@@ -91,5 +113,35 @@ class Events implements ArgumentInterface
     private function getEventTitle($event)
     {
         return ' [' . $event->getGuideCode() . '] ' . $event->getCode();
+    }
+
+    /**
+     * @param int $orderItemId
+     * @return string
+     */
+    private function getOrderLink($orderItemId)
+    {
+        if (!$orderItemId) {
+            return '';
+        }
+        /** @var OrderInterface $order */
+        $order = $this->getOrder($orderItemId);
+        $url = $this->backendUrl->getUrl('sales/order/view', ['order_id' => $order->getEntityId()]);
+        $html = '<a href=\"' . $url . '\" target=\"_blank\" >';
+        $html .= $order->getIncrementId();
+        $html .= "</a>";
+
+        return $html;
+    }
+
+    /**
+     * @param $orderItemId
+     * @return OrderInterface
+     */
+    private function getOrder($orderItemId)
+    {
+        $orderItem = $this->orderItemRepository->get($orderItemId);
+
+        return $orderItem->getOrder();
     }
 }

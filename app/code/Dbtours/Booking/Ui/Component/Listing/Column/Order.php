@@ -68,7 +68,7 @@ class Order extends Column
         /** @var OrderInterface $order */
         $order = $this->getOrder($orderItemId);
         $url = $this->context->getUrl('sales/order/view', ['order_id' => $order->getEntityId()]);
-        $html = "<a href='" . $url . "'>";
+        $html = "<a href='" . $url . "' target='_blank' >";
         $html .= $order->getIncrementId();
         $html .= "</a>";
 
