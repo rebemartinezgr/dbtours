@@ -4,18 +4,42 @@ $showTime           = $block->getTimeFormat() ? "showsTime: true," : "showsTime:
 $timeFormat         = $block->getTimeFormat() ? "timeFormat: '" . $block->getTimeFormat() . "'," : "";
 $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYearsRange() . "'," : "";
 ?>
+<button id="date-options-button" class="action primary" type="button"><?=__("Show Options")?></button>
 
-<div class="container-ajax-loader">
-    <div class="ajax-loader"></div>
+<div id="date-options-content" style="display: none">
+    <div class="container-ajax-loader">
+        <div class="ajax-loader"></div>
+    </div>
+
+    <div id="div-<?= $block->getId()?>"></div>
+
+    <div id="container-tabs"></div>
 </div>
-
-<div id="div-<?= $block->getId()?>"></div>
-
-<div id="container-tabs"></div>
 
 <script type="text/javascript">
     require(["jquery", "mage/calendar", "tabs"], function($){
-        $("#product-addtocart-button").attr('disabled', true);
+        $("#product-addtocart-button").attr('hidden', true);
+        $("#date-options-button").click(function(e) {
+            e.preventDefault();
+            $("#date-options-button").css("display","none");
+            $("#date-options-content").css("display","block");
+            $.ajax({
+                url : "<?= $block->getDataUrl() ?>",
+                type : 'GET',
+                data : {
+                    'productId' : "<?= $block->getProductId() ?>",
+                },
+                dataType:'json',
+                success : function(data) {
+                    init(data);
+                    $(".container-ajax-loader").css("display","none");
+                },
+                error : function(request,error) {
+                    alert("An error occurs, please refresh the current page");
+                }
+            });
+        });
+
 
         function showOptions(options, languagesData) {
             var html = '<div id="language-tabs" class="product data items">';
@@ -61,11 +85,11 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
             });
 
             $(".option-header .data.switch").click(function(e) {
-                $("#product-addtocart-button").attr('disabled', true);
+                $("#product-addtocart-button").attr('hidden', true);
             });
 
             $('input.time-option:radio').click(function(e) {
-                $("#product-addtocart-button").attr('disabled', false);
+                $("#product-addtocart-button").attr('hidden', false);
                 // reset selected language
                 $('input.language-option:radio').attr('checked',false);
                  //mark as checked current language
@@ -102,7 +126,7 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
                     return [data.dates.indexOf(string) != -1];
                 },
                 onSelect: function(dateText, inst) {
-                    $("#product-addtocart-button").attr('disabled', true);
+                    $("#product-addtocart-button").attr('hidden', true);
                     var date = new Date(Date.parse($(this).datepicker('getDate')));
                     var dateFormatted = jQuery.datepicker.formatDate('yy-mm-dd', date);
                     if (data.dates.indexOf(dateFormatted) != -1) {
@@ -111,22 +135,6 @@ $calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYear
                 }
             });
         }
-
-        $.ajax({
-            url : "<?= $block->getDataUrl() ?>",
-            type : 'GET',
-            data : {
-                'productId' : "<?= $block->getProductId() ?>",
-            },
-            dataType:'json',
-            success : function(data) {
-               init(data);
-               $(".container-ajax-loader").css("display","none");
-            },
-            error : function(request,error) {
-                alert("An error occurs, please refresh the current page");
-            }
-        });
     });
 </script>
 
