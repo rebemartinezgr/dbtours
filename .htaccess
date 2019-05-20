@@ -408,4 +408,13 @@ ErrorDocument 403 /pub/errors/404.php
         Header unset X-UA-Compatible
     </FilesMatch>
 
+    # One year for image files
+    <FilesMatch ".(jpg|jpeg|png|gif|ico)$">
+    Header set Cache-Control "max-age=31536000"
+    </FilesMatch>
+    # One month for css and js
+    <FilesMatch ".(css|js)$">
+    Header set Cache-Control "max-age=2628000"
+    </FilesMatch>
+
 </IfModule>
