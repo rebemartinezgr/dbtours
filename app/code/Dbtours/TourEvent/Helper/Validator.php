@@ -14,7 +14,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\Quote\Item;
 
 /**
- * Class TourEvent
+ * Class Validator
  */
 class Validator
 {

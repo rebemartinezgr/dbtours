@@ -45,7 +45,6 @@ class Recurring implements InstallSchemaInterface
 
     /**
      * @param SchemaSetupInterface $setup
-     * @throws \Zend_Db_Exception
      */
     private function createTourEventLanguageView(SchemaSetupInterface $setup)
     {
