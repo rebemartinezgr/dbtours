@@ -33,7 +33,7 @@ class CancelObserver implements ObserverInterface
     }
 
     /**
-     * @event sales_model_service_quote_submit_success
+     * @event order_cancel_after
      *
      * @param Observer $observer
      * @return void

@@ -12,6 +12,7 @@ use Dbtours\Calendar\Api\Config\Db\CalendarEvent\GeneralInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterface;
 use Dbtours\Calendar\Api\Data\CalendarEventInterfaceFactory;
 use Dbtours\Calendar\Api\Data\TourEventLanguageInterface as TourEventLanguage;
+use Dbtours\Base\Logger\Logger;
 use Magento\Framework\Stdlib\Datetime;
 
 /**
@@ -35,19 +36,28 @@ class CalendarManager
     private $generalConfig;
 
     /**
+     * @var Logger
+     */
+    private $logger;
+
+
+    /**
      * CalendarManager constructor.
      * @param CalendarEventRepositoryInterface $calendarEventRepository
      * @param CalendarEventInterfaceFactory $calendarEventFactory
      * @param GeneralInterface $generalConfig
+     * @param Logger $logger
      */
     public function __construct(
         CalendarEventRepositoryInterface $calendarEventRepository,
         CalendarEventInterfaceFactory $calendarEventFactory,
-        GeneralInterface $generalConfig
+        GeneralInterface $generalConfig,
+        Logger $logger
     ) {
         $this->calendarEventRepository = $calendarEventRepository;
         $this->calendarEventFactory    = $calendarEventFactory;
         $this->generalConfig           = $generalConfig;
+        $this->logger                  = $logger;
     }
 
     /**
@@ -70,14 +80,13 @@ class CalendarManager
         try {
             $orderItem = $booking->getOrderItem();
             if ($orderItem) {
-                // todo CONTROL ONE TRANSACTION
                 $this->calendarEventRepository->deleteByOrderItemId($orderItem);
                 if (!$booking->isDeleted()) {
                     $this->addCalendarEvents($booking);
                 }
             }
         } catch (\Exception $e) {
-            // todo log
+            $this->logger->error(__CLASS__ ."::" . __METHOD__ . " : " . $e->getMessage());
         }
     }
 
