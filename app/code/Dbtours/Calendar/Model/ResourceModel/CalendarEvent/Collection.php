@@ -27,7 +27,18 @@ class Collection extends AbstractCollection
         $this->_init(ModelCalendarEvent::class, ResourceModelCalendarEvent::class);
     }
 
-    public function getFullInfo()
+    /**
+     * @return AbstractCollection|void
+     */
+    protected function _beforeLoad() {
+        parent::_beforeLoad();
+        $this->getFullInfo();
+    }
+
+    /**
+     * @return $this
+     */
+    private function getFullInfo()
     {
         $eventTableAlias   = 'main_table';
         $bookingTableAlias = 'booking';
@@ -49,6 +60,7 @@ class Collection extends AbstractCollection
                 CalendarEventInterface::FINISH        => $eventTableAlias . '.' . CalendarEventInterface::FINISH,
                 CalendarEventInterface::ORDER_ITEM_ID => $eventTableAlias . '.' . CalendarEventInterface::ORDER_ITEM_ID,
                 CalendarEventInterface::TYPE_ID       => $eventTableAlias . '.' . CalendarEventInterface::TYPE_ID,
+                'booking_id'                          => $bookingTableAlias . '.' . BookingInterface::ID,
                 BookingInterface::TOUR                => $bookingTableAlias . '.' . BookingInterface::TOUR,
                 BookingInterface::LANGUAGE            => $bookingTableAlias . '.' . BookingInterface::LANGUAGE
             ]

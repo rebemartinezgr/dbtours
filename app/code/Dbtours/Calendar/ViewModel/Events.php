@@ -62,9 +62,9 @@ class Events implements ArgumentInterface
     public function getCalendarEvents()
     {
         $result     = [];
-        $collection = $this->eventCollection->getFullInfo();
+//        $collection = $this->eventCollection->getFullInfo();
         /** @var  \Dbtours\Calendar\Model\CalendarEvent $item */
-        foreach ($collection->getItems() as $item) {
+        foreach ($this->eventCollection->getItems() as $item) {
             $result[] = [
                 "start"   => $item->getStartTime(),
                 "end"     => $item->getFinishTime(),
@@ -74,7 +74,6 @@ class Events implements ArgumentInterface
                 "content" => $this->getEventContent($item),
                 "guide"   => $item->getGuideId(),
                 "type"    => $item->getTypeId()
-
             ];
         }
         return json_encode($result);
@@ -90,6 +89,10 @@ class Events implements ArgumentInterface
         $content = '<p>' . '<b>Type:  </b>' . $event->getCode() . '</p>';
 
         //Booking
+        $bookingUrl = $this->getBookingLink($event->getBookingId());
+        $content .= $bookingUrl ? '<p>' . '<b>Booking: </b>' . $bookingUrl . '</p>' : '';
+
+        //Tour
         $content .= $event->getTour() ? '<p>' . '<b>Tour: </b>' . $event->getTour() . '</p>' : '';
         $content .= $event->getLanguageCode() ?
             '<p>' . '<b>Language: </b>' . $this->localeHelper->getFormattedLanguage($event->getLanguageCode()) . '</p>' : '';
@@ -129,6 +132,23 @@ class Events implements ArgumentInterface
         $url = $this->backendUrl->getUrl('sales/order/view', ['order_id' => $order->getEntityId()]);
         $html = '<a href=\"' . $url . '\" target=\"_blank\" >';
         $html .= $order->getIncrementId();
+        $html .= "</a>";
+
+        return $html;
+    }
+
+    /**
+     * @param int $bookingId
+     * @return string
+     */
+    private function getBookingLink($bookingId)
+    {
+        if (!$bookingId) {
+            return '';
+        }
+        $url = $this->backendUrl->getUrl('booking/booking/edit', ['id' => $bookingId]);
+        $html = '<a href=\"' . $url . '\" target=\"_blank\" >';
+        $html .= $bookingId;
         $html .= "</a>";
 
         return $html;
