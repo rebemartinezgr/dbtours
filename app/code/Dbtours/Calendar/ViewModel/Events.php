@@ -62,9 +62,9 @@ class Events implements ArgumentInterface
     public function getCalendarEvents()
     {
         $result     = [];
-//        $collection = $this->eventCollection->getFullInfo();
+        $collection = $this->eventCollection->getFullInfo();
         /** @var  \Dbtours\Calendar\Model\CalendarEvent $item */
-        foreach ($this->eventCollection->getItems() as $item) {
+        foreach ($collection as $item) {
             $result[] = [
                 "start"   => $item->getStartTime(),
                 "end"     => $item->getFinishTime(),

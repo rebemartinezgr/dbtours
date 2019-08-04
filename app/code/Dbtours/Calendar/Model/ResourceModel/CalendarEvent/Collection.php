@@ -28,17 +28,9 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * @return AbstractCollection|void
-     */
-    protected function _beforeLoad() {
-        parent::_beforeLoad();
-        $this->getFullInfo();
-    }
-
-    /**
      * @return $this
      */
-    private function getFullInfo()
+    public function getFullInfo()
     {
         $eventTableAlias   = 'main_table';
         $bookingTableAlias = 'booking';
