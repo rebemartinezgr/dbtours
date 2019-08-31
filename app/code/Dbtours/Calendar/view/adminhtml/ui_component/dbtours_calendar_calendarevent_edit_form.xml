@@ -69,6 +69,9 @@
                     <item name="label" xsi:type="string" translate="true">Guide</item>
                     <item name="dataType" xsi:type="string">int</item>
                     <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
                 </item>
                 <item name="options" xsi:type="object">Dbtours\Booking\Ui\Component\Listing\Column\Guides</item>
             </argument>
@@ -113,6 +116,9 @@
                     <item name="label" xsi:type="string" translate="true">Event type</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
                 </item>
                 <item name="options" xsi:type="object">Dbtours\Calendar\Ui\Component\Listing\Column\EventType</item>
             </argument>

@@ -20,7 +20,7 @@ class Date
      */
     public function convertToDBTimeZone($date)
     {
-        $date = new Zend_Date($date);
+        $date = new Zend_Date($date, null, 'es_ES');
         $date->setTimezone('Europe/Madrid');
         $date = $date->get(\Magento\Framework\Stdlib\DateTime::DATETIME_INTERNAL_FORMAT);
 
