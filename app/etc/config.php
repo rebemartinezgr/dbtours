@@ -146,13 +146,9 @@ return [
         'Dotdigitalgroup_Email' => 1,
         'Magento_WishlistAnalytics' => 1,
         'Mageplaza_Core' => 1,
-        'Mageplaza_Gdpr' => 1,
-        'Mageplaza_GoogleRecaptcha' => 1,
-        'Mageplaza_Reports' => 1,
         'Mageplaza_Seo' => 1,
         'Mageplaza_Sitemap' => 1,
         'Mageplaza_Smtp' => 1,
-        'Mageplaza_SocialLogin' => 1,
         'Temando_Shipping' => 1,
         'Vertex_Tax' => 1
     ]
