@@ -140,6 +140,10 @@
     Options +FollowSymLinks
     RewriteEngine on
 
+
+RewriteRule ^([^/]+)/(sitemap.xml) /sitemaps/$1/sitemap.xml [L,NC]
+RewriteRule ^([^/]*)sitemap.xml /sitemaps/de/sitemap.xml [L,NC]
+
 ############################################
 ## you can put here your magento root folder
 ## path relative to web root
