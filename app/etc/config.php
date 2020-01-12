@@ -10,6 +10,7 @@ return [
         'Dbtours_Guide' => 1,
         'Dbtours_Catalog' => 1,
         'Dbtours_Calendar' => 1,
+        'Dbtours_Promo' => 1,
         'Dbtours_Sales' => 1,
         'Dbtours_TourEvent' => 1,
         'Magento_Theme' => 1,
