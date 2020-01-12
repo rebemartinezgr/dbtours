@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dabda5825b0e691f0cffd5ac0f5b9a51",
+    "content-hash": "ac771c1367ae4acaa0cf7a79ac7d3ee1",
     "packages": [
         {
             "name": "amzn/amazon-pay-and-login-with-amazon-core-module",
@@ -682,6 +682,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -1067,6 +1068,53 @@
             "transport-options": {
                 "symlink": false
             }
+        },
+        {
+            "name": "google/recaptcha",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/recaptcha.git",
+                "reference": "98c4a6573b27e8b0990ea8789c74ea378795134c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/recaptcha/zipball/98c4a6573b27e8b0990ea8789c74ea378795134c",
+                "reference": "98c4a6573b27e8b0990ea8789c74ea378795134c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.2.20|^2.15",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^4.8.36|^5.7.27|^6.59|^7.5.11"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ReCaptcha\\": "src/ReCaptcha"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Client library for reCAPTCHA, a free service that protects websites from spam and abuse.",
+            "homepage": "https://www.google.com/recaptcha/",
+            "keywords": [
+                "Abuse",
+                "captcha",
+                "recaptcha",
+                "spam"
+            ],
+            "time": "2019-08-16T15:48:25+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -7397,6 +7445,48 @@
             "time": "2019-08-16T08:51:45+00:00"
         },
         {
+            "name": "mageplaza/module-google-recaptcha",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-google-recaptcha.git",
+                "reference": "b43899b20a09e8ac1dde8493acc3c7f3a162fa1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-google-recaptcha/zipball/b43899b20a09e8ac1dde8493acc3c7f3a162fa1c",
+                "reference": "b43899b20a09e8ac1dde8493acc3c7f3a162fa1c",
+                "shasum": ""
+            },
+            "require": {
+                "google/recaptcha": "^1.2",
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\GoogleRecaptcha\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Google Recaptcha Extension",
+            "time": "2019-08-30T02:37:16+00:00"
+        },
+        {
             "name": "mageplaza/module-sitemap",
             "version": "1.0.2",
             "source": {
@@ -9090,6 +9180,7 @@
                 "captcha",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-captcha",
             "time": "2018-04-24T17:24:10+00:00"
         },
         {
@@ -9143,6 +9234,7 @@
                 "code",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-code",
             "time": "2016-10-24T13:23:32+00:00"
         },
         {
@@ -9199,6 +9291,7 @@
                 "config",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-config",
             "time": "2016-02-04T23:01:10+00:00"
         },
         {
@@ -9252,6 +9345,7 @@
                 "console",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-console",
             "time": "2018-01-25T19:08:04+00:00"
         },
         {
@@ -9302,6 +9396,7 @@
                 "crypt",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-crypt",
             "time": "2016-02-03T23:46:30+00:00"
         },
         {
@@ -9360,6 +9455,7 @@
                 "db",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-db",
             "time": "2019-02-25T11:37:45+00:00"
         },
         {
@@ -9407,6 +9503,7 @@
                 "di",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-di",
             "time": "2016-04-25T20:58:11+00:00"
         },
         {
@@ -9469,6 +9566,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2019-08-06T17:53:53+00:00"
         },
         {
@@ -9514,6 +9612,7 @@
                 "escaper",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-escaper",
             "time": "2019-09-05T20:03:20+00:00"
         },
         {
@@ -9561,6 +9660,7 @@
                 "eventmanager",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2017-12-12T17:48:56+00:00"
         },
         {
@@ -9626,6 +9726,7 @@
                 "filter",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-filter",
             "time": "2019-08-19T07:08:04+00:00"
         },
         {
@@ -9704,6 +9805,7 @@
                 "form",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-form",
             "time": "2018-12-11T22:51:29+00:00"
         },
         {
@@ -9759,6 +9861,7 @@
                 "zend",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-http",
             "time": "2019-02-07T17:47:08+00:00"
         },
         {
@@ -9817,6 +9920,7 @@
                 "hydrator",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-hydrator",
             "time": "2016-02-18T22:38:26+00:00"
         },
         {
@@ -9885,6 +9989,7 @@
                 "i18n",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-i18n",
             "time": "2019-09-30T12:04:37+00:00"
         },
         {
@@ -9942,6 +10047,7 @@
                 "inputfilter",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-inputfilter",
             "time": "2019-08-28T19:45:32+00:00"
         },
         {
@@ -9997,6 +10103,7 @@
                 "json",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-json",
             "time": "2016-02-04T21:20:26+00:00"
         },
         {
@@ -10042,6 +10149,7 @@
                 "loader",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-loader",
             "time": "2019-09-04T19:38:14+00:00"
         },
         {
@@ -10113,6 +10221,7 @@
                 "logging",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-log",
             "time": "2018-04-09T21:59:51+00:00"
         },
         {
@@ -10175,6 +10284,7 @@
                 "mail",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mail",
             "time": "2018-06-07T13:37:07+00:00"
         },
         {
@@ -10225,6 +10335,7 @@
                 "math",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-math",
             "time": "2018-12-04T15:34:17+00:00"
         },
         {
@@ -10276,6 +10387,7 @@
                 "mime",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mime",
             "time": "2018-05-14T19:02:50+00:00"
         },
         {
@@ -10336,6 +10448,7 @@
                 "modulemanager",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-modulemanager",
             "time": "2017-12-02T06:11:18+00:00"
         },
         {
@@ -10431,6 +10544,7 @@
                 "mvc",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-mvc",
             "time": "2018-05-03T13:13:41+00:00"
         },
         {
@@ -10480,6 +10594,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-psr7bridge",
             "time": "2016-05-10T21:44:39+00:00"
         },
         {
@@ -10537,6 +10652,7 @@
                 "serializer",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-serializer",
             "time": "2018-05-14T18:45:18+00:00"
         },
         {
@@ -10584,6 +10700,7 @@
                 "server",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-server",
             "time": "2018-04-30T22:21:28+00:00"
         },
         {
@@ -10636,6 +10753,7 @@
                 "servicemanager",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-servicemanager",
             "time": "2018-06-22T14:49:54+00:00"
         },
         {
@@ -10703,6 +10821,7 @@
                 "session",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-session",
             "time": "2019-09-19T19:50:12+00:00"
         },
         {
@@ -10756,6 +10875,7 @@
                 "soap",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-soap",
             "time": "2019-04-30T16:45:35+00:00"
         },
         {
@@ -10815,6 +10935,7 @@
                 "stdlib",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-stdlib",
             "time": "2016-04-12T21:17:31+00:00"
         },
         {
@@ -10863,6 +10984,7 @@
                 "text",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-text",
             "time": "2018-04-30T14:55:10+00:00"
         },
         {
@@ -10910,6 +11032,7 @@
                 "uri",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-uri",
             "time": "2019-10-07T13:35:33+00:00"
         },
         {
@@ -10983,6 +11106,7 @@
                 "validator",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-validator",
             "time": "2019-01-29T22:26:39+00:00"
         },
         {
@@ -11070,6 +11194,7 @@
                 "view",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-view",
             "time": "2019-10-11T21:10:04+00:00"
         }
     ],
