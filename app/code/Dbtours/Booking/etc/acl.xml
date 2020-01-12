@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Dbtours_Booking::booking" title="Booking" sortOrder="10">
+                    <resource id="Dbtours_Booking::manage_booking" title="Manage Booking" sortOrder="10"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Dbtours\Booking\Api\Data\BookingInterface" type="Dbtours\Booking\Model\Booking"/>
+    <preference for="Dbtours\Booking\Api\Data\BookingSearchResultsInterface" type="Dbtours\Booking\Model\BookingSearchResults"/>
+    <preference for="Dbtours\Booking\Api\BookingRepositoryInterface" type="Dbtours\Booking\Model\BookingRepository"/>
+
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="booking_extension_attribute" type="Dbtours\Booking\Plugin\OrderItemRepositoryPlugin" />
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="dbtours_booking_booking_listing_data_source" xsi:type="string">Dbtours\Booking\Model\ResourceModel\Booking\Grid\Collection</item>
+                <item name="dbtours_booking_booking_form_data_source" xsi:type="string">Dbtours\Booking\Model\ResourceModel\Booking\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <virtualType name="Dbtours\Booking\Model\ResourceModel\Booking\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">db_booking</argument>
+            <argument name="resourceModel" xsi:type="string">Dbtours\Booking\Model\ResourceModel\Booking</argument>
+        </arguments>
+    </virtualType>
+
+</config>

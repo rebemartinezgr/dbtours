@@ -1,0 +1,140 @@
+<?php
+/** @var  \Dbtours\Catalog\Block\Product\View\Options\Type\TourEvent $block */
+$showTime           = $block->getTimeFormat() ? "showsTime: true," : "showsTime: false,";
+$timeFormat         = $block->getTimeFormat() ? "timeFormat: '" . $block->getTimeFormat() . "'," : "";
+$calendarYearsRange = $block->getYearsRange() ? "yearRange: '" . $block->getYearsRange() . "'," : "";
+?>
+<button id="date-options-button" class="action primary" type="button"><?=__("Show Options")?></button>
+
+<div id="date-options-content" style="display: none">
+    <div class="container-ajax-loader">
+        <div class="ajax-loader"></div>
+    </div>
+
+    <div id="div-<?= $block->getId()?>"></div>
+
+    <div id="container-tabs"></div>
+</div>
+
+<script type="text/javascript">
+    require(["jquery", "mage/calendar", "tabs"], function($){
+        $("#product-addtocart-button").attr('hidden', true);
+        $("#date-options-button").click(function(e) {
+            e.preventDefault();
+            $("#date-options-button").css("display","none");
+            $("#date-options-content").css("display","block");
+            $.ajax({
+                url : "<?= $block->getDataUrl() ?>",
+                type : 'GET',
+                data : {
+                    'productId' : "<?= $block->getProductId() ?>",
+                },
+                dataType:'json',
+                success : function(data) {
+                    init(data);
+                    $(".container-ajax-loader").css("display","none");
+                },
+                error : function(request,error) {
+                    alert("An error occurs, please refresh the current page");
+                }
+            });
+        });
+
+
+        function showOptions(options, languagesData) {
+            var html = '<div id="language-tabs" class="product data items">';
+            for (var language in options) {
+                html +=  '<div class="data item title option-header" aria-labeledby="tab-label-' + language + 
+                    '-title" ' +
+                    'data-role="collapsible"' +
+                    ' id="tab-label-' + language + '">' +
+                    '<a class="data switch"' +
+                    'tabindex="-1" ' +
+                    'data-toggle="switch"' +
+                    'href="' + language + '"' +
+                    'id="tab-label-' + language + '-title">' +
+                     languagesData[language]  + '</a></div>';
+                html += '<div class="data item content option-content" id="' + language + '" data-role="content">'
+                html +=  '<div class="option-content-elements">'
+                html += '<input class="language-option" id="language-' + language +'"' +
+                    'type="radio" ' +
+                    'name="<?= $block->getName()?>[language_code]" ' +
+                    'value="' + language +'">';
+                for (var time in options[language]) {
+                    var tourEventId = options[language][time];
+                    html += '<input class="time-option" ' +
+                        'id="' + tourEventId + language + '" ' +
+                        'data-language="' + language + '" ' +
+                        'type="radio" ' +
+                        'name="<?= $block->getName()?>[tour_event_id]" ';
+                    if (tourEventId > 0) {
+                        html +='value="' + tourEventId +'">';
+                        html += '<label for="' + tourEventId+language +'">' + time + '</label>';
+                    } else {
+                        html += 'disabled>';
+                        html += '<label for="' + tourEventId+language +'" class="disabled">' + time + '</label>';
+                    }
+                }
+                html += '</div></div>';
+            }
+            html += '</div>';
+            
+            $("#container-tabs").html(html);
+            $("#language-tabs").tabs({
+                openedState: 'active-tab',
+            });
+
+            $(".option-header .data.switch").click(function(e) {
+                $("#product-addtocart-button").attr('hidden', true);
+            });
+
+            $('input.time-option:radio').click(function(e) {
+                $("#product-addtocart-button").attr('hidden', false);
+                // reset selected language
+                $('input.language-option:radio').attr('checked',false);
+                 //mark as checked current language
+                var selectedLanguage = $(this).data("language");
+                $("#language-" + selectedLanguage).attr('checked', true);
+            });
+        }
+
+        function init(data) {
+            if(data.dates.length) {
+                initDatepicker(data);
+                $(".container-ajax-loader").css("display","none");
+            } else {
+                $(<?= "'#div-" . $block->getId() . "'"?>).html('<p style="color:red">' +  '<?= __("This tour is not available online for the moment")?>' + '</p>');
+            }
+        }
+
+        function initDatepicker(data) {
+            $(<?= "'#div-" . $block->getId() . "'"?>).datepicker({
+                <?= $showTime ?>
+                <?= $timeFormat ?>
+                <?= $calendarYearsRange ?>
+                showButtonPanel: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                minDate: new Date(),
+                firstDay: 1,
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "<?= $block->getDateFormat() ?>",
+                buttonImage: "<?= $block->getImage() ?>",
+                beforeShowDay: function (date) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [data.dates.indexOf(string) != -1];
+                },
+                onSelect: function(dateText, inst) {
+                    $("#product-addtocart-button").attr('hidden', true);
+                    var date = new Date(Date.parse($(this).datepicker('getDate')));
+                    var dateFormatted = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    if (data.dates.indexOf(dateFormatted) != -1) {
+                        showOptions(data.options[dateFormatted], data.languages);
+                    }
+                }
+            });
+        }
+    });
+</script>
+

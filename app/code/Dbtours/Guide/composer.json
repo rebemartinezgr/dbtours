@@ -1,0 +1,20 @@
+{
+  "name": "dbtours/guide",
+  "description": "Db Tours Guide",
+  "require": {
+    "php": "~7.0.0"
+  },
+  "type": "magento2-module",
+  "version": "0.0.1",
+  "license": [
+    "Commercial"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "dbtours\\guide\\": ""
+    }
+  }
+}

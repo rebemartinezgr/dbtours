@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Dbtours_Calendar::css/events/calendar.css"/>
+        <css src="Dbtours_Calendar::css/events/editor.css"/>
+        <link src="Dbtours_Calendar/js/events/calendar.js"/>
+        <link src="Dbtours_Calendar/js/events/editor.js"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block name="calendar.events.filter" class="Magento\Backend\Block\Template" template="Dbtours_Calendar::events-filter.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Dbtours\Calendar\ViewModel\Events\Filter</argument>
+                </arguments>
+            </block>
+            <block name="calendar.events" class="Magento\Backend\Block\Template"
+                   template="Dbtours_Calendar::events.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Dbtours\Calendar\ViewModel\Events</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

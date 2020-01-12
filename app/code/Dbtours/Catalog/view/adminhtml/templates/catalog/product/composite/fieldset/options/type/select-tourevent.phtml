@@ -1,0 +1,41 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /* @var $block \Dbtours\Catalog\Block\Adminhtml\Product\View\Options\Type\TourEvent */ ?>
+<?php $_option = $block->getOption(); ?>
+<?php $_optionId = $_option->getId() ?>
+<div class="admin__field field<?php if ($_option->getIsRequire()) echo ' required _required' ?>">
+    <label class="label admin__field-label">
+        <span><?= $block->escapeHtml('Date & Language') ?></span>
+    </label>
+    <div class="control admin__field-control">
+        <?= $block->getValuesHtml() ?>
+        <?php $tourEventName = "options[" . $_optionId . "][tour_event_id]"?>
+        <?php $languageName =  "options[" . $_optionId . "][language_code]"?>
+        <input id="tour_event_id" type="text" name="<?= $tourEventName ?>" hidden/>
+        <input id ="language_code" type="text" name="<?= $languageName ?>" hidden/>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require(["jquery"], function($){
+        var selector = $("select[name='options[<?= $_optionId?>][tour_event_language]']");
+        selector.change(function(e) {
+            var option = $(this). children("option:selected");
+            var language = option.attr('data-language-code');
+            var tourevent = option.attr('data-tour-event-id');
+            $("#tour_event_id").val(tourevent);
+            $("#language_code").val(language);
+        });
+        selector.change();
+
+    });
+</script>
+
+

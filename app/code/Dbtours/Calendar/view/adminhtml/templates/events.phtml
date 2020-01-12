@@ -1,0 +1,39 @@
+<?php $view = $block->getViewModel(); ?>
+<?php $events = $view->getCalendarEvents(); ?>
+
+<div id='calendar' style="max-width:1000px; margin:0 auto"></div>
+
+<script>
+    var entries = JSON.parse('<?php echo($events)?>');
+    var calendar = new Calendar({
+        target: document.querySelector("#calendar"),
+        data: {
+            escape: false,
+            view: 'calendar',
+            dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        }
+    });
+    calendar.set({entries: entries, message: ''});
+
+    function search(guideId, typeId) {
+        calendar.set({message: 'loading...'});
+        var filteredEntries  = [];
+        for (var k in entries) {
+            var included = true;
+            var entry = entries[k];
+            if (guideId && entry['guide'] !== guideId) {
+                included = false;
+            }
+            if (typeId && entry['type'] !== typeId) {
+                included = false;
+            }
+
+            if (included) {
+                filteredEntries.push(entry);
+            }
+        }
+        calendar.set({entries: filteredEntries, message: ''});
+    }
+
+</script>
+

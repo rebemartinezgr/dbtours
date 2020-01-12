@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /* @var $block \Dbtours\Catalog\Block\Product\View\Options\Type\TourEvent */ ?>
+<?php $_option = $block->getOption() ?>
+<?php $_optionId = $_option->getId() ?>
+<?php $class = ($_option->getIsRequire()) ? ' required' : ''; ?>
+<div class="field tourevent<?= /* @escapeNotVerified */ $class ?>">
+    <fieldset class="fieldset fieldset-product-options-inner<?= /* @escapeNotVerified */ $class ?>">
+        <legend class="legend">
+            <span><?= $block->escapeHtml($_option->getTitle()) ?></span>
+        </legend>
+        <div class="control">
+            <?= $block->getCalendarDateHtml() ?>
+        </div>
+    </fieldset>
+</div>

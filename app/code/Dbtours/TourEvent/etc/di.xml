@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Dbtours\TourEvent\Api\Config\Db\TourEventInterface" type="Dbtours\TourEvent\Model\Config\Db\TourEvent"/>
+    <preference for="Dbtours\TourEvent\Api\Config\Db\TourEvent\GenerationInterface" type="Dbtours\TourEvent\Model\Config\Db\TourEvent\Generation"/>
+    <preference for="Dbtours\TourEvent\Api\Data\TourEventInterface" type="Dbtours\TourEvent\Model\TourEvent"/>
+    <preference for="Dbtours\TourEvent\Api\Data\TourEventSearchResultsInterface" type="Dbtours\TourEvent\Model\TourEventSearchResults"/>
+    <preference for="Dbtours\TourEvent\Api\TourEventRepositoryInterface" type="Dbtours\TourEvent\Model\TourEventRepository"/>
+    <preference for="Dbtours\TourEvent\Api\Data\TourEventLanguageInterface" type="Dbtours\TourEvent\Model\TourEventLanguage"/>
+    <preference for="Dbtours\TourEvent\Api\Data\TourEventLanguageSearchResultsInterface" type="Dbtours\TourEvent\Model\TourEventLanguageSearchResults"/>
+    <preference for="Dbtours\TourEvent\Api\TourEventLanguageRepositoryInterface" type="Dbtours\TourEvent\Model\TourEventLanguageRepository"/>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="tourevent_generation" xsi:type="object">Dbtours\TourEvent\Console\Generator</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Dbtours\TourEvent\Helper\Validator">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="validate_area" xsi:type="array">
+                    <item name="0" xsi:type="string">frontend</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

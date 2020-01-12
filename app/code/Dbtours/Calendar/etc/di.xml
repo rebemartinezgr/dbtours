@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Dbtours\Calendar\Api\Data\CalendarEventInterface" type="Dbtours\Calendar\Model\CalendarEvent"/>
+    <preference for="Dbtours\Calendar\Api\Data\CalendarEventSearchResultsInterface" type="Dbtours\Calendar\Model\CalendarEventSearchResults"/>
+    <preference for="Dbtours\Calendar\Api\CalendarEventRepositoryInterface" type="Dbtours\Calendar\Model\CalendarEventRepository"/>
+
+    <preference for="Dbtours\Calendar\Api\Config\Db\CalendarEventInterface" type="Dbtours\Calendar\Model\Config\Db\CalendarEvent"/>
+    <preference for="Dbtours\Calendar\Api\Config\Db\CalendarEvent\GeneralInterface" type="Dbtours\Calendar\Model\Config\Db\CalendarEvent\General"/>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="dbtours_calendar_calendarevent_listing_data_source" xsi:type="string">Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Grid\Collection</item>
+                <item name="dbtours_calendar_calendarevent_form_data_source" xsi:type="string">Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Dbtours\Calendar\Model\ResourceModel\CalendarEvent\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">db_calendar_event</argument>
+            <argument name="resourceModel" xsi:type="string">Dbtours\Calendar\Model\ResourceModel\CalendarEvent</argument>
+        </arguments>
+    </virtualType>
+
+
+
+</config>

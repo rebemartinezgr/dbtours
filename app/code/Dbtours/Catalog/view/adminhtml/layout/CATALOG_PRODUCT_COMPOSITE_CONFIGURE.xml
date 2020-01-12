@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author Rebeca Martínez García
+  ~ @copyright  Copyright © 2018  Discover Barcelona
+  -->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <referenceBlock name="product.composite.fieldset.options">
+        <block class="Dbtours\Catalog\Block\Adminhtml\Product\View\Options\Type\TourEvent"
+               name="product.composite.fieldset.options.tourevent"
+               as="tourevent"
+               template="Dbtours_Catalog::catalog/product/composite/fieldset/options/type/select-tourevent.phtml"/>
+    </referenceBlock>
+</layout>

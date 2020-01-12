@@ -29,6 +29,8 @@
 
 ############################################
 ## default index file
+## Specifies option, to use methods arguments in backtrace or not
+    SetEnv MAGE_DEBUG_SHOW_ARGS 1
 
     DirectoryIndex index.php
 
@@ -95,7 +97,7 @@
     # Insert filter on all content
     ###SetOutputFilter DEFLATE
     # Insert filter on selected content types only
-    #AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json image/svg+xml
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json image/svg+xml
 
     # Netscape 4.x has some problems...
     #BrowserMatch ^Mozilla/4 gzip-only-text/html
@@ -107,10 +109,10 @@
     #BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 
     # Don't compress images
-    #SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
 
     # Make sure proxies don't deliver the wrong content
-    #Header append Vary User-Agent env=!dont-vary
+    Header append Vary User-Agent env=!dont-vary
 
 </IfModule>
 
@@ -137,6 +139,10 @@
 
     Options +FollowSymLinks
     RewriteEngine on
+
+
+RewriteRule ^([^/]+)/(sitemap.xml) /sitemaps/$1/sitemap.xml [L,NC]
+RewriteRule ^([^/]*)sitemap.xml /sitemaps/de/sitemap.xml [L,NC]
 
 ############################################
 ## you can put here your magento root folder
@@ -364,6 +370,15 @@
             Require all denied
         </IfVersion>
     </Files>
+    <Files .user.ini>
+        <IfVersion < 2.4>
+            order allow,deny
+            deny from all
+        </IfVersion>
+        <IfVersion >= 2.4>
+            Require all denied
+        </IfVersion>
+    </Files>
 
 # For 404s and 403s that aren't handled by the application, show plain 404 response
 ErrorDocument 404 /pub/errors/404.php
@@ -406,6 +421,15 @@ ErrorDocument 403 /pub/errors/404.php
 
     <FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
         Header unset X-UA-Compatible
+    </FilesMatch>
+
+    # One year for image files
+    <FilesMatch ".(jpg|jpeg|png|gif|ico)$">
+    Header set Cache-Control "max-age=31536000"
+    </FilesMatch>
+    # One month for css and js
+    <FilesMatch ".(css|js)$">
+    Header set Cache-Control "max-age=2628000"
     </FilesMatch>
 
 </IfModule>

@@ -1,0 +1,50 @@
+<?php
+/** @var Dbtours\Calendar\ViewModel\Events\Filter $view */
+$view = $block->getViewModel();
+?>
+<div class="event-filter">
+    <label class="admin__field-label">
+        <span><b><?= __('Guide') ?></b></span>
+    </label>
+    <?= $view->getGuideSelect() ?>
+
+    <label class="admin__field-label">
+        <span><b><?= __('Event Type') ?></b></span>
+    </label>
+    <?= $view->getEventTpeSelect()?>
+    <button class="search">Filter</button>
+    <button class="reset">Reset</button>
+</div>
+
+<script>
+    require(["jquery"], function($) {
+        $("button.search").click(function () {
+            var guideId = $("#guide-filter").val();
+            var typeId = $("#type-filter").val();
+            search(guideId, typeId);
+        });
+        $("button.reset").click(function () {
+            $("#guide-filter").val('');
+            $("#type-filter").val('');
+            $("button.search").click();
+
+        });
+    });
+</script>
+
+
+
+<style type="text/css">
+    .event-filter {
+        max-width:1000px;
+        margin:30px auto;
+    }
+    .event-filter .admin__field-label span {
+        margin-bottom:10px
+    }
+    .event-filter .admin__control-select {
+        margin-right:30px
+    }
+</style>
+
+

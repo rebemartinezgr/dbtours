@@ -13,9 +13,26 @@
         }
     },
     "require": {
-        "magento/product-community-edition": "2.2.7",
+        "magento/product-community-edition": "2.2.8",
         "composer/composer": "@alpha",
-        "avstudnitz/scopehint2": "^1.0"
+        "avstudnitz/scopehint2": "^1.0",
+        "mageplaza/magento-2-spanish-language-pack": "dev-master",
+        "mageplaza/magento-2-german-language-pack": "dev-master",
+        "mageplaza/magento-2-seo-extension": "^2.1",
+        "mageplaza/module-sitemap": "^1.0",
+        "mageplaza/module-smtp": "^1.2",
+        "ecg/base": "*",
+        "ecg/blog": "*",
+        "ecg/contentbuilder": "*",
+        "ecg/brand": "*",
+        "ecg/instagram": "*",
+        "ecg/megamenu": "*",
+        "ecg/popupnewsletter": "*",
+        "ecg/slideshow": "*",
+        "ecg/testimonial": "*",
+        "ecg/widget": "*",
+        "ecg/axon": "*",
+        "interactiv4/module-redsyspro": "^102.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.2.0",
@@ -63,11 +80,17 @@
         },
         "local": {
             "type": "path",
-            "url": "i4modules/*"
+            "url": "../ecg/*",
+            "options": {
+                "symlink": false
+            }
         },
         "interactiv4": {
-            "type": "composer",
-            "url": "https://repo.devi4.com"
+            "type": "path",
+            "url": "../interactiv4/*",
+            "options": {
+                "symlink": false
+            }
         }
     },
     "extra": {
