@@ -18,4 +18,5 @@
             </argument>
         </arguments>
     </type>
+    <preference for="Mageplaza\GoogleRecaptcha\Observer\Captcha" type="Dbtours\Base\Observer\GoogleRecaptcha\Captcha"/>
 </config>
